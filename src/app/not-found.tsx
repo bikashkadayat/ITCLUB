@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft, Compass } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { RouteRecovery } from "@/components/layout/route-recovery";
 
 export default function NotFound() {
@@ -15,12 +16,12 @@ export default function NotFound() {
         </h1>
         <p className="mx-auto mt-6 max-w-md text-muted-foreground">The page you are looking for does not exist or has moved. Let’s route you back.</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button size="lg" className="rounded-full px-5" render={<Link href="/" />}>
+          <Link href="/" className={cn(buttonVariants({ size: "lg" }), "rounded-full px-5")}>
             <ArrowLeft data-icon="inline-start" /> Back home
-          </Button>
-          <Button size="lg" variant="outline" className="rounded-full px-5" render={<Link href="/departments" />}>
+          </Link>
+          <Link href="/departments" className={cn(buttonVariants({ size: "lg", variant: "outline" }), "rounded-full px-5")}>
             <Compass data-icon="inline-start" /> Explore Opportunities
-          </Button>
+          </Link>
         </div>
       </div>
     </section>

@@ -43,7 +43,7 @@ Full details, the registry schema and what was deliberately removed: **`docs/STA
 
 - `.github/workflows/deploy.yml` builds and publishes on every push to `main`.
 - Setup guides: `GITHUB_PAGES_SETUP.md` and `CLOUDFLARE_SETUP.md`.
-- Repository variables (optional): `NEXT_PUBLIC_CONTACT_EMAIL`, `NEXT_PUBLIC_FORM_ENDPOINT`.
+- Repository variable (optional): `NEXT_PUBLIC_CONTACT_EMAIL` (display only). Form submissions go to the club WhatsApp number in `src/lib/whatsapp.ts`.
 
 ## Content
 

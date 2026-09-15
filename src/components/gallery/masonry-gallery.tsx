@@ -43,7 +43,7 @@ export function MasonryGallery({ extra = [] }: { extra?: GalleryImage[] }) {
           icon={Camera}
           title={`No ${cat.toLowerCase()} photos yet`}
           description="The Media & Outreach department documents every event in photo and video. Photos from the first cycle will appear here."
-          action={{ label: "See planned events", href: "/events" }}
+          action={{ label: "See upcoming events", href: "/events" }}
         />
       ) : (
         <div className="mt-8 columns-1 gap-5 sm:columns-2 lg:columns-3 [&>*]:mb-5 [&>*]:break-inside-avoid">

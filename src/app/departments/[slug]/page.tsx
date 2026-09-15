@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowRight, ArrowLeft, BookOpen, Calendar, Wrench, Rocket, Flag } from "lucide-react";
 import { departments, getDepartment } from "@/data/departments";
 import { events } from "@/data/events";
+import { formatDate } from "@/lib/utils";
 import { projects } from "@/data/projects";
 import { pageMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/shared/page-hero";
@@ -97,7 +98,7 @@ export default async function DepartmentPage({ params }: { params: Promise<{ slu
                         <span>
                           <span className="block text-sm font-medium group-hover:text-primary">{e.title}</span>
                           <span className="text-xs text-muted-foreground">
-                            {e.type} · {e.schedule ?? "Scheduled"}
+                            {e.type} · {formatDate(e.date)}
                           </span>
                         </span>
                         <ArrowRight className="size-4 shrink-0 text-muted-foreground group-hover:text-primary" aria-hidden />

@@ -8,7 +8,7 @@ import { PageHero } from "@/components/shared/page-hero";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal, Stagger, StaggerItem } from "@/components/shared/reveal";
 import { DepartmentIcon } from "@/components/shared/department-icon";
-import { formatDate, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 export const metadata = pageMetadata({
   title: "Resource Center",
@@ -19,38 +19,21 @@ export const metadata = pageMetadata({
 export default function ResourcesPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Resource Center"
-        crumbs={[{ label: "Resources" }]}
-        title={
-          <>
-            Everything you need <span className="gradient-text">to keep learning</span>.
-          </>
-        }
-        description="Everything members need in one place: the official founding documents, a learning roadmap for each department and the platforms where the club publishes its work."
-      />
+      <PageHero eyebrow="Resources" crumbs={[{ label: "Resources" }]} title={<>Documents and <span className="gradient-text">learning tracks</span>.</>} description="Founding documents, a roadmap per department, and where we publish." />
 
       <section className="section" aria-labelledby="docs-heading">
         <div className="container-x">
-          <SectionHeading eyebrow="Official documents" title={<span id="docs-heading">Founding documents.</span>} description="Signed PDFs submitted to the college administration on 13 September 2026." />
-          <Stagger className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <SectionHeading eyebrow="Official documents" title={<span id="docs-heading">Founding documents.</span>} />
+          <Stagger className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
             {documents.map((d) => (
               <StaggerItem key={d.id}>
-                <a href={d.file} target="_blank" rel="noopener noreferrer" className="group flex h-full flex-col rounded-3xl border border-border/80 bg-card p-6 card-hover">
-                  <div className="flex items-center justify-between">
-                    <span className="flex size-11 items-center justify-center rounded-xl bg-secondary text-primary">
-                      <FileText className="size-5" aria-hidden />
-                    </span>
-                    <span className="font-mono text-xs text-muted-foreground">DOC {d.id}</span>
-                  </div>
-                  <h3 className="mt-5 text-lg font-semibold leading-snug group-hover:text-primary">{d.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{d.description}</p>
-                  <div className="mt-auto flex items-center justify-between pt-5 text-xs text-muted-foreground">
-                    <span>
-                      PDF · {d.pages} page{d.pages > 1 ? "s" : ""} · {formatDate(d.date)}
-                    </span>
-                    <Download className="size-4 text-primary" aria-hidden />
-                  </div>
+                <a href={d.file} target="_blank" rel="noopener noreferrer" className="group flex h-full items-center gap-5 rounded-3xl border border-border/80 bg-card p-6 card-hover">
+                  <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-secondary text-primary transition-transform duration-500 group-hover:-translate-y-1"><FileText className="size-5" aria-hidden /></span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-semibold leading-snug group-hover:text-primary">{d.title}</span>
+                    <span className="mt-1 block text-xs text-muted-foreground">PDF · {d.pages} page{d.pages > 1 ? "s" : ""}</span>
+                  </span>
+                  <Download className="size-4 shrink-0 text-primary" aria-hidden />
                 </a>
               </StaggerItem>
             ))}
@@ -58,34 +41,28 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-
-      <section className="section" aria-labelledby="tracks-heading">
+      <section className="section bg-muted/40" aria-labelledby="tracks-heading">
         <div className="container-x">
-          <SectionHeading eyebrow="Learning tracks" title={<span id="tracks-heading">A learning path for every department.</span>} description="Start at step one, learn at your own pace, and join a project when you feel ready." />
-          <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2">
+          <SectionHeading eyebrow="Learning tracks" title={<span id="tracks-heading">A path for every department.</span>} />
+          <div className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
             {learningTracks.map((t) => {
               const dept = departments.find((d) => d.slug === t.slug)!;
               return (
                 <Reveal key={t.slug}>
-                  <div className="h-full rounded-3xl border border-border/80 bg-card p-6">
+                  <Link href={`/departments/${t.slug}`} className="group block h-full rounded-3xl border border-border/80 bg-card p-6 card-hover" aria-label={`${t.department} learning track, ${t.steps.length} steps`}>
                     <div className="flex items-center gap-3">
-                      <span className={cn("flex size-10 items-center justify-center rounded-xl bg-gradient-to-br text-white", dept.color)}>
-                        <DepartmentIcon icon={dept.icon} className="size-5" />
-                      </span>
-                      <h3 className="text-lg font-semibold">{t.department}</h3>
+                      <span className={cn("flex size-11 items-center justify-center rounded-xl bg-gradient-to-br text-white", dept.color)}><DepartmentIcon icon={dept.icon} className="size-5" /></span>
+                      <h3 className="font-semibold">{t.department}</h3>
                     </div>
-                    <ol className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
-                      {t.steps.map((s, i) => (
-                        <li key={s} className="flex items-center gap-3 rounded-xl bg-muted/70 px-3 py-2 text-sm">
-                          <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-background font-mono text-[11px] text-primary">{i + 1}</span>
-                          {s}
-                        </li>
-                      ))}
-                    </ol>
-                    <Link href={`/departments/${t.slug}`} className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                      Department page <ArrowRight className="size-4" aria-hidden />
-                    </Link>
-                  </div>
+                    <div className="mt-6 flex items-center justify-between">
+                      <ol className="flex items-center gap-1.5" aria-label={`${t.steps.length} steps`}>
+                        {t.steps.map((s, i) => (
+                          <li key={s} className="flex size-7 items-center justify-center rounded-full bg-muted font-mono text-[11px] text-primary" title={s}>{i + 1}</li>
+                        ))}
+                      </ol>
+                      <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary">{t.steps.length} steps <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden /></span>
+                    </div>
+                  </Link>
                 </Reveal>
               );
             })}
@@ -95,16 +72,13 @@ export default function ResourcesPage() {
 
       <section className="section" aria-labelledby="tools-heading">
         <div className="container-x">
-          <SectionHeading eyebrow="Platforms" align="center" title={<span id="tools-heading">Where the club publishes.</span>} />
-          <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <SectionHeading eyebrow="Platforms" align="center" title={<span id="tools-heading">Where we publish.</span>} />
+          <div className="mt-14 grid grid-cols-2 gap-4 lg:grid-cols-4">
             {portfolioPlatforms.map((p) => (
               <Reveal key={p.name}>
-                <a href={p.href} target="_blank" rel="noopener noreferrer" className="group flex h-full items-start justify-between gap-3 rounded-3xl border border-border/80 bg-card p-6 card-hover">
-                  <div>
-                    <h3 className="font-semibold">{p.name}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{p.purpose}</p>
-                  </div>
-                  <ExternalLink className="size-4 shrink-0 text-muted-foreground group-hover:text-primary" aria-hidden />
+                <a href={p.href} target="_blank" rel="noopener noreferrer" className="group flex h-full items-center justify-between gap-3 rounded-3xl border border-border/80 bg-card px-6 py-6 card-hover">
+                  <span className="font-semibold">{p.name}</span>
+                  <ExternalLink className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" aria-hidden />
                 </a>
               </Reveal>
             ))}

@@ -38,11 +38,9 @@ Registry schema:
 
 1. The applicant fills in the form. Validation runs in the browser.
 2. The browser generates an application reference (`TAIC-APP-YYYYMMDD-XXXX`) and keeps a copy of the application in the applicant's own browser storage.
-3. Delivery to the committee, in order of preference:
-   - **Form endpoint** (`NEXT_PUBLIC_FORM_ENDPOINT`, e.g. Formspree): a JSON POST. The committee receives an email or sees it in the service's inbox. Recommended.
-   - **Email fallback** (`NEXT_PUBLIC_CONTACT_EMAIL`): the applicant's email app opens with the application pre-filled and a JSON block at the bottom that the committee tool can import.
-   - If neither is configured the form shows a notice; set at least one repository variable before launch.
-4. The applicant can also download a `.json` copy and is shown the reference and a link to the status page.
+3. Delivery to the committee is **WhatsApp**: the form shows "Your membership information is ready to be sent to the Executive Committee via WhatsApp" with a **Send Via WhatsApp** button. The button opens `https://wa.me/9779705811712?text=…` with the full application (name, email, phone, program, semester, department, skills, motivation and the reference) pre-filled; the applicant presses send in WhatsApp. No email, no form service, no backend.
+4. The applicant can also download a `.json` copy (importable by the committee tool) and is shown the reference and a link to the status page.
+5. The contact form, newsletter sign-up and event seat requests use the same WhatsApp number (`src/lib/whatsapp.ts`).
 
 ## Committee tool (`/admin`)
 
@@ -95,7 +93,6 @@ npm run preview    # serves out/ exactly like GitHub Pages (404.html included)
 | Variable | Purpose |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Canonical origin, sitemap and QR verification links |
-| `NEXT_PUBLIC_CONTACT_EMAIL` | Club inbox for the Contact page and email fallbacks |
-| `NEXT_PUBLIC_FORM_ENDPOINT` | Optional JSON endpoint for form submissions |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | Club inbox shown on the Contact page (display only) |
 
 There are no secrets. Anything set here is visible in the built site.

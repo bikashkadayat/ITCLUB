@@ -1,20 +1,19 @@
 "use client";
 
 /**
- * Membership application. Runs entirely in the browser: validates, assigns an
- * application reference (TAIC-APP-…), keeps the applicant's own copy in this
- * browser, and delivers the application to the committee through
- * NEXT_PUBLIC_FORM_ENDPOINT or the visitor's email app (JSON in the body so the
- * committee tool can import it), with a downloadable .json copy as backup.
+ * Membership application. Runs entirely in the browser (GitHub Pages has no
+ * server): validates, assigns an application reference (TAIC-APP-YYYYMMDD-XXXX),
+ * keeps the applicant's own copy in this browser, then hands the application to
+ * WhatsApp through a wa.me link addressed to the Executive Committee. A
+ * downloadable .json copy (importable by the committee tool) is offered as backup.
  */
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { CheckCircle2, AlertCircle, Loader2, Mail, Download } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { CheckCircle2, AlertCircle, Send, Download } from "lucide-react";
 import { departments } from "@/data/departments";
 import { membership } from "@/data/membership";
 import { DepartmentIcon } from "@/components/shared/department-icon";
 import { applicationSchema, zodErrors } from "@/lib/validation";
-import { submitStaticForm, mailBody, hasDeliveryChannel } from "@/lib/static-forms";
+import { whatsappUrl, membershipMessage, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
 import { newApplicationRef, saveMyApplication } from "@/lib/my-application";
 import { downloadText } from "@/lib/club-store";
 import { cn } from "@/lib/utils";
@@ -22,16 +21,14 @@ import { cn } from "@/lib/utils";
 const field = "h-11 w-full rounded-xl border border-border bg-background px-4 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/25 aria-invalid:border-destructive";
 
 export function MembershipForm() {
-  const router = useRouter();
   const [selected, setSelected] = useState<string[]>([]);
   const [errors, setErrors] = useState<Record<string, string[]>>({});
   const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null);
-  const [pending, setPending] = useState(false);
-  const [lastJson, setLastJson] = useState<{ ref: string; json: string } | null>(null);
+  const [ready, setReady] = useState<{ ref: string; json: string; url: string } | null>(null);
   const toggle = (slug: string) => setSelected((s) => (s.includes(slug) ? s.filter((x) => x !== slug) : s.length >= 2 ? s : [...s, slug]));
   const err = (k: string) => errors[k]?.[0];
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     const parsed = applicationSchema.safeParse({
@@ -52,47 +49,27 @@ export function MembershipForm() {
       return;
     }
     setErrors({});
-    setPending(true);
     const d = parsed.data;
     const ref = newApplicationRef();
     const submittedAt = new Date().toISOString();
     const deptNames = d.departments.map((slug) => departments.find((x) => x.slug === slug)?.name ?? slug);
     const record = { form: "membership", ref, submittedAt, name: d.name, email: d.email, phone: d.phone, program: d.program, semester: d.semester, departments: d.departments, departmentNames: deptNames.join(", "), skills: (d.skills ?? "").split(",").map((s) => s.trim()).filter(Boolean), motivation: d.motivation };
     const json = JSON.stringify(record, null, 2);
-    const rows: [string, string][] = [
-      ["Reference", ref],
-      ["Name", d.name],
-      ["Email", d.email],
-      ["Phone", d.phone],
-      ["Program", d.program],
-      ["Semester", d.semester],
-      ["Departments", deptNames.join(", ")],
-      ["Skills", d.skills || "—"],
-      ["Motivation", d.motivation],
-    ];
-    const result = await submitStaticForm(
-      "membership",
-      { ref, submittedAt, name: d.name, email: d.email, phone: d.phone, program: d.program, semester: d.semester, departments: d.departments.join(", "), departmentNames: deptNames.join(", "), skills: d.skills ?? "", motivation: d.motivation },
-      { subject: `Membership application ${ref} — ${d.name}`, body: `${mailBody(rows)}\n\nI confirm I am a student in good standing and agree to the Club Constitution and Code of Conduct.\n\n--- Application data for the committee tool (do not edit) ---\n${json}` }
+    const url = whatsappUrl(
+      membershipMessage({ name: d.name, email: d.email, phone: d.phone, program: d.program, semester: `${d.semester} Semester`, department: deptNames.join(", "), skills: d.skills ?? "", motivation: d.motivation, ref })
     );
-    setPending(false);
-    if (!result.ok) return setMessage({ ok: false, text: result.message });
-    saveMyApplication({ ref, name: d.name, email: d.email, submittedAt, delivered: result.via });
-    setLastJson({ ref, json });
-    if (result.via === "endpoint") return router.push("/membership/submitted");
-    setMessage({ ok: true, text: `Your email app has opened with the application filled in. Press send to deliver it to the Executive Committee. Your reference is ${ref}.` });
+    saveMyApplication({ ref, name: d.name, email: d.email, submittedAt, delivered: "whatsapp" });
+    setMessage(null);
+    setReady({ ref, json, url });
   }
+
+  if (ready) return <ReadyToSend ready={ready} />;
 
   return (
     <form onSubmit={onSubmit} className="space-y-7" noValidate>
       <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
-      {!hasDeliveryChannel && (
-        <p className="flex items-start gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-800 dark:text-amber-300" role="status">
-          <AlertCircle className="mt-0.5 size-4 shrink-0" aria-hidden /> Online submissions are being set up. Until then, please reach the Executive Committee at the college in person.
-        </p>
-      )}
       <ol className="grid grid-cols-1 gap-2 rounded-2xl border border-border/80 bg-muted/40 p-3 text-xs text-muted-foreground sm:grid-cols-3">
-        {[["1", "Fill in the form", "About three minutes. You get a reference number instantly."], ["2", "Committee review", "The Executive Committee reviews every application after each intake."], ["3", "Status & card", "Check your status with the reference; approved members get a Member ID and digital card."]].map(([n, t, d]) => (
+        {[["1", "Fill in the form", "About three minutes. You get a reference number instantly."], ["2", "Send via WhatsApp", "Your application opens in WhatsApp, ready to send to the Executive Committee."], ["3", "Status & card", "Check your status with the reference; approved members get a Member ID and digital card."]].map(([n, t, d]) => (
           <li key={n} className="flex gap-2.5 rounded-xl bg-card px-3 py-2.5">
             <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">{n}</span>
             <span><span className="block font-medium text-foreground">{t}</span>{d}</span>
@@ -152,23 +129,42 @@ export function MembershipForm() {
       {err("agree") && <p className="-mt-4 text-xs text-destructive" role="alert">{err("agree")}</p>}
 
       {message && (
-        <div className={cn("space-y-3 rounded-xl px-4 py-3 text-sm", message.ok ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400" : "bg-destructive/10 text-destructive")} role={message.ok ? "status" : "alert"}>
-          <p className="flex items-center gap-2">{message.ok ? <CheckCircle2 className="size-4 shrink-0" aria-hidden /> : <AlertCircle className="size-4 shrink-0" aria-hidden />} {message.text}</p>
-          {message.ok && lastJson && (
-            <div className="flex flex-wrap items-center gap-2">
-              <button type="button" onClick={() => downloadText(`${lastJson.ref}.json`, lastJson.json)} className="inline-flex h-9 items-center gap-1.5 rounded-full border border-emerald-600/40 bg-background px-3.5 text-xs font-medium text-foreground hover:bg-muted"><Download className="size-3.5" aria-hidden /> Download a copy of your application</button>
-              <a href={`/membership/status/?ref=${lastJson.ref}`} className="inline-flex h-9 items-center rounded-full bg-primary px-3.5 text-xs font-medium text-primary-foreground hover:bg-primary/90">Check status later →</a>
-            </div>
-          )}
-        </div>
+        <p className="flex items-center gap-2 rounded-xl bg-destructive/10 px-4 py-3 text-sm text-destructive" role="alert">
+          <AlertCircle className="size-4 shrink-0" aria-hidden /> {message.text}
+        </p>
       )}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <button type="submit" disabled={pending} className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-60">
-          {pending ? <Loader2 className="size-4 animate-spin" aria-hidden /> : <Mail className="size-4" aria-hidden />} Submit application
+        <button type="submit" className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+          <Send className="size-4" aria-hidden /> Submit application
         </button>
-        <p className="text-xs text-muted-foreground">You receive a reference number instantly. The Executive Committee reviews applications after each intake and replies by email.</p>
+        <p className="text-xs text-muted-foreground">You receive a reference number instantly, then send the application to the Executive Committee on WhatsApp ({WHATSAPP_DISPLAY}). Decisions are shared on WhatsApp after each intake.</p>
       </div>
     </form>
+  );
+}
+
+/** Success screen shown before WhatsApp opens. The button is the user gesture that launches wa.me (popup blockers allow it). */
+function ReadyToSend({ ready }: { ready: { ref: string; json: string; url: string } }) {
+  const btn = useRef<HTMLAnchorElement>(null);
+  useEffect(() => btn.current?.focus(), []);
+  return (
+    <div className="rounded-3xl border border-primary/30 bg-secondary/50 p-6 text-center sm:p-10" role="status" aria-live="polite">
+      <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600"><CheckCircle2 className="size-7" aria-hidden /></span>
+      <h3 className="mt-5 text-2xl font-semibold tracking-tight">Your membership information is ready to be sent to the Executive Committee via WhatsApp.</h3>
+      <p className="mt-3 text-sm text-muted-foreground">WhatsApp opens with your full application pre-filled and addressed to the club ({WHATSAPP_DISPLAY}). Press send in WhatsApp to deliver it.</p>
+      <a ref={btn} href={ready.url} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] px-7 text-sm font-semibold text-white shadow-lg shadow-[#25D366]/30 transition-colors hover:bg-[#1ebe5b] focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-[#25D366]/40">
+        <Send className="size-4" aria-hidden /> Send Via WhatsApp
+      </a>
+      <div className="mt-8 rounded-2xl border border-border/80 bg-card p-4 text-left text-sm">
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Your application reference</p>
+        <p className="mt-1 font-mono text-lg tracking-wider text-primary">{ready.ref}</p>
+        <p className="mt-2 text-muted-foreground">It is included in the WhatsApp message. Keep it to check your status and, once approved, open your digital membership card.</p>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <button type="button" onClick={() => downloadText(`${ready.ref}.json`, ready.json)} className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border bg-background px-3.5 text-xs font-medium text-foreground hover:bg-muted"><Download className="size-3.5" aria-hidden /> Download a copy of your application</button>
+          <a href={`/membership/status/?ref=${ready.ref}`} className="inline-flex h-9 items-center rounded-full bg-primary px-3.5 text-xs font-medium text-primary-foreground hover:bg-primary/90">Check status later →</a>
+        </div>
+      </div>
+    </div>
   );
 }
 

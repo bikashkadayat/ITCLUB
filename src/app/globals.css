@@ -27,6 +27,7 @@
   --color-brand-coral: #ff5050;
   --color-brand-coral-light: #ff8a8a;
   --color-brand-red: #fd0909;
+  --color-brand-red-deep: #c40606; /* AA-contrast variant of brand-red for small text on light surfaces (6.2:1 on white) */
   --color-brand-rose: #de304c;
   --color-brand-navy: #0b0d2a;
   --color-brand-ink: #06071a;
@@ -221,8 +222,18 @@
     @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
   }
   .section {
-    @apply py-20 sm:py-24 lg:py-32;
+    @apply py-24 sm:py-32 lg:py-40;
   }
+  /* Motion background: slow-drifting aurora blobs (respects reduced motion). */
+  @keyframes aurora-a { 0%, 100% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(6%, -8%, 0) scale(1.15); } }
+  @keyframes aurora-b { 0%, 100% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(-8%, 6%, 0) scale(1.1); } }
+  .aurora { @apply pointer-events-none absolute inset-0 overflow-hidden; }
+  .aurora > span { @apply absolute rounded-full blur-3xl; will-change: transform; }
+  .aurora > span:nth-child(1) { left: -10%; top: -20%; width: 40rem; height: 40rem; background: radial-gradient(closest-side, var(--glow-blue), transparent 70%); opacity: 0.55; animation: aurora-a 22s ease-in-out infinite; }
+  .aurora > span:nth-child(2) { right: -12%; top: 10%; width: 32rem; height: 32rem; background: radial-gradient(closest-side, var(--glow-coral), transparent 70%); opacity: 0.4; animation: aurora-b 26s ease-in-out infinite; }
+  .aurora > span:nth-child(3) { left: 30%; bottom: -30%; width: 36rem; height: 36rem; background: radial-gradient(closest-side, color-mix(in oklch, var(--color-brand-blue-light) 35%, transparent), transparent 70%); opacity: 0.35; animation: aurora-a 30s ease-in-out infinite reverse; }
+  .float-slow { animation: float 7s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce) { .aurora > span, .float-slow { animation: none; } }
   .text-balance { text-wrap: balance; }
   .text-pretty { text-wrap: pretty; }
 

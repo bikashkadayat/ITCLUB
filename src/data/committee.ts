@@ -142,7 +142,6 @@ export const committee: CommitteeMember[] = [
   },
   {
     id: "suman-karki",
-    photo: "/images/team/suman-karki.jpg", // placeholder silhouette — replace with a real portrait
     name: "Suman Karki",
     position: "Faculty Advisor / Mentor",
     shortPosition: "Faculty Advisor",

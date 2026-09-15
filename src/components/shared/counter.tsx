@@ -7,10 +7,17 @@ export function Counter({ value, suffix = "", duration = 1.6, className }: { val
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   const reduce = useReducedMotion();
-  const [n, setN] = useState(reduce ? value : 0);
+  // Always start from 0 so the first client render matches the server HTML (the
+  // reduced-motion preference is only known in the browser); jump to the final
+  // value in the effect when the user prefers reduced motion.
+  const [n, setN] = useState(0);
 
   useEffect(() => {
-    if (!inView || reduce) return;
+    if (reduce) {
+      setN(value);
+      return;
+    }
+    if (!inView) return;
     let raf = 0;
     const start = performance.now();
     const tick = (t: number) => {

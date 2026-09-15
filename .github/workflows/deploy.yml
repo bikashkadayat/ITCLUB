@@ -5,8 +5,7 @@
 #
 # Repository → Settings → Pages → Source must be "GitHub Actions".
 # Optional repository variables (Settings → Secrets and variables → Actions → Variables):
-#   NEXT_PUBLIC_CONTACT_EMAIL   club inbox used by the forms' mailto fallback and the Contact page
-#   NEXT_PUBLIC_FORM_ENDPOINT   JSON endpoint (Formspree, Getform, Basin…) that receives form submissions
+#   NEXT_PUBLIC_CONTACT_EMAIL   club inbox shown on the Contact page (forms are delivered via WhatsApp, see src/lib/whatsapp.ts)
 
 name: Deploy to GitHub Pages
 
@@ -50,7 +49,6 @@ jobs:
         env:
           NEXT_PUBLIC_SITE_URL: https://itclub.techaicollege.edu.np
           NEXT_PUBLIC_CONTACT_EMAIL: ${{ vars.NEXT_PUBLIC_CONTACT_EMAIL }}
-          NEXT_PUBLIC_FORM_ENDPOINT: ${{ vars.NEXT_PUBLIC_FORM_ENDPOINT }}
           NEXT_TELEMETRY_DISABLED: "1"
 
       - name: Verify export

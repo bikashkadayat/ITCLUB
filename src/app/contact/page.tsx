@@ -1,7 +1,8 @@
 import Image from "next/image";
-import { MapPin, Mail, Building2, Clock } from "lucide-react";
+import { MapPin, Mail, MessageCircle } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/data/site";
+import { whatsappUrl, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
 import { PageHero } from "@/components/shared/page-hero";
 import { Reveal } from "@/components/shared/reveal";
 import { ContactForm } from "@/components/forms/contact-form";
@@ -25,7 +26,7 @@ export default function ContactPage() {
             Let’s <span className="gradient-text">talk</span>.
           </>
         }
-        description="Partnerships, guest talks, media enquiries or a simple question about joining — send us a message and a member of the committee will reply."
+        description="Send a message and a committee member will reply."
       />
 
       <section className="section" aria-labelledby="contact-heading">
@@ -49,12 +50,10 @@ export default function ContactPage() {
                     </span>
                   </p>
                   <p className="flex gap-3">
-                    <Building2 className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
-                    <span>Tech &amp; AI Innovation Club — official student club, operating under the college administration and Faculty Advisor</span>
-                  </p>
-                  <p className="flex gap-3">
-                    <Clock className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
-                    <span>Bi-weekly member assemblies · Monthly general assembly</span>
+                    <MessageCircle className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
+                    <a href={whatsappUrl("Hello Tech & AI Innovation Club,")} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-4">
+                      WhatsApp {WHATSAPP_DISPLAY}
+                    </a>
                   </p>
                   {siteConfig.contactEmail ? (
                     <p className="flex gap-3">
@@ -63,17 +62,11 @@ export default function ContactPage() {
                         {siteConfig.contactEmail}
                       </a>
                     </p>
-                  ) : (
-                    <p className="flex gap-3">
-                      <Mail className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
-                      <span>Use the form to reach the club directly.</span>
-                    </p>
-                  )}
+                  ) : null}
                 </address>
                 {siteConfig.social.some((s) => s.href) && (
                 <div className="mt-6">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Social</p>
-                  <ul className="mt-3 flex flex-wrap gap-2">
+                  <ul className="flex flex-wrap gap-2" aria-label="Social media">
                     {siteConfig.social.filter((s) => s.href).map((s) => {
                       const Icon = socialIcon[s.id];
                       return (
@@ -114,7 +107,6 @@ export default function ContactPage() {
           <Reveal delay={0.05} className="lg:col-span-7">
             <div className="rounded-3xl border border-border/80 bg-card p-6 sm:p-8">
               <h2 className="text-2xl font-semibold">Send a message</h2>
-              <p className="mt-2 text-sm text-muted-foreground">We reply to all genuine enquiries. For membership, please use the dedicated form on the Membership page.</p>
               <div className="mt-6">
                 <ContactForm />
               </div>

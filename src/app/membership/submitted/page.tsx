@@ -14,7 +14,7 @@ export default function SubmittedPage() {
           <span className="mx-auto flex size-16 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600"><CheckCircle2 className="size-8" aria-hidden /></span>
           <h1 className="mt-6 text-3xl font-medium">Application submitted</h1>
           <p className="mt-4 text-pretty text-muted-foreground">Your application has been successfully submitted. The Executive Committee will review your application and contact you soon.</p>
-          <p className="mt-3 text-sm text-muted-foreground">You will receive an email at the address you provided once a decision is made.</p>
+          <p className="mt-3 text-sm text-muted-foreground">The committee replies on WhatsApp to the number you provided once a decision is made.</p>
           <SubmittedSummary />
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link href="/events" className="inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground hover:bg-primary/90"><CalendarDays className="size-4" /> Upcoming Events</Link>

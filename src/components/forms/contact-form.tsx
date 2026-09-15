@@ -1,10 +1,10 @@
 "use client";
 
-/** Contact form for the static (GitHub Pages) build. Swapped in by `next.config.ts` when STATIC_EXPORT=1. */
+/** Contact form. Static site: the message is delivered to the club WhatsApp number. */
 import { useState } from "react";
-import { CheckCircle2, AlertCircle, Loader2, Send } from "lucide-react";
+import { CheckCircle2, AlertCircle, Send } from "lucide-react";
 import { contactSchema, zodErrors } from "@/lib/validation";
-import { submitStaticForm, mailBody, hasDeliveryChannel } from "@/lib/static-forms";
+import { whatsappUrl, contactMessage, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 
 const field =
@@ -12,11 +12,10 @@ const field =
 
 export function ContactForm() {
   const [errors, setErrors] = useState<Record<string, string[]>>({});
-  const [state, setState] = useState<{ status: "idle" | "success" | "error"; message?: string }>({ status: "idle" });
-  const [pending, setPending] = useState(false);
+  const [state, setState] = useState<{ status: "idle" | "ready" | "error"; message?: string; url?: string }>({ status: "idle" });
   const err = (k: string) => errors[k]?.[0];
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = e.currentTarget;
     const parsed = contactSchema.safeParse(Object.fromEntries(new FormData(fd)));
@@ -26,20 +25,19 @@ export function ContactForm() {
       return;
     }
     setErrors({});
-    setPending(true);
     const d = parsed.data;
-    const r = await submitStaticForm("contact", { name: d.name, email: d.email, subject: d.subject, message: d.message }, { subject: `[Website] ${d.subject}`, body: `${mailBody([["Name", d.name], ["Email", d.email]])}\n\n${d.message}` });
-    setPending(false);
-    if (!r.ok) return setState({ status: "error", message: r.message });
-    setState({ status: "success", message: r.via === "endpoint" ? "Thanks for reaching out. The Executive Committee will reply by email." : "Your email app has opened with the message filled in. Press send to deliver it." });
+    setState({ status: "ready", url: whatsappUrl(contactMessage(d)) });
   }
 
-  if (state.status === "success") {
+  if (state.status === "ready" && state.url) {
     return (
       <div className="rounded-3xl border border-primary/30 bg-secondary/60 p-8 text-center" role="status">
         <CheckCircle2 className="mx-auto size-10 text-primary" aria-hidden />
         <h3 className="mt-4 text-xl font-semibold">Message ready</h3>
-        <p className="mt-2 text-sm text-muted-foreground">{state.message}</p>
+        <p className="mt-2 text-sm text-muted-foreground">Your message is ready to be sent to the Executive Committee via WhatsApp ({WHATSAPP_DISPLAY}). Press send in WhatsApp to deliver it.</p>
+        <a href={state.url} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 text-sm font-semibold text-white shadow-lg shadow-[#25D366]/25 hover:bg-[#1ebe5b]">
+          <Send className="size-4" aria-hidden /> Send Via WhatsApp
+        </a>
       </div>
     );
   }
@@ -47,11 +45,6 @@ export function ContactForm() {
   return (
     <form onSubmit={onSubmit} className="space-y-5" noValidate>
       <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
-      {!hasDeliveryChannel && (
-        <p className="flex items-start gap-2 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-800 dark:text-amber-300" role="status">
-          <AlertCircle className="mt-0.5 size-4 shrink-0" aria-hidden /> Online submissions are being set up. Until then, please reach the Executive Committee at the college in person.
-        </p>
-      )}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="c-name" className="mb-1.5 block text-sm font-medium">Name</label>
@@ -79,9 +72,8 @@ export function ContactForm() {
           <AlertCircle className="size-4" aria-hidden /> {state.message}
         </p>
       )}
-      <button type="submit" disabled={pending} className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-lg shadow-brand-blue/25 hover:bg-primary/90 disabled:opacity-60">
-        {pending ? <Loader2 className="size-4 animate-spin" aria-hidden /> : <Send className="size-4" aria-hidden />}
-        Send message
+      <button type="submit" className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-lg shadow-brand-blue/25 hover:bg-primary/90">
+        <Send className="size-4" aria-hidden /> Send message
       </button>
     </form>
   );

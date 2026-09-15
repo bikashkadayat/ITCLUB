@@ -26,14 +26,14 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
   const e = getEvent(slug);
   if (!e) notFound();
   const dept = departments.find((d) => d.slug === e.department);
-  const startsAt = e.date ? new Date(e.date) : null;
-  const upcoming = startsAt ? startsAt > new Date() : false;
+  const startsAt = new Date(e.date);
+  const upcoming = e.status === "upcoming";
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Event",
     name: e.title,
     description: e.summary,
-    ...(startsAt ? { startDate: startsAt.toISOString() } : {}),
+    startDate: e.date,
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     location: { "@type": "Place", name: e.venue, address: "New Baneshwor, Kathmandu, Nepal" },
@@ -48,17 +48,16 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           <Breadcrumbs items={[{ label: "Events", href: "/events" }, { label: e.title }]} className="mb-6" />
           <div className="flex flex-wrap items-center gap-2">
             <span className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-secondary-foreground">{e.type}</span>
-            {dept && <span className="rounded-full border border-border px-3 py-1 text-xs">{dept.name}</span>}
-            {e.tentative && <span className="rounded-full bg-accent px-3 py-1 text-xs text-accent-foreground">Tentative date</span>}
+            {(dept || e.host) && <span className="rounded-full border border-border px-3 py-1 text-xs">{dept?.name ?? e.host}</span>}
             {e.registrationOpen && <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-600">Registration open</span>}
           </div>
           <h1 className="mt-5 max-w-4xl text-balance text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl">{e.title}</h1>
           <p className="mt-5 max-w-2xl text-lg text-muted-foreground">{e.summary}</p>
           <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-2 text-sm">
-            <div className="flex items-center gap-2"><CalendarDays className="size-4 text-primary" /><dd>{startsAt ? `${formatDate(startsAt.toISOString())} · ${formatTime(startsAt.toISOString())}` : e.schedule ?? "Date to be announced"}</dd></div>
+            <div className="flex items-center gap-2"><CalendarDays className="size-4 text-primary" /><dd>{formatDate(e.date)} · {formatTime(e.date)}</dd></div>
             <div className="flex items-center gap-2"><MapPin className="size-4 text-primary" /><dd>{e.venue}</dd></div>
           </dl>
-          {startsAt && upcoming && <Countdown target={startsAt.toISOString()} className="mt-6" />}
+          {upcoming && <Countdown target={startsAt.toISOString()} className="mt-6" />}
           <div className="mt-8">
             <EventActions title={e.title} open={e.registrationOpen} />
           </div>

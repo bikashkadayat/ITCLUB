@@ -127,7 +127,7 @@ export default function MembershipPage() {
       <section id="apply" className="section bg-muted/40 scroll-mt-24" aria-labelledby="apply-heading">
         <div className="container-x grid grid-cols-1 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <SectionHeading eyebrow="Online membership form" title={<span id="apply-heading">Apply for membership.</span>} description="This is the official membership application. It goes to the Executive Committee, who review applications after each intake and reply by email. Keep the reference number you receive: it lets you check your status and, once approved, open your digital membership card." />
+            <SectionHeading eyebrow="Online membership form" title={<span id="apply-heading">Apply for membership.</span>} description="This is the official membership application. When you submit, WhatsApp opens with your application ready to send to the Executive Committee, who review applications after each intake and reply on WhatsApp. Keep the reference number you receive: it lets you check your status and, once approved, open your digital membership card." />
           </div>
           <Reveal className="rounded-3xl border border-border/80 bg-card p-6 sm:p-8 lg:col-span-8">
             <MembershipForm />

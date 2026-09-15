@@ -50,7 +50,7 @@ export function Logo({ variant = "lockup", className, priority, href = "/" }: Lo
           <span className="font-display text-[15px] font-semibold tracking-wide text-brand-blue dark:text-white sm:text-base">
             TECH <span className="text-brand-coral">&amp;</span> AI
           </span>
-          <span className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.3em] text-brand-red dark:text-brand-coral-light">
+          <span className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.3em] text-brand-red-deep dark:text-brand-coral-light">
             Innovation Club
           </span>
           <span className="sr-only">, home</span>

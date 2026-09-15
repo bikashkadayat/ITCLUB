@@ -11,7 +11,7 @@ import { primaryNav, type NavEntry } from "@/data/navigation";
 import { Logo } from "@/components/shared/logo";
 import { ThemeToggle } from "./theme-toggle";
 import { SearchButton } from "./search-command";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger, SheetDescription, SheetClose } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger, SheetDescription } from "@/components/ui/sheet";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -25,6 +25,7 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
   useEffect(() => setOpen(false), [pathname]);
+  const closeMenu = () => setOpen(false);
 
   const isActive = (entry: NavEntry) => {
     if (entry.href === "/") return pathname === "/";
@@ -66,17 +67,17 @@ export function Navbar() {
                 <SheetDescription className="sr-only">Site navigation links</SheetDescription>
                 <nav aria-label="Mobile" className="flex flex-1 flex-col overflow-y-auto px-3 py-3">
                   {primaryNav.map((entry) => (
-                    <MobileItem key={entry.label} entry={entry} pathname={pathname} />
+                    <MobileItem key={entry.label} entry={entry} pathname={pathname} onNavigate={closeMenu} />
                   ))}
-                  <SheetClose render={<Link href="/members" />} className="mt-1 rounded-xl px-3 py-3 text-base font-medium hover:bg-muted">
+                  <Link href="/members" onClick={closeMenu} className="mt-1 rounded-xl px-3 py-3 text-base font-medium hover:bg-muted">
                     Member area
-                  </SheetClose>
+                  </Link>
                 </nav>
                 <div className="space-y-3 border-t border-border p-5">
                   <SearchButton className="w-full justify-center" />
-                  <SheetClose render={<Link href="/membership" />} className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-primary text-sm font-medium text-primary-foreground">
+                  <Link href="/membership" onClick={closeMenu} className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-primary text-sm font-medium text-primary-foreground">
                     Become a Member <ArrowRight className="size-4" aria-hidden />
-                  </SheetClose>
+                  </Link>
                   <p className="text-center text-xs text-muted-foreground">Official student club of {siteConfig.college.name}</p>
                 </div>
               </SheetContent>
@@ -141,14 +142,15 @@ function NavItem({ entry, active }: { entry: NavEntry; active: boolean }) {
   );
 }
 
-function MobileItem({ entry, pathname }: { entry: NavEntry; pathname: string }) {
+/** Mobile links are real anchors; they close the controlled Sheet on click instead of wrapping Link in SheetClose (which expects a native <button>). */
+function MobileItem({ entry, pathname, onNavigate }: { entry: NavEntry; pathname: string; onNavigate: () => void }) {
   const [open, setOpen] = useState(false);
   const active = entry.href === "/" ? pathname === "/" : Boolean(entry.href && entry.href !== "/" && pathname.startsWith(entry.href));
   if (!entry.children) {
     return (
-      <SheetClose render={<Link href={entry.href!} />} className={cn("rounded-xl px-3 py-3 text-base font-medium hover:bg-muted", active && "bg-secondary text-secondary-foreground")}>
+      <Link href={entry.href!} onClick={onNavigate} aria-current={active ? "page" : undefined} className={cn("rounded-xl px-3 py-3 text-base font-medium hover:bg-muted", active && "bg-secondary text-secondary-foreground")}>
         {entry.label}
-      </SheetClose>
+      </Link>
     );
   }
   return (
@@ -162,14 +164,14 @@ function MobileItem({ entry, pathname }: { entry: NavEntry; pathname: string }) 
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }} className="overflow-hidden">
             <div className="mb-1 ml-3 border-l border-border pl-2">
               {entry.href && (
-                <SheetClose render={<Link href={entry.href} />} className="block rounded-lg px-3 py-2 text-sm text-foreground/80 hover:bg-muted">
+                <Link href={entry.href} onClick={onNavigate} className="block rounded-lg px-3 py-2 text-sm text-foreground/80 hover:bg-muted">
                   Overview
-                </SheetClose>
+                </Link>
               )}
               {entry.children.map((c) => (
-                <SheetClose key={c.href + c.label} render={<Link href={c.href} />} className="block rounded-lg px-3 py-2 text-sm text-foreground/80 hover:bg-muted">
+                <Link key={c.href + c.label} href={c.href} onClick={onNavigate} className="block rounded-lg px-3 py-2 text-sm text-foreground/80 hover:bg-muted">
                   {c.label}
-                </SheetClose>
+                </Link>
               ))}
             </div>
           </motion.div>

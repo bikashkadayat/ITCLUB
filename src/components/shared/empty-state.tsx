@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { ArrowRight, type LucideIcon } from "lucide-react";
 
 export function EmptyState({
@@ -26,9 +26,9 @@ export function EmptyState({
         <h3 className="text-lg font-semibold">{title}</h3>
         <p className="mt-2 text-sm text-muted-foreground">{description}</p>
         {action && (
-          <Button size="lg" className="mt-6 rounded-full px-5" render={<Link href={action.href} />}>
+          <Link href={action.href} className={cn(buttonVariants({ size: "lg" }), "mt-6 rounded-full px-5")}>
             {action.label} <ArrowRight data-icon="inline-end" />
-          </Button>
+          </Link>
         )}
       </div>
     </div>

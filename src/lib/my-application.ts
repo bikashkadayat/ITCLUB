@@ -4,7 +4,7 @@ export interface MyApplication {
   name: string;
   email: string;
   submittedAt: string;
-  delivered: "endpoint" | "mailto" | "download" | "none";
+  delivered: "whatsapp" | "download" | "none";
 }
 
 const KEY = "taic-my-application";
@@ -36,9 +36,15 @@ export function saveMyMemberId(id: string) {
   } catch {}
 }
 
-/** TAIC-APP-YYYYMMDD-XXXX — generated in the browser at submission time. */
+/**
+ * TAIC-APP-YYYYMMDD-XXXX — generated in the browser at submission time, using the
+ * Nepal calendar date. There is no server to hand out sequential numbers, so the
+ * suffix is four random characters from an unambiguous alphabet.
+ */
 export function newApplicationRef(date = new Date()) {
-  const ymd = date.toISOString().slice(0, 10).replace(/-/g, "");
+  const parts = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kathmandu", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(date);
+  const get = (t: string) => parts.find((p) => p.type === t)?.value ?? "";
+  const ymd = `${get("year")}${get("month")}${get("day")}`;
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   const bytes = new Uint8Array(4);
   crypto.getRandomValues(bytes);
