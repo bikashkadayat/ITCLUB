@@ -74,9 +74,6 @@ export const siteConfig = {
       { label: "Projects", href: "/projects" },
       { label: "Resource Center", href: "/resources" },
       { label: "Blog & News", href: "/blog" },
-      { label: "Member Area", href: "/members" },
-      { label: "Membership Status", href: "/membership/status" },
-      { label: "Committee Tools", href: "/admin" },
     ],
   },
 } as const;

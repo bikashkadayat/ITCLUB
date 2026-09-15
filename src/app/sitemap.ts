@@ -10,7 +10,7 @@ export const dynamic = "force-static";
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteConfig.url;
   const now = new Date();
-  const staticRoutes = ["", "/about", "/departments", "/committee", "/membership", "/membership/status", "/membership/card", "/members", "/verify", "/events", "/projects", "/gallery", "/blog", "/contact", "/constitution", "/resources"];
+  const staticRoutes = ["", "/about", "/departments", "/committee", "/membership", "/events", "/projects", "/gallery", "/blog", "/contact", "/constitution", "/resources"];
   return [
     ...staticRoutes.map((r) => ({ url: `${base}${r}`, lastModified: now, changeFrequency: "weekly" as const, priority: r === "" ? 1 : 0.8 })),
     ...departments.map((d) => ({ url: `${base}/departments/${d.slug}`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.7 })),

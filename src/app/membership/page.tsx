@@ -19,12 +19,8 @@ export default function MembershipPage() {
       <PageHero
         eyebrow="Membership"
         crumbs={[{ label: "Membership" }]}
-        title={
-          <>
-            Everyone is welcome. <span className="gradient-text">Bring your curiosity.</span>
-          </>
-        }
-        description={membership.eligibility}
+        title={<>Become a <span className="gradient-text">Member</span></>}
+        description="Join a community of students passionate about technology, innovation, learning, and collaboration."
       >
         <a href="#apply" className="inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-lg shadow-brand-blue/25 hover:bg-primary/90">
           Become a Member
@@ -34,14 +30,13 @@ export default function MembershipPage() {
       {/* Process */}
       <section className="section" aria-labelledby="process-heading">
         <div className="container-x">
-          <SectionHeading eyebrow="Application process" title={<span id="process-heading">Joining takes four simple steps.</span>} />
-          <Stagger as="ol" className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+          <SectionHeading eyebrow="How it works" title={<span id="process-heading">Four simple steps.</span>} />
+          <Stagger as="ol" className="mt-12 grid grid-cols-2 gap-5 lg:grid-cols-4">
             {membership.process.map((s) => (
               <StaggerItem key={s.step} as="li">
                 <div className="relative h-full rounded-3xl border border-border/80 bg-card p-6 card-hover">
                   <span className="font-display text-4xl font-semibold text-primary/30">{s.step}</span>
                   <h3 className="mt-3 text-lg font-semibold">{s.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.text}</p>
                 </div>
               </StaggerItem>
             ))}
@@ -127,7 +122,7 @@ export default function MembershipPage() {
       <section id="apply" className="section bg-muted/40 scroll-mt-24" aria-labelledby="apply-heading">
         <div className="container-x grid grid-cols-1 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <SectionHeading eyebrow="Online membership form" title={<span id="apply-heading">Apply for membership.</span>} description="This is the official membership application. When you submit, WhatsApp opens with your application ready to send to the Executive Committee, who review applications after each intake and reply on WhatsApp. Keep the reference number you receive: it lets you check your status and, once approved, open your digital membership card." />
+            <SectionHeading title={<span id="apply-heading">Membership Application</span>} description="Fill out the form below and send your application through WhatsApp." />
           </div>
           <Reveal className="rounded-3xl border border-border/80 bg-card p-6 sm:p-8 lg:col-span-8">
             <MembershipForm />

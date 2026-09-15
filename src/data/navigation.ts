@@ -21,7 +21,6 @@ export const primaryNav: NavEntry[] = [
       { label: "Vision & Mission", href: "/about", description: "Why the club exists and where it is going" },
       { label: "Leadership Team", href: "/committee", description: "Executive Committee and Faculty Advisor" },
       { label: "Constitution", href: "/constitution", description: "The rules we govern ourselves by" },
-      { label: "Member Area", href: "/members", description: "Look up your membership, status and card" },
     ],
   },
   {

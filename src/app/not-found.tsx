@@ -2,12 +2,10 @@ import Link from "next/link";
 import { ArrowLeft, Compass } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { RouteRecovery } from "@/components/layout/route-recovery";
 
 export default function NotFound() {
   return (
     <section className="relative flex min-h-[80vh] items-center overflow-hidden">
-      <RouteRecovery />
       <div className="pointer-events-none absolute inset-0 bg-grid mask-fade-b opacity-60" aria-hidden />
       <div className="container-x relative py-32 text-center">
         <p className="font-mono text-sm text-primary">404 · route not found</p>

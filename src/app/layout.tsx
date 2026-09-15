@@ -7,7 +7,6 @@ import { Providers } from "@/components/layout/providers";
 import { SiteHeader } from "@/components/layout/site-header";
 import { Footer } from "@/components/layout/footer";
 import { BackToTop } from "@/components/layout/back-to-top";
-import { ChromeGate } from "@/components/layout/chrome-gate";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const display = Playfair_Display({ subsets: ["latin"], variable: "--font-display", display: "swap" });
@@ -74,16 +73,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           >
             Skip to content
           </a>
-          <ChromeGate>
             <SiteHeader />
-          </ChromeGate>
           <main id="main" className="flex-1">
             {children}
           </main>
-          <ChromeGate>
             <Footer />
             <BackToTop />
-          </ChromeGate>
         </Providers>
       </body>
     </html>

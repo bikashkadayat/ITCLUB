@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, ArrowRight, ChevronDown, IdCard } from "lucide-react";
+import { Menu, ArrowRight, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/data/site";
 import { primaryNav, type NavEntry } from "@/data/navigation";
@@ -48,9 +48,6 @@ export function Navbar() {
           <div className="flex items-center gap-2">
             <SearchButton className="hidden md:inline-flex lg:hidden xl:inline-flex" label={false} />
             <ThemeToggle />
-            <Link href="/members" className="hidden size-9 items-center justify-center rounded-full border border-border/80 bg-card/70 text-foreground/80 transition-colors hover:bg-muted md:inline-flex lg:hidden xl:inline-flex" aria-label="Member area" title="Member area">
-              <IdCard className="size-4" aria-hidden />
-            </Link>
             <Link href="/membership" className="group hidden h-9 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 md:inline-flex">
               Become a Member <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
             </Link>
@@ -69,9 +66,6 @@ export function Navbar() {
                   {primaryNav.map((entry) => (
                     <MobileItem key={entry.label} entry={entry} pathname={pathname} onNavigate={closeMenu} />
                   ))}
-                  <Link href="/members" onClick={closeMenu} className="mt-1 rounded-xl px-3 py-3 text-base font-medium hover:bg-muted">
-                    Member area
-                  </Link>
                 </nav>
                 <div className="space-y-3 border-t border-border p-5">
                   <SearchButton className="w-full justify-center" />

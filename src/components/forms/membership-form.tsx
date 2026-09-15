@@ -2,20 +2,17 @@
 
 /**
  * Membership application. Runs entirely in the browser (GitHub Pages has no
- * server): validates, assigns an application reference (TAIC-APP-YYYYMMDD-XXXX),
- * keeps the applicant's own copy in this browser, then hands the application to
- * WhatsApp through a wa.me link addressed to the Executive Committee. A
- * downloadable .json copy (importable by the committee tool) is offered as backup.
+ * server, database or email): validates, assigns an application reference
+ * (TAIC-APP-YYYYMMDD-XXXX) and opens WhatsApp with the full application addressed
+ * to the Executive Committee. Nothing is sent anywhere else.
  */
 import { useEffect, useRef, useState } from "react";
-import { CheckCircle2, AlertCircle, Send, Download } from "lucide-react";
+import { CheckCircle2, AlertCircle, Send } from "lucide-react";
 import { departments } from "@/data/departments";
 import { membership } from "@/data/membership";
 import { DepartmentIcon } from "@/components/shared/department-icon";
 import { applicationSchema, zodErrors } from "@/lib/validation";
-import { whatsappUrl, membershipMessage, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
-import { newApplicationRef, saveMyApplication } from "@/lib/my-application";
-import { downloadText } from "@/lib/club-store";
+import { whatsappUrl, membershipMessage, newApplicationRef, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 
 const field = "h-11 w-full rounded-xl border border-border bg-background px-4 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/25 aria-invalid:border-destructive";
@@ -24,7 +21,7 @@ export function MembershipForm() {
   const [selected, setSelected] = useState<string[]>([]);
   const [errors, setErrors] = useState<Record<string, string[]>>({});
   const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null);
-  const [ready, setReady] = useState<{ ref: string; json: string; url: string } | null>(null);
+  const [ready, setReady] = useState<{ ref: string; url: string } | null>(null);
   const toggle = (slug: string) => setSelected((s) => (s.includes(slug) ? s.filter((x) => x !== slug) : s.length >= 2 ? s : [...s, slug]));
   const err = (k: string) => errors[k]?.[0];
 
@@ -51,16 +48,13 @@ export function MembershipForm() {
     setErrors({});
     const d = parsed.data;
     const ref = newApplicationRef();
-    const submittedAt = new Date().toISOString();
     const deptNames = d.departments.map((slug) => departments.find((x) => x.slug === slug)?.name ?? slug);
-    const record = { form: "membership", ref, submittedAt, name: d.name, email: d.email, phone: d.phone, program: d.program, semester: d.semester, departments: d.departments, departmentNames: deptNames.join(", "), skills: (d.skills ?? "").split(",").map((s) => s.trim()).filter(Boolean), motivation: d.motivation };
-    const json = JSON.stringify(record, null, 2);
-    const url = whatsappUrl(
-      membershipMessage({ name: d.name, email: d.email, phone: d.phone, program: d.program, semester: `${d.semester} Semester`, department: deptNames.join(", "), skills: d.skills ?? "", motivation: d.motivation, ref })
-    );
-    saveMyApplication({ ref, name: d.name, email: d.email, submittedAt, delivered: "whatsapp" });
+    const message = membershipMessage({ name: d.name, email: d.email, phone: d.phone, program: d.program, semester: `${d.semester} Semester`, department: deptNames.join(", "), skills: d.skills ?? "", motivation: d.motivation, ref });
+    const url = whatsappUrl(message);
     setMessage(null);
-    setReady({ ref, json, url });
+    setReady({ ref, url });
+    // Opens WhatsApp straight away; this runs inside the submit gesture so browsers allow it.
+    window.open(url, "_blank", "noopener,noreferrer");
   }
 
   if (ready) return <ReadyToSend ready={ready} />;
@@ -68,11 +62,11 @@ export function MembershipForm() {
   return (
     <form onSubmit={onSubmit} className="space-y-7" noValidate>
       <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
-      <ol className="grid grid-cols-1 gap-2 rounded-2xl border border-border/80 bg-muted/40 p-3 text-xs text-muted-foreground sm:grid-cols-3">
-        {[["1", "Fill in the form", "About three minutes. You get a reference number instantly."], ["2", "Send via WhatsApp", "Your application opens in WhatsApp, ready to send to the Executive Committee."], ["3", "Status & card", "Check your status with the reference; approved members get a Member ID and digital card."]].map(([n, t, d]) => (
+      <ol className="grid grid-cols-1 gap-2 rounded-2xl border border-border/80 bg-muted/40 p-3 text-xs text-muted-foreground sm:grid-cols-4">
+        {[["1", "Fill Application Form", ""], ["2", "Send Application via WhatsApp", ""], ["3", "Executive Committee Reviews", ""], ["4", "Receive Confirmation", ""]].map(([n, t, d]) => (
           <li key={n} className="flex gap-2.5 rounded-xl bg-card px-3 py-2.5">
             <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">{n}</span>
-            <span><span className="block font-medium text-foreground">{t}</span>{d}</span>
+            <span><span className="block font-medium text-foreground">{t}</span>{d || null}</span>
           </li>
         ))}
       </ol>
@@ -137,32 +131,27 @@ export function MembershipForm() {
         <button type="submit" className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
           <Send className="size-4" aria-hidden /> Submit application
         </button>
-        <p className="text-xs text-muted-foreground">You receive a reference number instantly, then send the application to the Executive Committee on WhatsApp ({WHATSAPP_DISPLAY}). Decisions are shared on WhatsApp after each intake.</p>
+        <p className="text-xs text-muted-foreground">WhatsApp opens with your application addressed to the Executive Committee ({WHATSAPP_DISPLAY}).</p>
       </div>
     </form>
   );
 }
 
-/** Success screen shown before WhatsApp opens. The button is the user gesture that launches wa.me (popup blockers allow it). */
-function ReadyToSend({ ready }: { ready: { ref: string; json: string; url: string } }) {
+/** Shown after submit. WhatsApp has already been opened in a new tab; the button re-opens it if the tab was blocked or closed. */
+function ReadyToSend({ ready }: { ready: { ref: string; url: string } }) {
   const btn = useRef<HTMLAnchorElement>(null);
   useEffect(() => btn.current?.focus(), []);
   return (
     <div className="rounded-3xl border border-primary/30 bg-secondary/50 p-6 text-center sm:p-10" role="status" aria-live="polite">
       <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600"><CheckCircle2 className="size-7" aria-hidden /></span>
       <h3 className="mt-5 text-2xl font-semibold tracking-tight">Your membership information is ready to be sent to the Executive Committee via WhatsApp.</h3>
-      <p className="mt-3 text-sm text-muted-foreground">WhatsApp opens with your full application pre-filled and addressed to the club ({WHATSAPP_DISPLAY}). Press send in WhatsApp to deliver it.</p>
+      <p className="mt-3 text-sm text-muted-foreground">Press send in WhatsApp to deliver it. If WhatsApp did not open, use the button below.</p>
       <a ref={btn} href={ready.url} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] px-7 text-sm font-semibold text-white shadow-lg shadow-[#25D366]/30 transition-colors hover:bg-[#1ebe5b] focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-[#25D366]/40">
         <Send className="size-4" aria-hidden /> Send Via WhatsApp
       </a>
-      <div className="mt-8 rounded-2xl border border-border/80 bg-card p-4 text-left text-sm">
-        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Your application reference</p>
+      <div className="mt-8 rounded-2xl border border-border/80 bg-card p-4 text-sm">
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Application reference</p>
         <p className="mt-1 font-mono text-lg tracking-wider text-primary">{ready.ref}</p>
-        <p className="mt-2 text-muted-foreground">It is included in the WhatsApp message. Keep it to check your status and, once approved, open your digital membership card.</p>
-        <div className="mt-3 flex flex-wrap items-center gap-2">
-          <button type="button" onClick={() => downloadText(`${ready.ref}.json`, ready.json)} className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border bg-background px-3.5 text-xs font-medium text-foreground hover:bg-muted"><Download className="size-3.5" aria-hidden /> Download a copy of your application</button>
-          <a href={`/membership/status/?ref=${ready.ref}`} className="inline-flex h-9 items-center rounded-full bg-primary px-3.5 text-xs font-medium text-primary-foreground hover:bg-primary/90">Check status later →</a>
-        </div>
       </div>
     </div>
   );

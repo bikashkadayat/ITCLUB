@@ -1,22 +1,17 @@
-import { Users, Layers, CalendarDays, BookOpen, GraduationCap } from "lucide-react";
+import { Layers, CalendarDays, BookOpen, GraduationCap } from "lucide-react";
 import { departments } from "@/data/departments";
 import { upcomingEvents } from "@/data/events";
-import { committee } from "@/data/committee";
-import { publishedRegistry } from "@/lib/registry";
 import { Counter } from "@/components/shared/counter";
 import { Stagger, StaggerItem } from "@/components/shared/reveal";
 
 /** Figures derived from the club's own data (departments, scheduled events, learning areas and activities, founding team). */
-export function StatsCards({ members = publishedRegistry.members.filter((m) => m.status === "ACTIVE").length }: { members?: number }) {
+export function StatsCards() {
   const opportunities = departments.reduce((n, d) => n + d.learningAreas.length + d.activities.length + d.projects.length, 0);
-  const showMembers = (members ?? 0) >= 25;
   const stats = [
-    showMembers
-      ? { icon: Users, value: members!, suffix: "+", label: "Active members", hint: "Students building together across three faculties" }
-      : { icon: GraduationCap, value: 3, suffix: "", label: "Faculties united", hint: `Computer science, management and law · ${committee.length} founding leaders` },
-    { icon: Layers, value: departments.length, suffix: "", label: "Specialized departments", hint: "AI, software, security, problem solving, media, events" },
-    { icon: CalendarDays, value: upcomingEvents.length, suffix: "", label: "Upcoming activities", hint: "Orientation, roadmap discussion and our first workshop" },
-    { icon: BookOpen, value: opportunities, suffix: "+", label: "Learning opportunities", hint: "Learning tracks, activities and projects" },
+    { icon: GraduationCap, value: 3, suffix: "", label: "Faculties united" },
+    { icon: Layers, value: departments.length, suffix: "", label: "Specialized departments" },
+    { icon: CalendarDays, value: upcomingEvents.length, suffix: "", label: "Upcoming activities" },
+    { icon: BookOpen, value: opportunities, suffix: "+", label: "Learning opportunities" },
   ];
   return (
     <section className="section pb-0" aria-label="Club in numbers">

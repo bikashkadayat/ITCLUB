@@ -27,10 +27,6 @@ const pages: SearchItem[] = [
   { id: "blog", title: "Blog & News", href: "/blog", group: "Pages" },
   { id: "resources", title: "Resource Center", subtitle: "Documents and learning tracks", href: "/resources", group: "Pages" },
   { id: "constitution", title: "Constitution & Bylaws", href: "/constitution", group: "Pages" },
-  { id: "members", title: "Member Area", subtitle: "Look up your membership by Member ID", href: "/members", group: "Pages", keywords: "member id card status" },
-  { id: "status", title: "Membership status", subtitle: "Check an application by reference number", href: "/membership/status", group: "Pages", keywords: "application reference" },
-  { id: "card", title: "Membership card", subtitle: "Preview, download and print your card", href: "/membership/card", group: "Pages", keywords: "qr pdf" },
-  { id: "verify", title: "Verify a member", subtitle: "Scan or enter a Member ID", href: "/verify", group: "Pages", keywords: "qr verification" },
   { id: "contact", title: "Contact", subtitle: "New Baneshwor, Kathmandu", href: "/contact", group: "Pages", keywords: "map address email" },
 ];
 

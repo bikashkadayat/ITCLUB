@@ -2,26 +2,10 @@ export const membership = {
   eligibility:
     "Any student enrolled in good standing at Tech AI College of Management & Law is eligible to become a member — across the computer science, management and law faculties.",
   process: [
-    {
-      step: "01",
-      title: "Submit the intake form",
-      text: "An eligible student submits the official membership application online. The Executive Committee is notified immediately.",
-    },
-    {
-      step: "02",
-      title: "Choose your departments",
-      text: "Select up to two primary departments aligned with your learning tracks or engineering interests.",
-    },
-    {
-      step: "03",
-      title: "Executive Committee review",
-      text: "Membership becomes active upon acceptance of the form by the Executive Committee.",
-    },
-    {
-      step: "04",
-      title: "Stay active",
-      text: "Attend the mandatory bi-weekly assemblies and contribute to at least one departmental project delivery cycle per semester.",
-    },
+    { step: "01", title: "Fill Application Form" },
+    { step: "02", title: "Send Application via WhatsApp" },
+    { step: "03", title: "Executive Committee Reviews" },
+    { step: "04", title: "Receive Confirmation" },
   ],
   benefits: [
     { title: "Workshops, projects & events", text: "Participate in the club’s workshops, projects, events and activities across six departments." },
