@@ -76,11 +76,11 @@ function ProfileCard({ member: m, variant = "officer" }: { member: CommitteeMemb
           {variant === "advisor" && <span className="absolute -bottom-1 -right-1 flex size-8 items-center justify-center rounded-full bg-brand-coral text-white shadow" title="Faculty"><GraduationCap className="size-4" aria-hidden /></span>}
         </div>
         <div className="min-w-0 flex-1">
-          <p className={cn("text-[11px] font-semibold uppercase tracking-[0.22em]", variant === "advisor" ? "text-brand-coral" : "text-primary")}>{role}</p>
+          <p className={cn("text-xs lg:text-[11px] font-semibold uppercase tracking-[0.22em]", variant === "advisor" ? "text-brand-coral" : "text-primary")}>{role}</p>
           <h3 className={cn("mt-1 font-medium", featured ? "text-2xl sm:text-3xl" : "text-xl")}>{m.name}</h3>
           <p className={cn("mt-3 line-clamp-2 text-sm leading-relaxed text-muted-foreground", featured && "max-w-xl")}>{m.bio}</p>
           <div className={cn("mt-5 flex flex-wrap items-center justify-center gap-2", featured && "sm:justify-start")}>
-            <MemberDialog member={m} className="inline-flex h-9 items-center gap-1.5 rounded-full bg-primary px-4 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+            <MemberDialog member={m} className="inline-flex h-11 items-center gap-1.5 rounded-full bg-primary px-5 text-sm font-medium sm:h-9 sm:px-4 sm:text-xs text-primary-foreground transition-colors hover:bg-primary/90">
               Full profile <ArrowUpRight className="size-3.5" aria-hidden />
             </MemberDialog>
             {m.linkedin && (

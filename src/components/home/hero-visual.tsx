@@ -33,7 +33,7 @@ export function HeroVisual() {
           <defs><linearGradient id="net" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#8f93ff" stopOpacity="0.9" /><stop offset="1" stopColor="#ff8a8a" stopOpacity="0.7" /></linearGradient></defs>
         </svg>
         {/* status chips inside the frame */}
-        <div className="absolute right-5 top-5 flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[11px] font-medium text-white backdrop-blur">
+        <div className="absolute right-5 top-5 flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs lg:text-[11px] font-medium text-white backdrop-blur">
           <span className="relative flex size-2"><span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" /><span className="relative inline-flex size-2 rounded-full bg-emerald-400" /></span>
           Innovation lab · Tech AI College
         </div>

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Eye, Target, Lightbulb, Building2, Scale, GraduationCap } from "lucide-react";
+import { ArrowRight, Eye, Target, Wrench, FlaskConical, Puzzle, Briefcase, Users, Globe, Building2, Scale, GraduationCap } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 import { club } from "@/data/club";
 import { timeline } from "@/data/timeline";
@@ -14,6 +14,8 @@ export const metadata = pageMetadata({
   description: "Why the Tech & AI Innovation Club was founded, its vision, mission, objectives, expected impact and establishment journey at Tech AI College of Management & Law.",
   path: "/about",
 });
+
+const objectiveIcons = [Wrench, FlaskConical, Puzzle, Briefcase, Users, Globe];
 
 const faculties = [
   { Icon: GraduationCap, label: "Computer Science" },
@@ -81,13 +83,13 @@ export default function AboutPage() {
       <section className="section" aria-labelledby="objectives-heading">
         <div className="container-x">
           <SectionHeading eyebrow="Objectives" align="center" title={<span id="objectives-heading">Six objectives.</span>} />
-          <Stagger className="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-3">
+          <Stagger className="mt-12 grid grid-cols-1 gap-3 sm:mt-16 sm:grid-cols-3 sm:gap-4">
             {club.objectives.map((o, i) => (
               <StaggerItem key={o.title}>
-                <div className="group flex h-full flex-col items-center gap-4 rounded-3xl border border-border/80 bg-card px-5 py-8 text-center card-hover">
-                  <span className="flex size-12 items-center justify-center rounded-2xl bg-secondary text-primary transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-[-4deg]"><Lightbulb className="size-5" aria-hidden /></span>
-                  <h3 className="text-sm font-semibold sm:text-base">{o.title}</h3>
-                  <span className="mt-auto font-mono text-[11px] text-muted-foreground">0{i + 1}</span>
+                <div className="group flex h-full items-center gap-4 rounded-3xl border border-border/80 bg-card px-5 py-4 card-hover sm:flex-col sm:py-8 sm:text-center">
+                  <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-blue to-brand-coral text-white shadow-md transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-[-4deg]">{(() => { const Icon = objectiveIcons[i % objectiveIcons.length]; return <Icon className="size-5" aria-hidden />; })()}</span>
+                  <h3 className="text-base font-semibold">{o.title}</h3>
+                  <span className="ml-auto font-mono text-xs text-muted-foreground sm:ml-0 sm:mt-auto lg:text-[11px]">0{i + 1}</span>
                 </div>
               </StaggerItem>
             ))}

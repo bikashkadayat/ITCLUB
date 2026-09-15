@@ -30,7 +30,7 @@ export function ProjectsPreview() {
                   <div className="flex items-center gap-2 text-primary">
                     <GitBranch className="size-4" aria-hidden />
                     <span className="truncate font-semibold">{p.name}</span>
-                    <span className="ml-auto rounded-full border border-border px-2 py-0.5 text-[10px] uppercase tracking-wider text-muted-foreground">{p.visibility}</span>
+                    <span className="ml-auto rounded-full border border-border px-2 py-0.5 text-xs lg:text-[10px] uppercase tracking-wider text-muted-foreground">{p.visibility}</span>
                   </div>
                   <p className="mt-3 line-clamp-3 font-sans text-sm leading-relaxed text-muted-foreground">{p.description}</p>
                   <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-1 pt-5 text-xs text-muted-foreground">

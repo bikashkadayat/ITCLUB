@@ -25,7 +25,7 @@ export function PageHero({ eyebrow, title, description, crumbs, children, classN
         style={{ background: "radial-gradient(closest-side, var(--glow-coral), transparent)" }}
         aria-hidden
       />
-      <div className="container-x relative pb-14 pt-32 sm:pb-20 sm:pt-40">
+      <div className="container-x relative pb-12 pt-36 sm:pb-20 sm:pt-40">
         {crumbs && <Breadcrumbs items={crumbs} className="mb-6" />}
         <Reveal className="max-w-3xl">
           {eyebrow && (
@@ -34,8 +34,8 @@ export function PageHero({ eyebrow, title, description, crumbs, children, classN
               {eyebrow}
             </p>
           )}
-          <h1 className="text-balance text-4xl font-medium leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">{title}</h1>
-          {description && <p className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground">{description}</p>}
+          <h1 className="text-balance text-[2.25rem] font-medium leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">{title}</h1>
+          {description && <p className="mt-5 max-w-2xl text-pretty text-[17px] leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg">{description}</p>}
         </Reveal>
         {children && <div className="mt-8">{children}</div>}
       </div>

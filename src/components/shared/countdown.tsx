@@ -48,7 +48,7 @@ export function Countdown({ target, className, compact = false }: { target: stri
           <span className={cn("font-mono tabular-nums font-semibold leading-none text-foreground", compact ? "text-lg" : "text-2xl sm:text-3xl")}>
             {t ? String(c.value).padStart(2, "0") : "--"}
           </span>
-          <span className="mt-1 text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground">{c.label}</span>
+          <span className="mt-1 text-xs lg:text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground">{c.label}</span>
         </div>
       ))}
     </div>

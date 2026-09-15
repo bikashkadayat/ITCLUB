@@ -73,7 +73,7 @@ export default async function DepartmentPage({ params }: { params: Promise<{ slu
                     <li key={p.title} className="rounded-2xl border border-border/80 bg-background p-4">
                       <div className="flex items-center justify-between gap-3">
                         <p className="font-medium">{p.title}</p>
-                        <span className={cn("shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider", p.status === "In development" ? "bg-secondary text-secondary-foreground" : "bg-muted text-muted-foreground")}>{p.status}</span>
+                        <span className={cn("shrink-0 rounded-full px-2 py-0.5 text-xs lg:text-[10px] font-semibold uppercase tracking-wider", p.status === "In development" ? "bg-secondary text-secondary-foreground" : "bg-muted text-muted-foreground")}>{p.status}</span>
                       </div>
                       <p className="mt-1.5 text-sm text-muted-foreground">{p.description}</p>
                     </li>

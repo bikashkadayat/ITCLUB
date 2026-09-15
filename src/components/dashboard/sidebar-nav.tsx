@@ -27,7 +27,7 @@ export function SidebarNav({ groups, horizontal = false }: { groups: { heading?:
           return (
             <Link key={item.href} href={item.href} className={cn("flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium", active(item) ? "bg-secondary text-secondary-foreground" : "text-muted-foreground hover:bg-muted")}>
               <Icon className="size-3.5" aria-hidden /> {item.label}
-              {item.badge ? <span className="rounded-full bg-brand-coral px-1.5 text-[10px] text-white">{item.badge}</span> : null}
+              {item.badge ? <span className="rounded-full bg-brand-coral px-1.5 text-xs lg:text-[10px] text-white">{item.badge}</span> : null}
             </Link>
           );
         })}
@@ -38,7 +38,7 @@ export function SidebarNav({ groups, horizontal = false }: { groups: { heading?:
     <nav className="space-y-5" aria-label="Dashboard">
       {groups.map((g, i) => (
         <div key={i}>
-          {g.heading && <p className="mb-1.5 px-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">{g.heading}</p>}
+          {g.heading && <p className="mb-1.5 px-3 text-xs lg:text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">{g.heading}</p>}
           <ul className="space-y-0.5">
             {g.items.map((item) => {
               const Icon = navIcons[item.icon];
@@ -47,7 +47,7 @@ export function SidebarNav({ groups, horizontal = false }: { groups: { heading?:
                   <Link href={item.href} aria-current={active(item) ? "page" : undefined} className={cn("flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium transition-colors", active(item) ? "bg-secondary text-secondary-foreground" : "text-foreground/75 hover:bg-muted hover:text-foreground")}>
                     <Icon className="size-4 shrink-0" aria-hidden />
                     <span className="flex-1 truncate">{item.label}</span>
-                    {item.badge ? <span className="rounded-full bg-brand-coral px-1.5 py-0.5 text-[10px] font-semibold text-white">{item.badge}</span> : null}
+                    {item.badge ? <span className="rounded-full bg-brand-coral px-1.5 py-0.5 text-xs lg:text-[10px] font-semibold text-white">{item.badge}</span> : null}
                   </Link>
                 </li>
               );

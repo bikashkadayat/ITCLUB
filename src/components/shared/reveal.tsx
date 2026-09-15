@@ -37,13 +37,17 @@ const itemVariants: Variants = {
   hidden: { opacity: 0, y: 22 },
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
+// Reduced motion: no stagger, no movement, instant reveal. Variants must stay defined,
+// otherwise the server-rendered "hidden" style is never animated away and items stay invisible.
+const reducedContainerVariants: Variants = { hidden: {}, show: { transition: { staggerChildren: 0, delayChildren: 0 } } };
+const reducedItemVariants: Variants = { hidden: { opacity: 0, y: 0 }, show: { opacity: 1, y: 0, transition: { duration: 0 } } };
 
 export function Stagger({ children, className, as = "div" }: { children: ReactNode; className?: string; as?: "div" | "ul" | "ol" }) {
   const reduce = useReducedMotion();
   const Comp = motion[as];
   return (
     <Comp
-      variants={reduce ? undefined : containerVariants}
+      variants={reduce ? reducedContainerVariants : containerVariants}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, margin: "-60px" }}
@@ -58,7 +62,7 @@ export function StaggerItem({ children, className, as = "div" }: { children: Rea
   const reduce = useReducedMotion();
   const Comp = motion[as];
   return (
-    <Comp variants={reduce ? undefined : itemVariants} className={className}>
+    <Comp variants={reduce ? reducedItemVariants : itemVariants} className={className}>
       {children}
     </Comp>
   );

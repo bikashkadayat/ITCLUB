@@ -67,7 +67,7 @@ export function TeamCard({ member: m, className }: { member: CommitteeMember; cl
       <div className="flex items-start justify-between gap-3">
         <AvatarInitials name={m.name} photo={m.photo} size={72} className="size-[72px] shadow-lg shadow-brand-blue/15" />
         {m.isFaculty && (
-          <span className="inline-flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-[11px] font-semibold text-accent-foreground">
+          <span className="inline-flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-xs lg:text-[11px] font-semibold text-accent-foreground">
             <GraduationCap className="size-3.5" aria-hidden /> Faculty
           </span>
         )}
@@ -77,7 +77,7 @@ export function TeamCard({ member: m, className }: { member: CommitteeMember; cl
       <p className="mt-1 text-xs text-muted-foreground">{m.program}</p>
       <ul className="mt-4 flex flex-wrap gap-1.5">
         {m.focus.map((f) => (
-          <li key={f} className="rounded-full bg-muted px-2.5 py-1 text-[11px] font-medium text-foreground/75">
+          <li key={f} className="rounded-full bg-muted px-2.5 py-1 text-xs lg:text-[11px] font-medium text-foreground/75">
             {f}
           </li>
         ))}

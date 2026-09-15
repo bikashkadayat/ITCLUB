@@ -18,7 +18,7 @@ export function MemberDialog({ member: m, className, children }: { member: Commi
         <div className="space-y-6 px-4 pb-6 text-sm">
           <p className="text-pretty leading-relaxed text-foreground/90">{m.bio}</p>
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Key responsibilities</p>
+            <p className="text-xs lg:text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Key responsibilities</p>
             <ul className="mt-3 grid gap-2 sm:grid-cols-2">
               {m.duties.map((d) => (
                 <li key={d} className="flex gap-2.5 leading-snug text-foreground/85">
@@ -28,7 +28,7 @@ export function MemberDialog({ member: m, className, children }: { member: Commi
             </ul>
           </div>
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Under the Constitution</p>
+            <p className="text-xs lg:text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Under the Constitution</p>
             <p className="mt-2 leading-relaxed text-foreground/85">{m.responsibilities}</p>
           </div>
           <ul className="flex flex-wrap gap-2">

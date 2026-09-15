@@ -222,8 +222,23 @@
     @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
   }
   .section {
-    @apply py-24 sm:py-32 lg:py-40;
+    @apply py-16 sm:py-24 lg:py-32;
   }
+  /* ---- Mobile: lighter effects, bigger touch targets ---- */
+  @media (max-width: 639px) {
+    .particles, .aurora, .bg-circuit { display: none; }
+    .hero-float, .float-slow, .hero-node { animation: none; }
+    .blur-3xl { filter: blur(32px); }
+    .glass { backdrop-filter: none; -webkit-backdrop-filter: none; }
+    h1, h2, h3 { overflow-wrap: anywhere; }
+  }
+  @media (pointer: coarse) {
+    button, [role="button"], [role="tab"], select, nav a, footer a, a.inline-flex, a.inline-block { min-height: 44px; }
+    button[aria-label], nav a[aria-label] { min-width: 44px; }
+    footer a.inline-block, nav[aria-label="Breadcrumb"] a { display: inline-flex; align-items: center; }
+    input, select, textarea { font-size: 16px; } /* prevents iOS zoom-on-focus */
+  }
+  .pb-safe { padding-bottom: max(1.25rem, env(safe-area-inset-bottom)); }
   /* Motion background: slow-drifting aurora blobs (respects reduced motion). */
   @keyframes aurora-a { 0%, 100% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(6%, -8%, 0) scale(1.15); } }
   @keyframes aurora-b { 0%, 100% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(-8%, 6%, 0) scale(1.1); } }

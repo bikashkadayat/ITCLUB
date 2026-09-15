@@ -51,7 +51,7 @@ export default function ContactPage() {
                   </p>
                   <p className="flex gap-3">
                     <MessageCircle className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
-                    <a href={whatsappUrl("Hello Tech & AI Innovation Club,")} target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-4">
+                    <a href={whatsappUrl("Hello Tech & AI Innovation Club,")} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-primary underline underline-offset-4">
                       WhatsApp {WHATSAPP_DISPLAY}
                     </a>
                   </p>

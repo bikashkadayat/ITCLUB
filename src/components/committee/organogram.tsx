@@ -16,7 +16,7 @@ function Node({ name, role, tone = "default", href, className }: { name: string;
         className
       )}
     >
-      <p className={cn("text-[10px] font-semibold uppercase tracking-[0.18em]", tone === "primary" ? "text-white/70" : tone === "advisor" ? "text-brand-coral" : "text-muted-foreground")}>{role}</p>
+      <p className={cn("text-xs lg:text-[10px] font-semibold uppercase tracking-[0.18em]", tone === "primary" ? "text-white/70" : tone === "advisor" ? "text-brand-coral" : "text-muted-foreground")}>{role}</p>
       <p className={cn("mt-0.5 text-sm font-medium", tone === "primary" && "text-white")}>{name}</p>
     </div>
   );
@@ -53,8 +53,8 @@ export function Organogram() {
             </li>
             <Connector />
             <li>
-              <p className="mb-3 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Six departments</p>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+              <p className="mb-3 text-center text-xs lg:text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Six departments</p>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:grid-cols-6">
                 {departments.map((d) => (
                   <Link key={d.slug} href={`/departments/${d.slug}`} className="rounded-2xl border border-border/80 bg-card px-3 py-3 text-center text-xs font-medium transition-colors hover:border-primary/40 hover:text-primary">
                     {d.name}

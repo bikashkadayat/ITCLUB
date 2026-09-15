@@ -70,7 +70,7 @@ const tones: Record<string, string> = {
 };
 
 export function StatusBadge({ status, className }: { status: string; className?: string }) {
-  return <span className={cn("inline-flex rounded-full px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider", tones[status] ?? "bg-muted text-muted-foreground", className)}>{status.replace(/_/g, " ").toLowerCase()}</span>;
+  return <span className={cn("inline-flex rounded-full px-2 py-0.5 text-xs lg:text-[11px] font-semibold uppercase tracking-wider", tones[status] ?? "bg-muted text-muted-foreground", className)}>{status.replace(/_/g, " ").toLowerCase()}</span>;
 }
 
 export function Empty({ title, text, action }: { title: string; text?: string; action?: React.ReactNode }) {

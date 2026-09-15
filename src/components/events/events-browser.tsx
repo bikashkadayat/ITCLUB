@@ -83,9 +83,9 @@ export function EventCard({ event: e }: { event: ClubEvent }) {
     <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/80 bg-card p-6 card-hover">
       <div className={cn("absolute inset-x-0 top-0 h-1 bg-gradient-to-r", dept?.color ?? "from-brand-blue to-brand-coral")} aria-hidden />
       <div className="flex flex-wrap items-center gap-2">
-        <span className={cn("rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider", statusStyles[e.status])}>{e.status}</span>
-        <span className="rounded-full border border-border px-2.5 py-1 text-[11px] font-medium">{e.type}</span>
-        {(dept || e.host) && <span className="ml-auto text-[11px] text-muted-foreground">{dept?.shortName ?? e.host}</span>}
+        <span className={cn("rounded-full px-2.5 py-1 text-xs lg:text-[11px] font-semibold uppercase tracking-wider", statusStyles[e.status])}>{e.status}</span>
+        <span className="rounded-full border border-border px-2.5 py-1 text-xs lg:text-[11px] font-medium">{e.type}</span>
+        {(dept || e.host) && <span className="ml-auto text-xs lg:text-[11px] text-muted-foreground">{dept?.shortName ?? e.host}</span>}
       </div>
       <h3 className="mt-5 text-xl font-semibold leading-snug"><Link href={`/events/${e.slug}`} className="hover:text-primary">{e.title}</Link></h3>
       <dl className="mt-5 space-y-2 text-sm text-foreground/80">

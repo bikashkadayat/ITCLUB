@@ -32,7 +32,7 @@ export function MasonryGallery({ extra = [] }: { extra?: GalleryImage[] }) {
             )}
           >
             {c === "All" ? "All" : `${c} Gallery`}
-            <span className="ml-2 font-mono text-[11px] opacity-70">{c === "All" ? galleryImages.length : counts[c]}</span>
+            <span className="ml-2 font-mono text-xs lg:text-[11px] opacity-70">{c === "All" ? galleryImages.length : counts[c]}</span>
           </button>
         ))}
       </div>
@@ -68,7 +68,7 @@ export function MasonryGallery({ extra = [] }: { extra?: GalleryImage[] }) {
               </button>
               <figcaption className="flex items-start justify-between gap-3 p-4">
                 <span className="text-sm text-foreground/85">{img.caption}</span>
-                <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{img.category}</span>
+                <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-xs lg:text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{img.category}</span>
               </figcaption>
             </motion.figure>
           ))}

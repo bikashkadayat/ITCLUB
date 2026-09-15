@@ -8,7 +8,7 @@ import { whatsappUrl, contactMessage, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 
 const field =
-  "h-11 w-full rounded-xl border border-border bg-background px-4 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/25 aria-invalid:border-destructive";
+  "h-12 w-full rounded-xl border border-border bg-background px-4 text-base outline-none sm:h-11 sm:text-sm transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/25 aria-invalid:border-destructive";
 
 export function ContactForm() {
   const [errors, setErrors] = useState<Record<string, string[]>>({});

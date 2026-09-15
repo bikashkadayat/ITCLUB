@@ -9,9 +9,9 @@ import { departments } from "@/data/departments";
 
 export function Footer() {
   return (
-    <footer className="relative mt-24 border-t border-border/70 bg-card/40">
+    <footer className="relative mt-16 border-t border-border/70 bg-card/40 sm:mt-24">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-blue/60 to-transparent" aria-hidden />
-      <div className="container-x pt-16">
+      <div className="container-x pt-12 sm:pt-16">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <Logo variant="full" className="w-44" />
@@ -55,7 +55,7 @@ export function Footer() {
             )}
           </div>
 
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-3 lg:col-span-5">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:col-span-5">
             <FooterColumn title="Club" links={siteConfig.footerNav.club} />
             <FooterColumn title="Programs" links={siteConfig.footerNav.programs} />
             <FooterColumn
@@ -96,7 +96,7 @@ function FooterColumn({ title, links }: { title: string; links: readonly { label
       <ul className="mt-3 space-y-1">
         {links.map((l) => (
           <li key={l.href}>
-            <Link href={l.href} className="inline-block py-1 text-sm text-muted-foreground transition-colors hover:text-foreground">
+            <Link href={l.href} className="inline-block py-1.5 text-[15px] text-muted-foreground transition-colors hover:text-foreground sm:py-1 sm:text-sm">
               {l.label}
             </Link>
           </li>

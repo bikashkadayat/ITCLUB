@@ -57,7 +57,7 @@ export default function ResourcesPage() {
                     <div className="mt-6 flex items-center justify-between">
                       <ol className="flex items-center gap-1.5" aria-label={`${t.steps.length} steps`}>
                         {t.steps.map((s, i) => (
-                          <li key={s} className="flex size-7 items-center justify-center rounded-full bg-muted font-mono text-[11px] text-primary" title={s}>{i + 1}</li>
+                          <li key={s} className="flex size-7 items-center justify-center rounded-full bg-muted font-mono text-xs lg:text-[11px] text-primary" title={s}>{i + 1}</li>
                         ))}
                       </ol>
                       <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary">{t.steps.length} steps <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden /></span>
@@ -73,7 +73,7 @@ export default function ResourcesPage() {
       <section className="section" aria-labelledby="tools-heading">
         <div className="container-x">
           <SectionHeading eyebrow="Platforms" align="center" title={<span id="tools-heading">Where we publish.</span>} />
-          <div className="mt-14 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {portfolioPlatforms.map((p) => (
               <Reveal key={p.name}>
                 <a href={p.href} target="_blank" rel="noopener noreferrer" className="group flex h-full items-center justify-between gap-3 rounded-3xl border border-border/80 bg-card px-6 py-6 card-hover">

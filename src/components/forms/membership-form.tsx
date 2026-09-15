@@ -15,7 +15,7 @@ import { applicationSchema, zodErrors } from "@/lib/validation";
 import { whatsappUrl, membershipMessage, newApplicationRef, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 
-const field = "h-11 w-full rounded-xl border border-border bg-background px-4 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/25 aria-invalid:border-destructive";
+const field = "h-12 w-full rounded-xl border border-border bg-background px-4 text-base outline-none sm:h-11 sm:text-sm transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/25 aria-invalid:border-destructive";
 
 export function MembershipForm() {
   const [selected, setSelected] = useState<string[]>([]);
@@ -65,7 +65,7 @@ export function MembershipForm() {
       <ol className="grid grid-cols-1 gap-2 rounded-2xl border border-border/80 bg-muted/40 p-3 text-xs text-muted-foreground sm:grid-cols-4">
         {[["1", "Fill Application Form", ""], ["2", "Send Application via WhatsApp", ""], ["3", "Executive Committee Reviews", ""], ["4", "Receive Confirmation", ""]].map(([n, t, d]) => (
           <li key={n} className="flex gap-2.5 rounded-xl bg-card px-3 py-2.5">
-            <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">{n}</span>
+            <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-xs lg:text-[10px] font-semibold text-primary-foreground">{n}</span>
             <span><span className="block font-medium text-foreground">{t}</span>{d || null}</span>
           </li>
         ))}
@@ -103,7 +103,7 @@ export function MembershipForm() {
               <label key={d.slug} className={cn("flex min-w-0 cursor-pointer items-center gap-3 rounded-2xl border p-3.5 transition-all", on ? "border-primary/50 bg-secondary/70 ring-2 ring-primary/20" : "border-border/80 bg-card hover:bg-muted", disabled && "cursor-not-allowed opacity-50")}>
                 <input type="checkbox" name="departments" value={d.slug} checked={on} disabled={disabled} onChange={() => toggle(d.slug)} className="sr-only" />
                 <span className={cn("flex size-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br text-white", d.color)}><DepartmentIcon icon={d.icon} className="size-4" /></span>
-                <span className="min-w-0"><span className="block text-sm font-medium">{d.name}</span><span className="block truncate text-xs text-muted-foreground">{d.tagline}</span></span>
+                <span className="min-w-0"><span className="block text-sm font-medium">{d.name}</span><span className="block text-xs text-muted-foreground sm:truncate">{d.tagline}</span></span>
                 <span className={cn("ml-auto size-5 shrink-0 rounded-full border-2", on ? "border-primary bg-primary" : "border-border")} aria-hidden>{on && <CheckCircle2 className="size-full text-primary-foreground" />}</span>
               </label>
             );
@@ -113,11 +113,11 @@ export function MembershipForm() {
       </fieldset>
 
       <Field label="Why do you want to join, and what would you love to build?" id="motivation" error={err("motivation")}>
-        <textarea id="motivation" name="motivation" required rows={5} placeholder="No experience needed. Curiosity counts." className={cn(field, "h-auto py-3")} aria-invalid={Boolean(err("motivation"))} />
+        <textarea id="motivation" name="motivation" required rows={5} enterKeyHint="done" placeholder="No experience needed. Curiosity counts." className={cn(field, "h-auto py-3")} aria-invalid={Boolean(err("motivation"))} />
       </Field>
 
       <label className="flex items-start gap-3 text-sm">
-        <input type="checkbox" name="agree" className="mt-1 size-4 rounded border-border accent-[var(--primary)]" />
+        <input type="checkbox" name="agree" className="mt-1 size-5 shrink-0 rounded border-border accent-[var(--primary)] sm:size-4" />
         <span>I am a student enrolled in good standing at Tech AI College of Management &amp; Law, and I agree to the Club <a href="/constitution" className="text-primary underline underline-offset-4">Constitution</a> and Code of Conduct.</span>
       </label>
       {err("agree") && <p className="-mt-4 text-xs text-destructive" role="alert">{err("agree")}</p>}
@@ -128,7 +128,7 @@ export function MembershipForm() {
         </p>
       )}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <button type="submit" className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+        <button type="submit" className="inline-flex h-13 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-base font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:h-12 sm:w-auto sm:text-sm">
           <Send className="size-4" aria-hidden /> Submit application
         </button>
         <p className="text-xs text-muted-foreground">WhatsApp opens with your application addressed to the Executive Committee ({WHATSAPP_DISPLAY}).</p>

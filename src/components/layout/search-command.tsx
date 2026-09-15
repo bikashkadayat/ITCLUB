@@ -93,15 +93,15 @@ export function SearchButton({ className, label = true }: { className?: string; 
       onClick={open}
       aria-label="Search the site"
       className={cn(
-        "inline-flex h-9 items-center gap-2 rounded-full border border-border/80 bg-card/70 px-3 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
+        "inline-flex h-11 items-center gap-2 rounded-full border border-border/80 bg-card/70 px-3 text-sm sm:h-9 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
         className
       )}
     >
       <Search className="size-4" aria-hidden />
       {label && (
         <>
-          <span className="hidden lg:inline">Search</span>
-          <kbd className="hidden rounded-md border border-border bg-background px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground lg:inline">⌘K</kbd>
+          <span className="inline">Search</span>
+          <kbd className="hidden rounded-md border border-border bg-background px-1.5 py-0.5 font-mono text-xs lg:text-[10px] text-muted-foreground lg:inline">⌘K</kbd>
         </>
       )}
     </button>

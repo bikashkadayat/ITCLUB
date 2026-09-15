@@ -37,7 +37,7 @@ export function ProjectsBrowser({ projects = staticProjects }: { projects?: Proj
                 )}
               >
                 {c}
-                <span className="rounded-full bg-background px-2 py-0.5 font-mono text-[11px] text-muted-foreground">{count}</span>
+                <span className="rounded-full bg-background px-2 py-0.5 font-mono text-xs lg:text-[11px] text-muted-foreground">{count}</span>
               </button>
             );
           })}
@@ -84,18 +84,18 @@ export function ProjectsBrowser({ projects = staticProjects }: { projects?: Proj
                         {dept ? <DepartmentIcon icon={dept.icon} className="size-5" /> : <GitBranch className="size-5" aria-hidden />}
                       </span>
                       <div className="flex flex-wrap justify-end gap-1.5">
-                        <span className={cn("rounded-full px-2.5 py-1 text-[11px] font-semibold", p.status === "In development" ? "bg-secondary text-secondary-foreground" : "bg-muted text-muted-foreground")}>{p.status}</span>
-                        <span className="inline-flex items-center gap-1 rounded-full border border-border px-2.5 py-1 text-[11px] text-muted-foreground">
+                        <span className={cn("rounded-full px-2.5 py-1 text-xs lg:text-[11px] font-semibold", p.status === "In development" ? "bg-secondary text-secondary-foreground" : "bg-muted text-muted-foreground")}>{p.status}</span>
+                        <span className="inline-flex items-center gap-1 rounded-full border border-border px-2.5 py-1 text-xs lg:text-[11px] text-muted-foreground">
                           {p.visibility === "Public" ? <Globe className="size-3" aria-hidden /> : <Lock className="size-3" aria-hidden />} {p.visibility}
                         </span>
                       </div>
                     </div>
-                    <p className="mt-5 font-mono text-[11px] text-muted-foreground">tech-ai-innovation-club /</p>
+                    <p className="mt-5 font-mono text-xs lg:text-[11px] text-muted-foreground">tech-ai-innovation-club /</p>
                     <h3 className="font-mono text-lg font-semibold leading-snug text-primary">{p.name}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-foreground/80">{p.description}</p>
                     <div className="mt-4 flex flex-wrap gap-1.5">
                       {p.topics.map((t) => (
-                        <span key={t} className="rounded-full bg-secondary/70 px-2.5 py-0.5 font-mono text-[11px] text-secondary-foreground">
+                        <span key={t} className="rounded-full bg-secondary/70 px-2.5 py-0.5 font-mono text-xs lg:text-[11px] text-secondary-foreground">
                           {t}
                         </span>
                       ))}
@@ -108,7 +108,7 @@ export function ProjectsBrowser({ projects = staticProjects }: { projects?: Proj
                       )}
                       <span>{p.category}</span>
                       {dept && (
-                        <Link href={`/departments/${dept.slug}`} className="hover:text-foreground">
+                        <Link href={`/departments/${dept.slug}`} className="inline-flex items-center hover:text-foreground">
                           {dept.shortName}
                         </Link>
                       )}

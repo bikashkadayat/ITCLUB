@@ -35,7 +35,7 @@ export function ResourceLibrary({ items }: { items: LibraryItem[] }) {
       {tags.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-1.5">
           {tags.map((t) => (
-            <button key={t} onClick={() => setTag(tag === t ? null : t)} aria-pressed={tag === t} className={cn("rounded-full px-2.5 py-0.5 font-mono text-[11px]", tag === t ? "bg-brand-coral text-white" : "bg-muted text-muted-foreground hover:bg-secondary")}>#{t}</button>
+            <button key={t} onClick={() => setTag(tag === t ? null : t)} aria-pressed={tag === t} className={cn("rounded-full px-2.5 py-0.5 font-mono text-xs lg:text-[11px]", tag === t ? "bg-brand-coral text-white" : "bg-muted text-muted-foreground hover:bg-secondary")}>#{t}</button>
           ))}
         </div>
       )}
@@ -45,11 +45,11 @@ export function ResourceLibrary({ items }: { items: LibraryItem[] }) {
             <li key={r.id} className="flex h-full flex-col rounded-2xl border border-border/80 bg-card p-5 card-hover">
               <div className="flex items-center justify-between">
                 <span className="flex size-9 items-center justify-center rounded-xl bg-secondary text-primary"><FileText className="size-4" /></span>
-                <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{labels[r.category] ?? r.category}</span>
+                <span className="rounded-full bg-muted px-2 py-0.5 text-xs lg:text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{labels[r.category] ?? r.category}</span>
               </div>
               <h3 className="mt-4 font-semibold leading-snug">{r.title}</h3>
               {r.description && <p className="mt-1 line-clamp-3 text-sm text-muted-foreground">{r.description}</p>}
-              <div className="mt-2 flex flex-wrap gap-1">{r.tags.map((t) => (<span key={t} className="font-mono text-[10px] text-muted-foreground">#{t}</span>))}</div>
+              <div className="mt-2 flex flex-wrap gap-1">{r.tags.map((t) => (<span key={t} className="font-mono text-xs lg:text-[10px] text-muted-foreground">#{t}</span>))}</div>
               <div className="mt-auto flex items-center justify-between pt-4 text-xs text-muted-foreground">
                 <span>{r.department ?? "Club"} · {formatDate(r.createdAt, { month: "short" })} · {r.downloads} downloads</span>
                 <a href={r.href} target="_blank" rel="noopener" className="inline-flex items-center gap-1 font-medium text-primary">{r.fileName ? <><Download className="size-3.5" /> Download</> : <><ExternalLink className="size-3.5" /> Open</>}</a>

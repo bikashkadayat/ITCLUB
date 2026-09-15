@@ -31,11 +31,11 @@ export default function MembershipPage() {
       <section className="section" aria-labelledby="process-heading">
         <div className="container-x">
           <SectionHeading eyebrow="How it works" title={<span id="process-heading">Four simple steps.</span>} />
-          <Stagger as="ol" className="mt-12 grid grid-cols-2 gap-5 lg:grid-cols-4">
+          <Stagger as="ol" className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
             {membership.process.map((s) => (
               <StaggerItem key={s.step} as="li">
                 <div className="relative h-full rounded-3xl border border-border/80 bg-card p-6 card-hover">
-                  <span className="font-display text-4xl font-semibold text-primary/30">{s.step}</span>
+                  <span className="font-display text-4xl font-semibold text-primary/60">{s.step}</span>
                   <h3 className="mt-3 text-lg font-semibold">{s.title}</h3>
                 </div>
               </StaggerItem>
@@ -47,7 +47,7 @@ export default function MembershipPage() {
       {/* Benefits */}
       <section className="section bg-muted/40" aria-labelledby="benefits-heading">
         <div className="container-x">
-          <SectionHeading eyebrow="Membership benefits" title={<span id="benefits-heading">What you get as a member.</span>} description="From Article 6.3 of the Constitution and the expected outcomes of the proposal." />
+          <SectionHeading eyebrow="Membership benefits" title={<span id="benefits-heading">What you get as a member.</span>} />
           <Stagger className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {membership.benefits.map((b) => (
               <StaggerItem key={b.title}>

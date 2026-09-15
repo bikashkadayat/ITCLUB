@@ -47,7 +47,7 @@ export function InteractiveTimeline({ items }: { items: TimelineItem[] }) {
                   {item.status === "current" && <span className="absolute inset-0 rounded-full bg-brand-coral/30 animate-pulse-ring" aria-hidden />}
                 </span>
                 <span className="min-w-0">
-                  <span className="block font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">{label(item.date)}</span>
+                  <span className="block font-mono text-xs lg:text-[11px] uppercase tracking-[0.2em] text-muted-foreground">{label(item.date)}</span>
                   <span className={cn("mt-0.5 block font-medium leading-snug", isActive ? "text-foreground" : "text-foreground/80")}>{item.title}</span>
                 </span>
               </button>
@@ -70,7 +70,7 @@ export function InteractiveTimeline({ items }: { items: TimelineItem[] }) {
             <div className="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-brand-blue/10 blur-3xl" aria-hidden />
             <span
               className={cn(
-                "inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider",
+                "inline-flex items-center rounded-full px-2.5 py-1 text-xs lg:text-[11px] font-semibold uppercase tracking-wider",
                 current.status === "done" && "bg-secondary text-secondary-foreground",
                 current.status === "current" && "bg-accent text-accent-foreground",
                 current.status === "upcoming" && "bg-muted text-muted-foreground"

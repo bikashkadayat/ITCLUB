@@ -13,7 +13,7 @@ export function DepartmentsGrid({ compact = false }: { compact?: boolean }) {
       <div className="pointer-events-none absolute inset-0 bg-dots opacity-60" aria-hidden />
       <div className="container-x relative">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <SectionHeading eyebrow="Six departments" title={<span id="departments-heading">Pick your track. Or two.</span>} />
+          <SectionHeading eyebrow={compact ? "Explore" : "Six departments"} title={<span id="departments-heading">Pick your track. Or two.</span>} />
           {!compact && (
             <Link href="/departments" className="group inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-primary">
               All departments <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
@@ -21,7 +21,7 @@ export function DepartmentsGrid({ compact = false }: { compact?: boolean }) {
           )}
         </div>
 
-        <Stagger className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <Stagger className="mt-12 grid grid-cols-1 gap-4 sm:mt-16 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {departments.map((d, i) => (
             <StaggerItem key={d.slug}>
               <Link href={`/departments/${d.slug}`} className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/80 bg-card p-7 card-hover focus-visible:ring-2 focus-visible:ring-primary">

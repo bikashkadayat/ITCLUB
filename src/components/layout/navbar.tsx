@@ -36,7 +36,7 @@ export function Navbar() {
   return (
     <header className={cn("fixed inset-x-0 top-0 z-40 transition-all duration-300", scrolled ? "py-2" : "py-4")}>
       <div className="container-x">
-        <div className={cn("flex h-14 items-center justify-between rounded-full border px-3 pl-4 transition-all duration-300 sm:px-4 sm:pl-5", scrolled ? "glass border-border/80 shadow-[0_10px_40px_-20px_var(--glow-blue)]" : "border-transparent bg-transparent")}>
+        <div className={cn("flex h-16 items-center justify-between rounded-full border px-2 pl-3 transition-all duration-300 sm:h-14 sm:px-4 sm:pl-5", scrolled ? "glass border-border/80 shadow-[0_10px_40px_-20px_var(--glow-blue)]" : "border-transparent bg-transparent")}>
           <Logo priority />
 
           <nav aria-label="Primary" className="hidden items-center gap-0 lg:flex xl:gap-0.5">
@@ -45,31 +45,31 @@ export function Navbar() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <SearchButton className="hidden md:inline-flex lg:hidden xl:inline-flex" label={false} />
             <ThemeToggle />
-            <Link href="/membership" className="group hidden h-9 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 md:inline-flex">
+            <Link href="/membership" className="group hidden h-11 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 md:inline-flex lg:h-9">
               Become a Member <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
             </Link>
 
             <Sheet open={open} onOpenChange={setOpen}>
-              <SheetTrigger aria-label="Open navigation menu" className="inline-flex size-9 items-center justify-center rounded-full border border-border/80 bg-card/70 text-foreground/80 transition-colors hover:bg-muted lg:hidden">
+              <SheetTrigger aria-label="Open navigation menu" className="inline-flex size-11 items-center justify-center rounded-full border border-border/80 bg-card/70 text-foreground/80 transition-colors hover:bg-muted sm:size-9 lg:hidden">
                 <Menu className="size-5" aria-hidden />
               </SheetTrigger>
-              <SheetContent side="right" className="w-[88vw] max-w-sm gap-0 p-0">
+              <SheetContent side="right" className="w-full max-w-none gap-0 p-0 sm:max-w-sm">
                 <div className="flex items-center justify-between border-b border-border px-5 py-4">
                   <Logo />
                 </div>
                 <SheetTitle className="sr-only">Navigation</SheetTitle>
                 <SheetDescription className="sr-only">Site navigation links</SheetDescription>
-                <nav aria-label="Mobile" className="flex flex-1 flex-col overflow-y-auto px-3 py-3">
+                <nav aria-label="Mobile" className="flex flex-1 flex-col overflow-y-auto overscroll-contain px-3 py-4">
                   {primaryNav.map((entry) => (
                     <MobileItem key={entry.label} entry={entry} pathname={pathname} onNavigate={closeMenu} />
                   ))}
                 </nav>
-                <div className="space-y-3 border-t border-border p-5">
+                <div className="space-y-3 border-t border-border p-5 pb-safe">
                   <SearchButton className="w-full justify-center" />
-                  <Link href="/membership" onClick={closeMenu} className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-primary text-sm font-medium text-primary-foreground">
+                  <Link href="/membership" onClick={closeMenu} className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary text-base font-medium text-primary-foreground shadow-lg shadow-brand-blue/25">
                     Become a Member <ArrowRight className="size-4" aria-hidden />
                   </Link>
                   <p className="text-center text-xs text-muted-foreground">Official student club of {siteConfig.college.name}</p>
@@ -142,28 +142,28 @@ function MobileItem({ entry, pathname, onNavigate }: { entry: NavEntry; pathname
   const active = entry.href === "/" ? pathname === "/" : Boolean(entry.href && entry.href !== "/" && pathname.startsWith(entry.href));
   if (!entry.children) {
     return (
-      <Link href={entry.href!} onClick={onNavigate} aria-current={active ? "page" : undefined} className={cn("rounded-xl px-3 py-3 text-base font-medium hover:bg-muted", active && "bg-secondary text-secondary-foreground")}>
+      <Link href={entry.href!} onClick={onNavigate} aria-current={active ? "page" : undefined} className={cn("flex min-h-14 items-center rounded-2xl px-4 text-xl font-medium tracking-tight transition-colors hover:bg-muted active:scale-[0.99]", active && "bg-secondary text-secondary-foreground")}>
         {entry.label}
       </Link>
     );
   }
   return (
     <div>
-      <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className={cn("flex w-full items-center justify-between rounded-xl px-3 py-3 text-base font-medium hover:bg-muted", active && "text-primary")}>
+      <button type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open} className={cn("flex min-h-14 w-full items-center justify-between rounded-2xl px-4 text-xl font-medium tracking-tight transition-colors hover:bg-muted active:scale-[0.99]", active && "text-primary")}>
         {entry.label}
-        <ChevronDown className={cn("size-4 transition-transform duration-300", open && "rotate-180")} aria-hidden />
+        <ChevronDown className={cn("size-5 transition-transform duration-300", open && "rotate-180")} aria-hidden />
       </button>
       <AnimatePresence initial={false}>
         {open && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }} className="overflow-hidden">
-            <div className="mb-1 ml-3 border-l border-border pl-2">
+            <div className="mb-2 ml-4 border-l border-border pl-2">
               {entry.href && (
-                <Link href={entry.href} onClick={onNavigate} className="block rounded-lg px-3 py-2 text-sm text-foreground/80 hover:bg-muted">
+                <Link href={entry.href} onClick={onNavigate} className="flex min-h-12 items-center rounded-xl px-4 text-base text-foreground/80 hover:bg-muted">
                   Overview
                 </Link>
               )}
               {entry.children.map((c) => (
-                <Link key={c.href + c.label} href={c.href} onClick={onNavigate} className="block rounded-lg px-3 py-2 text-sm text-foreground/80 hover:bg-muted">
+                <Link key={c.href + c.label} href={c.href} onClick={onNavigate} className="flex min-h-12 items-center rounded-xl px-4 text-base text-foreground/80 hover:bg-muted">
                   {c.label}
                 </Link>
               ))}

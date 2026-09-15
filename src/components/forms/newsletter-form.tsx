@@ -39,7 +39,7 @@ export function NewsletterForm({ className, compact = false }: { className?: str
           name="email"
           required
           placeholder="you@college.edu.np"
-          className={cn("h-11 flex-1 rounded-full border border-border bg-background px-4 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/30", state.status === "error" && "border-destructive")}
+          className={cn("h-11 min-h-11 flex-1 rounded-full border border-border bg-background px-4 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/30", state.status === "error" && "border-destructive")}
           aria-invalid={state.status === "error"}
         />
         <button type="submit" className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">

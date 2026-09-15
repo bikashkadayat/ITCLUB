@@ -17,7 +17,7 @@ export function PostCard({ post, className }: { post: BlogPost; className?: stri
             <span className="absolute bottom-4 left-5 font-display text-2xl text-white/90">{post.category}</span>
           </div>
         )}
-        <span className="absolute left-4 top-4 rounded-full bg-background/90 px-2.5 py-1 text-[11px] font-semibold text-foreground backdrop-blur">{post.category}</span>
+        <span className="absolute left-4 top-4 rounded-full bg-background/90 px-2.5 py-1 text-xs lg:text-[11px] font-semibold text-foreground backdrop-blur">{post.category}</span>
       </div>
       <div className="flex flex-1 flex-col p-5">
         <p className="text-xs text-muted-foreground">
