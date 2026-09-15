@@ -1,0 +1,79 @@
+# Builds the whole platform as a static site and publishes it to GitHub Pages.
+# Live at https://itclub.techaicollege.edu.np (Cloudflare DNS → bikashkadayat.github.io).
+# There is no server: public website, membership application, member area, committee
+# tool, membership cards and QR verification all run in the browser.
+#
+# Repository → Settings → Pages → Source must be "GitHub Actions".
+# Optional repository variables (Settings → Secrets and variables → Actions → Variables):
+#   NEXT_PUBLIC_CONTACT_EMAIL   club inbox used by the forms' mailto fallback and the Contact page
+#   NEXT_PUBLIC_FORM_ENDPOINT   JSON endpoint (Formspree, Getform, Basin…) that receives form submissions
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Configure GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build static site
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://itclub.techaicollege.edu.np
+          NEXT_PUBLIC_CONTACT_EMAIL: ${{ vars.NEXT_PUBLIC_CONTACT_EMAIL }}
+          NEXT_PUBLIC_FORM_ENDPOINT: ${{ vars.NEXT_PUBLIC_FORM_ENDPOINT }}
+          NEXT_TELEMETRY_DISABLED: "1"
+
+      - name: Verify export
+        run: |
+          test -f out/index.html
+          test -f out/CNAME && grep -q "itclub.techaicollege.edu.np" out/CNAME
+          test -f out/.nojekyll
+          test -f out/404.html
+          echo "Pages exported: $(find out -name index.html | wc -l)"
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

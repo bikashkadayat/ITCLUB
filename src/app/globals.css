@@ -1,0 +1,321 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ------------------------------------------------------------------
+   Tech & AI Innovation Club — design tokens
+   Brand colours are sampled directly from the official club logo:
+     Logo blue   #2027E3  (wordmark "TECH & AI", left mark)
+     Logo coral  #FF5050  (right mark)
+     Signal red  #FD0909  ("INNOVATION CLUB" wordmark)
+     Overlap     #DE304C  (where the two marks intersect)
+------------------------------------------------------------------- */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-heading: var(--font-display), Georgia, "Times New Roman", serif;
+  --font-display: var(--font-display), Georgia, "Times New Roman", serif;
+
+  --color-brand-blue: #2027e3;
+  --color-brand-blue-light: #5c62ff;
+  --color-brand-blue-deep: #14189c;
+  --color-brand-coral: #ff5050;
+  --color-brand-coral-light: #ff8a8a;
+  --color-brand-red: #fd0909;
+  --color-brand-rose: #de304c;
+  --color-brand-navy: #0b0d2a;
+  --color-brand-ink: #06071a;
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-float: float 8s ease-in-out infinite;
+  --animate-float-slow: float 14s ease-in-out infinite;
+  --animate-spin-slow: spin 24s linear infinite;
+  --animate-pulse-ring: pulse-ring 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-shimmer: shimmer 2.2s linear infinite;
+  --animate-rise: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-18px) rotate(3deg); }
+  }
+  @keyframes pulse-ring {
+    0% { transform: scale(0.9); opacity: 0.8; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+  @keyframes rise {
+    from { opacity: 0.4; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+  }
+}
+
+/* -------------------- Light theme -------------------- */
+:root {
+  --background: #fafaff;
+  --foreground: #0b0d2a;
+  --card: #ffffff;
+  --card-foreground: #0b0d2a;
+  --popover: #ffffff;
+  --popover-foreground: #0b0d2a;
+  --primary: #2027e3;
+  --primary-foreground: #ffffff;
+  --secondary: #eef0ff;
+  --secondary-foreground: #1a1fb5;
+  --muted: #f1f2f8;
+  --muted-foreground: #5b5f7a;
+  --accent: #fff0f0;
+  --accent-foreground: #c61f2c;
+  --destructive: #fd0909;
+  --border: #e4e6f2;
+  --input: #e4e6f2;
+  --ring: #2027e3;
+  --chart-1: #2027e3;
+  --chart-2: #ff5050;
+  --chart-3: #5c62ff;
+  --chart-4: #de304c;
+  --chart-5: #9a9ec4;
+  --radius: 0.75rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0b0d2a;
+  --sidebar-primary: #2027e3;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eef0ff;
+  --sidebar-accent-foreground: #1a1fb5;
+  --sidebar-border: #e4e6f2;
+  --sidebar-ring: #2027e3;
+
+  --grid-line: color-mix(in oklch, var(--foreground) 6%, transparent);
+  --glow-blue: color-mix(in oklch, #2027e3 22%, transparent);
+  --glow-coral: color-mix(in oklch, #ff5050 22%, transparent);
+}
+
+/* -------------------- Dark theme -------------------- */
+.dark {
+  --background: #06071a;
+  --foreground: #eef0ff;
+  --card: #0d0f2b;
+  --card-foreground: #eef0ff;
+  --popover: #0d0f2b;
+  --popover-foreground: #eef0ff;
+  --primary: #5c62ff;
+  --primary-foreground: #ffffff;
+  --secondary: #171a45;
+  --secondary-foreground: #c7caff;
+  --muted: #12143a;
+  --muted-foreground: #9a9ec4;
+  --accent: #3a1520;
+  --accent-foreground: #ff8a8a;
+  --destructive: #ff5050;
+  --border: #22254f;
+  --input: #22254f;
+  --ring: #7c81ff;
+  --chart-1: #5c62ff;
+  --chart-2: #ff5050;
+  --chart-3: #8f93ff;
+  --chart-4: #ff8a8a;
+  --chart-5: #9a9ec4;
+  --sidebar: #0d0f2b;
+  --sidebar-foreground: #eef0ff;
+  --sidebar-primary: #5c62ff;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #171a45;
+  --sidebar-accent-foreground: #c7caff;
+  --sidebar-border: #22254f;
+  --sidebar-ring: #7c81ff;
+
+  --grid-line: color-mix(in oklch, var(--foreground) 7%, transparent);
+  --glow-blue: color-mix(in oklch, #5c62ff 30%, transparent);
+  --glow-coral: color-mix(in oklch, #ff5050 26%, transparent);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  h1 { letter-spacing: -0.02em; }
+  p { text-wrap: pretty; }
+  button, a[role="button"] { font-weight: 500; }
+  ::selection {
+    background: color-mix(in oklch, var(--primary) 25%, transparent);
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+  }
+  .section {
+    @apply py-20 sm:py-24 lg:py-32;
+  }
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  .gradient-text {
+    background: linear-gradient(100deg, var(--color-brand-blue) 0%, var(--color-brand-blue-light) 45%, var(--color-brand-coral) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .dark .gradient-text {
+    background: linear-gradient(100deg, #8f93ff 0%, #c7caff 40%, var(--color-brand-coral-light) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  .gradient-brand {
+    background-image: linear-gradient(120deg, var(--color-brand-blue), var(--color-brand-coral));
+  }
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .bg-circuit {
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px),
+      radial-gradient(color-mix(in oklch, var(--primary) 22%, transparent) 1.5px, transparent 1.6px);
+    background-size: 64px 64px, 64px 64px, 64px 64px;
+    background-position: 0 0, 0 0, 32px 32px;
+  }
+  .particle {
+    position: absolute;
+    width: 6px; height: 6px;
+    border-radius: 9999px;
+    background: color-mix(in oklch, var(--primary) 55%, white);
+    opacity: 0;
+    filter: blur(0.5px);
+    animation: particle-drift 10s ease-in-out infinite;
+  }
+  .hero-float { animation: float 7s ease-in-out infinite; }
+  .hero-node { animation: node-pulse 3s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  .hero-progress { animation: progress-slide 4s ease-in-out infinite alternate; }
+  @keyframes particle-drift {
+    0% { transform: translateY(20px) scale(0.6); opacity: 0; }
+    20% { opacity: 0.7; }
+    80% { opacity: 0.35; }
+    100% { transform: translateY(-140px) scale(1.1); opacity: 0; }
+  }
+  @keyframes node-pulse { 0%, 100% { opacity: 0.55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.6); } }
+  @keyframes progress-slide { from { width: 30%; } to { width: 85%; } }
+  @media (prefers-reduced-motion: reduce) { .particle, .hero-float, .hero-node, .hero-progress { animation: none; } .particle { opacity: 0.3; } }
+  .bg-dots {
+    background-image: radial-gradient(var(--grid-line) 1.2px, transparent 1.2px);
+    background-size: 22px 22px;
+  }
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  }
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+  .glass {
+    background: color-mix(in oklch, var(--background) 72%, transparent);
+    backdrop-filter: saturate(160%) blur(14px);
+    -webkit-backdrop-filter: saturate(160%) blur(14px);
+  }
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_-20px_var(--glow-blue)];
+  }
+  .ring-brand {
+    box-shadow: 0 0 0 1px color-mix(in oklch, var(--primary) 35%, transparent);
+  }
+  .shimmer {
+    background: linear-gradient(90deg, transparent 0%, color-mix(in oklch, var(--foreground) 8%, transparent) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: var(--animate-shimmer);
+  }
+  .rise { animation: var(--animate-rise); }
+  @media (prefers-reduced-motion: reduce) { .rise { animation: none; } }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .prose-club {
+    @apply text-foreground/85 leading-relaxed;
+  }
+  .prose-club p { @apply mb-5; }
+  .prose-club h2 { @apply mt-10 mb-4 text-2xl font-semibold; }
+  .prose-club h3 { @apply mt-8 mb-3 text-xl font-semibold; }
+  .prose-club ul { @apply mb-5 list-disc space-y-2 pl-6; }
+  .prose-club ol { @apply mb-5 list-decimal space-y-2 pl-6; }
+  .prose-club blockquote { @apply my-6 border-l-4 border-primary/60 bg-secondary/60 px-5 py-4 italic rounded-r-xl; }
+  .prose-club a { @apply text-primary underline underline-offset-4; }
+  .prose-club strong { @apply text-foreground font-semibold; }
+}
