@@ -1,4 +1,6 @@
-import { StepArt } from "@/components/shared/mini-art";
+import Image from "next/image";
+import Link from "next/link";
+import { SocialLinks } from "@/components/shared/social-links";
 import { pageMetadata } from "@/lib/seo";
 import { membership } from "@/data/membership";
 import { club } from "@/data/club";
@@ -25,6 +27,11 @@ export default function MembershipPage() {
         <a href="#apply" className="inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-lg shadow-brand-blue/25 hover:bg-primary/90">
           Become a Member
         </a>
+        <figure className="relative mt-10 aspect-[16/7] w-full overflow-hidden rounded-3xl shadow-[0_30px_80px_-40px_var(--glow-blue)] ring-1 ring-black/5">
+          <Image src="/images/gallery/computer-lab-session.jpg" alt="Club members working together in the computer lab at Tech AI College." fill priority sizes="(min-width: 1280px) 1200px, 100vw" className="object-cover object-[50%_55%]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-ink/70 via-transparent to-transparent" aria-hidden />
+          <figcaption className="absolute bottom-5 left-6 font-display text-xl text-white sm:bottom-7 sm:left-8 sm:text-2xl">Your seat is waiting.</figcaption>
+        </figure>
       </PageHero>
 
       {/* Process */}
@@ -35,9 +42,8 @@ export default function MembershipPage() {
             {membership.process.map((s) => (
               <StaggerItem key={s.step} as="li">
                 <div className="group relative flex h-full flex-col rounded-3xl border border-border/80 bg-card p-6 transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/25 hover:shadow-[0_28px_60px_-34px_var(--glow-blue)]">
-                  <div className="h-20 w-full transition-transform duration-500 group-hover:scale-105"><StepArt step={Number(s.step)} /></div>
-                  <span className="mt-4 font-mono text-xs text-primary">{s.step}</span>
-                  <h3 className="mt-1 text-lg font-semibold leading-snug">{s.title}</h3>
+                  <span className="gradient-text font-display text-6xl font-semibold leading-none">{s.step}</span>
+                  <h3 className="mt-6 text-lg font-semibold leading-snug">{s.title}</h3>
                 </div>
               </StaggerItem>
             ))}
@@ -66,35 +72,11 @@ export default function MembershipPage() {
 
       {/* Structure & responsibilities */}
       <section className="section" aria-labelledby="structure-heading">
-        <div className="container-x grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="container-x">
           <Reveal>
             <div className="h-full rounded-3xl border border-border/80 bg-card p-8">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">How the club works</p>
-              <h2 id="structure-heading" className="mt-3 text-2xl font-semibold">
-                Club structure
-              </h2>
-              <ol className="mt-5 space-y-4">
-                {[
-                  ["Faculty Advisor / Mentor", "Strategic and administrative clearance; link to the college administration."],
-                  ["Executive Committee", "President, Vice President, Secretary, IT/Technical Coordinator, Event/Program Coordinator, PR/Communication Officer."],
-                  ["Six departments", "Each with a Department Lead, an Assistant Lead and Technical Associates / Members."],
-                  ["Members", "Choose up to two primary departments; active status through engagement compliance."],
-                ].map(([t, d], i) => (
-                  <li key={t} className="flex gap-4">
-                    <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-muted font-mono text-xs">{i + 1}</span>
-                    <div>
-                      <p className="font-medium">{t}</p>
-                      <p className="text-sm text-muted-foreground">{d}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <div className="h-full rounded-3xl border border-border/80 bg-card p-8">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-red-deep dark:text-brand-coral-light">What we expect</p>
-              <h2 className="mt-3 text-2xl font-semibold">Responsibilities &amp; conduct</h2>
+              <h2 id="structure-heading" className="mt-3 text-2xl font-semibold">Responsibilities &amp; conduct</h2>
               <ul className="mt-5 space-y-2.5">
                 {membership.responsibilities.map((r) => (
                   <li key={r} className="flex gap-2.5 text-sm text-foreground/85">
@@ -102,7 +84,7 @@ export default function MembershipPage() {
                   </li>
                 ))}
               </ul>
-              <h3 className="mt-7 text-sm font-semibold uppercase tracking-wider text-muted-foreground">Code of Conduct</h3>
+              <h3 className="mt-7 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">Code of Conduct</h3>
               <ul className="mt-3 flex flex-wrap gap-2">
                 {club.codeOfConduct.map((c) => (
                   <li key={c} className="rounded-full bg-muted px-3 py-1 text-xs">
@@ -110,7 +92,7 @@ export default function MembershipPage() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-5 text-xs text-muted-foreground">Membership may lapse if the engagement-compliance requirement is not met without valid reason, and may be terminated for serious or repeated violations following due process.</p>
+              <p className="mt-5 text-xs text-muted-foreground"><Link href="/committee" className="font-semibold text-primary">See how the club is organised →</Link><br />Membership may lapse if the engagement-compliance requirement is not met without valid reason, and may be terminated for serious or repeated violations following due process.</p>
             </div>
           </Reveal>
         </div>
@@ -121,6 +103,10 @@ export default function MembershipPage() {
         <div className="container-x grid grid-cols-1 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <SectionHeading title={<span id="apply-heading">Membership Application</span>} description="Fill out the form below and send your application through WhatsApp." />
+            <div className="mt-8 hidden rounded-2xl border border-border/80 bg-card p-5 lg:block">
+              <p className="text-sm font-medium">Follow the club for event announcements.</p>
+              <SocialLinks labelled className="mt-3" />
+            </div>
           </div>
           <Reveal className="rounded-3xl border border-border/80 bg-card p-6 sm:p-8 lg:col-span-8">
             <MembershipForm />

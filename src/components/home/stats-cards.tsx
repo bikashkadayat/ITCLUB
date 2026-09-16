@@ -1,34 +1,33 @@
 import { departments } from "@/data/departments";
 import { events } from "@/data/events";
 import { Counter } from "@/components/shared/counter";
-import { StatArt } from "@/components/shared/mini-art";
-import { Stagger, StaggerItem } from "@/components/shared/reveal";
+import { Reveal } from "@/components/shared/reveal";
 
-/** The club in numbers. Each figure sits on a miniature of the thing it counts. */
+/** The club in numbers: one quiet band, figures first, no decoration. */
 export function StatsCards() {
   const opportunities = departments.reduce((n, d) => n + d.learningAreas.length + d.activities.length + d.projects.length, 0);
   const stats = [
-    { kind: "faculties" as const, value: 3, suffix: "", label: "Faculties united" },
-    { kind: "departments" as const, value: departments.length, suffix: "", label: "Specialized departments" },
-    { kind: "events" as const, value: events.length, suffix: "", label: "Planned events" },
-    { kind: "learning" as const, value: opportunities, suffix: "+", label: "Learning opportunities" },
+    { value: 3, suffix: "", label: "Faculties united" },
+    { value: departments.length, suffix: "", label: "Specialized departments" },
+    { value: events.length, suffix: "", label: "Planned events" },
+    { value: opportunities, suffix: "+", label: "Learning opportunities" },
   ];
   return (
     <section className="pb-0 pt-4 sm:pt-6 lg:pt-8" aria-label="Club in numbers">
       <div className="container-x">
-        <Stagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {stats.map((s) => (
-            <StaggerItem key={s.label}>
-              <div className="group relative h-full overflow-hidden rounded-3xl border border-border/80 bg-card p-6 transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/25 hover:shadow-[0_28px_60px_-34px_var(--glow-blue)]">
-                <div className="pointer-events-none absolute -right-2 -top-3 h-24 w-32 text-foreground opacity-[0.45] transition-transform duration-700 group-hover:scale-105 sm:h-28 sm:w-36" aria-hidden>
-                  <StatArt kind={s.kind} />
-                </div>
-                <p className="relative font-display text-4xl font-medium tracking-tight sm:text-5xl"><Counter value={s.value} suffix={s.suffix} /></p>
-                <p className="relative mt-1 max-w-[60%] font-medium leading-snug">{s.label}</p>
+        <Reveal>
+          <dl className="grid grid-cols-2 overflow-hidden rounded-3xl border border-border/80 bg-card lg:grid-cols-4">
+            {stats.map((s, i) => (
+              <div key={s.label} className={`relative flex flex-col px-6 py-7 sm:px-8 sm:py-9 ${i % 2 === 1 ? "border-l border-border/70" : ""} ${i >= 2 ? "border-t border-border/70 lg:border-t-0" : ""} ${i === 2 ? "lg:border-l" : ""}`}>
+                <dt className="order-2 mt-1 text-sm font-medium text-muted-foreground">{s.label}</dt>
+                <dd className="order-1 font-display text-5xl font-medium tracking-tight sm:text-6xl">
+                  <Counter value={s.value} suffix={s.suffix} />
+                </dd>
+                <span className="absolute bottom-0 left-6 h-0.5 w-10 bg-gradient-to-r from-brand-blue to-brand-coral sm:left-8" aria-hidden />
               </div>
-            </StaggerItem>
-          ))}
-        </Stagger>
+            ))}
+          </dl>
+        </Reveal>
       </div>
     </section>
   );

@@ -28,6 +28,7 @@ export interface CommitteeMember {
 export const committee: CommitteeMember[] = [
   {
     id: "bikash-kadayat",
+    linkedin: "https://www.linkedin.com/in/bikash-kadayat-978852273/",
     photo: "/images/team/bikash-kadayat.jpg",
     name: "Bikash Kadayat",
     position: "President",
@@ -85,6 +86,7 @@ export const committee: CommitteeMember[] = [
   },
   {
     id: "nirmal-bk",
+    linkedin: "https://www.linkedin.com/in/nirmal-bahadur-bk-346a613a9/",
     photo: "/images/team/nirmal-bk.jpg",
     name: "Nirmal B.K",
     position: "IT / Technical Coordinator",

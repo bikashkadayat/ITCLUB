@@ -3,7 +3,7 @@ import { Crown, GraduationCap, ArrowUpRight } from "lucide-react";
 import type { CommitteeMember } from "@/data/committee";
 import { committeeWithPhotos } from "@/lib/team-photos";
 import { Reveal, Stagger, StaggerItem } from "@/components/shared/reveal";
-import { LinkedinIcon } from "@/components/shared/brand-icons";
+import { LinkedInButton } from "@/components/shared/linkedin-button";
 import { MemberDialog } from "./member-dialog";
 import { PortraitPlaceholder } from "@/components/shared/mini-art";
 import { cn } from "@/lib/utils";
@@ -79,14 +79,10 @@ function ProfileCard({ member: m, variant = "officer" }: { member: CommitteeMemb
           <h3 className={cn("mt-1 font-medium", featured ? "text-2xl sm:text-3xl" : "text-xl")}>{m.name}</h3>
           <p className={cn("mt-3 line-clamp-2 text-sm leading-relaxed text-muted-foreground", featured && "max-w-xl")}>{m.bio}</p>
           <div className={cn("mt-5 flex flex-wrap items-center justify-center gap-2", featured && "sm:justify-start")}>
-            <MemberDialog member={m} className="inline-flex h-11 items-center gap-1.5 rounded-full bg-primary px-5 text-sm font-medium sm:h-9 sm:px-4 sm:text-xs text-primary-foreground transition-colors hover:bg-primary/90">
+            <MemberDialog member={m} className="inline-flex h-10 items-center gap-1.5 rounded-full bg-primary px-5 text-sm font-medium sm:px-4 sm:text-xs text-primary-foreground transition-colors hover:bg-primary/90">
               Full profile <ArrowUpRight className="size-3.5" aria-hidden />
             </MemberDialog>
-            {m.linkedin && (
-              <a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex h-9 items-center gap-2 rounded-full border border-border bg-background px-3.5 text-xs font-medium transition-colors hover:border-primary/50 hover:text-primary">
-                <LinkedinIcon className="size-3.5" /> LinkedIn
-              </a>
-            )}
+            <LinkedInButton href={m.linkedin} name={m.name} />
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { socialLinks } from "./social";
 /**
  * Site-wide configuration.
  * Source of truth: Official Club Establishment Application, Detailed Club
@@ -36,17 +37,8 @@ export const siteConfig = {
       navy: "#0B0D2A",
     },
   },
-  /**
-   * Social links. Fill in the club's official handles once created; entries
-   * with an empty href are rendered as "coming soon" and never link out.
-   */
-  social: [
-    { id: "facebook", label: "Facebook", href: "" },
-    { id: "instagram", label: "Instagram", href: "" },
-    { id: "linkedin", label: "LinkedIn", href: "" },
-    { id: "github", label: "GitHub", href: "" },
-    { id: "youtube", label: "YouTube", href: "" },
-  ] as const,
+  /** Social channels live in data/social.ts (socialLinks). */
+  social: socialLinks,
   /** Public contact email for the club. Leave empty until an official address exists. */
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "",
   nav: [

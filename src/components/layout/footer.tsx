@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/data/site";
 import { Logo } from "@/components/shared/logo";
-import { socialIcon } from "@/components/shared/brand-icons";
+import { SocialLinks } from "@/components/shared/social-links";
 import { NewsletterForm } from "@/components/forms/newsletter-form";
 import { departments } from "@/data/departments";
 
@@ -31,31 +31,11 @@ export function Footer() {
                 {siteConfig.contactEmail}
               </a>
             )}
-            {siteConfig.social.some((s) => s.href) && (
-            <ul className="mt-6 flex items-center gap-2" aria-label="Social media">
-              {siteConfig.social.filter((s) => s.href).map((s) => {
-                const Icon = socialIcon[s.id];
-                return (
-                  <li key={s.id}>
-                    <a
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={s.label}
-                      className="inline-flex size-9 items-center justify-center rounded-full border border-border bg-background text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
-                      >
-                      <Icon className="size-4" />
-                      </a>
-                  </li>
-                );
-              })}
-            </ul>
-            )}
           </div>
 
           <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:col-span-5">
-            <FooterColumn title="Club" links={siteConfig.footerNav.club} />
-            <FooterColumn title="Programs" links={siteConfig.footerNav.programs} />
+            <FooterColumn title="Quick Links" links={siteConfig.footerNav.club} />
+            <FooterColumn title="Resources" links={siteConfig.footerNav.programs} />
             <FooterColumn
               title="Departments"
               links={departments.map((d) => ({ label: d.name, href: `/departments/${d.slug}` }))}
@@ -63,7 +43,10 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-3">
-            <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-foreground/80">Newsletter</h3>
+            <h3 className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-foreground/70">Follow Us</h3>
+            <p className="mt-3 text-sm text-muted-foreground">News, events and member stories.</p>
+            <SocialLinks labelled className="mt-4" />
+            <h3 className="mt-9 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-foreground/70">Newsletter</h3>
             <p className="mt-3 text-sm text-muted-foreground">Club updates, event announcements and project launches. No spam.</p>
             <NewsletterForm className="mt-4" compact />
           </div>
@@ -90,7 +73,7 @@ export function Footer() {
 function FooterColumn({ title, links }: { title: string; links: readonly { label: string; href: string }[] }) {
   return (
     <div>
-      <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-foreground/80">{title}</h3>
+      <h3 className="font-sans text-xs font-semibold uppercase tracking-[0.2em] text-foreground/70">{title}</h3>
       <ul className="mt-3 space-y-1">
         {links.map((l) => (
           <li key={l.href}>

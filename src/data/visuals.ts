@@ -26,6 +26,7 @@ export const visuals = {
   serverRoom: { src: "/images/visuals/server-room.jpg", alt: "Rows of server racks lit in blue and red inside a data centre.", width: 612, height: 393, kind: "stock", position: "40% 50%" },
   connectedDevices: { src: "/images/visuals/connected-devices.jpg", alt: "Hands using a phone and laptop with a network of connections overlaid.", width: 612, height: 338, kind: "stock", position: "55% 45%" },
   nepalNetwork: { src: "/images/visuals/nepal-network.jpg", alt: "A map of Nepal drawn as a glowing network in the colours of the national flag.", width: 740, height: 493, kind: "stock", position: "50% 50%", zoom: 1.45 },
+  digitalInclusion: { src: "/images/visuals/digital-inclusion.jpg", alt: "A young woman helps an elderly man use a laptop outside a village home.", width: 612, height: 408, kind: "stock", position: "50% 40%" },
   datacenterEngineer: { src: "/images/visuals/datacenter-engineer.jpg", alt: "An engineer holding a server drive beside hardware in a data centre.", width: 612, height: 344, kind: "stock", position: "60% 50%" },
 } satisfies Record<string, Visual>;
 

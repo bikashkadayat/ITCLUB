@@ -31,7 +31,7 @@ export function NewsletterForm({ className, compact = false }: { className?: str
   return (
     <form onSubmit={onSubmit} className={cn("w-full", className)} noValidate>
       <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
-      <div className={cn("flex gap-2", compact ? "flex-col xl:flex-row" : "flex-col sm:flex-row")}>
+      <div className={cn("flex gap-2", compact ? "flex-col" : "flex-col sm:flex-row")}>
         <label className="sr-only" htmlFor={`newsletter-email-${compact ? "c" : "f"}`}>Email address</label>
         <input
           id={`newsletter-email-${compact ? "c" : "f"}`}

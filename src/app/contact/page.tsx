@@ -6,7 +6,7 @@ import { whatsappUrl, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
 import { PageHero } from "@/components/shared/page-hero";
 import { Reveal } from "@/components/shared/reveal";
 import { ContactForm } from "@/components/forms/contact-form";
-import { socialIcon } from "@/components/shared/brand-icons";
+import { SocialLinks } from "@/components/shared/social-links";
 
 export const metadata = pageMetadata({
   title: "Contact",
@@ -64,22 +64,10 @@ export default function ContactPage() {
                     </p>
                   ) : null}
                 </address>
-                {siteConfig.social.some((s) => s.href) && (
-                <div className="mt-6">
-                  <ul className="flex flex-wrap gap-2" aria-label="Social media">
-                    {siteConfig.social.filter((s) => s.href).map((s) => {
-                      const Icon = socialIcon[s.id];
-                      return (
-                        <li key={s.id}>
-                          <a href={s.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-border px-3 py-1.5 text-sm hover:border-primary/50 hover:text-primary">
-                              <Icon className="size-4" /> {s.label}
-                            </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
+                <div className="mt-6 border-t border-border/70 pt-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">Follow us</p>
+                  <SocialLinks labelled className="mt-3" />
                 </div>
-                )}
               </div>
             </Reveal>
             <Reveal delay={0.1}>

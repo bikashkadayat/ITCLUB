@@ -211,7 +211,7 @@ export const events: ClubEvent[] = [
   },
   {
     slug: "ai-for-social-good-challenge-2026",
-    photo: "aiHologram",
+    photo: "digitalInclusion",
     title: "AI for Social Good Challenge 2026",
     tagline: "Build Technology That Creates Real Impact.",
     motto: "Technology for People. Innovation for Impact.",

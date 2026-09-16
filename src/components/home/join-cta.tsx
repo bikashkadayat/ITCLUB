@@ -38,7 +38,7 @@ export function JoinCta() {
                   <p className="absolute inset-x-0 bottom-0 p-5 text-sm font-medium text-white">Members at work in the computer lab.</p>
                 </div>
                 <div className="mt-4 rounded-3xl border border-border/80 bg-background/80 p-5 backdrop-blur">
-                  <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">Newsletter</h3>
+                  <h3 className="font-sans text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">Newsletter</h3>
                   <NewsletterForm className="mt-3" />
                 </div>
               </div>

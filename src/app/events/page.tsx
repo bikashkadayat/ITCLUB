@@ -18,7 +18,7 @@ export default async function EventsPage() {
   const buildNow = new Date().toISOString();
   return (
     <>
-      <PageHero eyebrow="Events" crumbs={[{ label: "Events" }]} title={<>Our first activities <span className="gradient-text">as a new club</span>.</>} description="From orientation to Vibe Coding Week, Career Talks, a 24-hour hackathon, the AI for Social Good Challenge, the Annual Project Exhibition and the Portfolio Website Bootcamp.">
+      <PageHero eyebrow="Events" crumbs={[{ label: "Events" }]} title={<>Our first activities <span className="gradient-text">as a new club</span>.</>} description="Workshops, talks, hackathons and showcases through the year.">
         <NextUp events={events} buildNow={buildNow} />
       </PageHero>
 

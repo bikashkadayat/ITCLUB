@@ -5,6 +5,7 @@ import { Check } from "lucide-react";
 import type { CommitteeMember } from "@/data/committee";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { LinkedinIcon } from "@/components/shared/brand-icons";
 
 export function MemberDialog({ member: m, className, children }: { member: CommitteeMember; className?: string; children: React.ReactNode }) {
   return (
@@ -17,6 +18,12 @@ export function MemberDialog({ member: m, className, children }: { member: Commi
         </DialogHeader>
         <div className="space-y-6 px-4 pb-6 text-sm">
           <p className="text-pretty leading-relaxed text-foreground/90">{m.bio}</p>
+          {m.linkedin && (
+            <a href={m.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center gap-2 rounded-xl border border-border px-4 text-sm font-medium text-[#0A66C2] transition-all hover:scale-[1.02] hover:border-[#0A66C2] hover:bg-[#0A66C2] hover:text-white">
+              <LinkedinIcon className="size-4" aria-hidden /> View LinkedIn Profile
+              <span className="sr-only">(opens in a new tab)</span>
+            </a>
+          )}
           <div>
             <p className="text-xs lg:text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Key responsibilities</p>
             <ul className="mt-3 grid gap-2 sm:grid-cols-2">
