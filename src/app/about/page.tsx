@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Eye, Target, Wrench, FlaskConical, Puzzle, Briefcase, Users, Globe, Building2, Scale, GraduationCap } from "lucide-react";
+import { ArrowRight, Building2, Scale, GraduationCap } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 import { club } from "@/data/club";
 import { timeline } from "@/data/timeline";
@@ -8,6 +8,7 @@ import { PageHero } from "@/components/shared/page-hero";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal, Stagger, StaggerItem } from "@/components/shared/reveal";
 import { InteractiveTimeline } from "@/components/shared/timeline";
+import { Photo } from "@/components/shared/photo";
 
 export const metadata = pageMetadata({
   title: "About the Club",
@@ -15,7 +16,6 @@ export const metadata = pageMetadata({
   path: "/about",
 });
 
-const objectiveIcons = [Wrench, FlaskConical, Puzzle, Briefcase, Users, Globe];
 
 const faculties = [
   { Icon: GraduationCap, label: "Computer Science" },
@@ -52,20 +52,20 @@ export default function AboutPage() {
       <section className="section bg-muted/40" aria-labelledby="vm-heading">
         <div className="container-x grid grid-cols-1 gap-6 lg:grid-cols-2">
           <Reveal>
-            <div className="relative h-full overflow-hidden rounded-3xl bg-gradient-to-br from-brand-blue via-brand-blue-deep to-brand-navy p-9 text-white sm:p-12">
-              <div className="absolute inset-0 bg-grid opacity-10" aria-hidden />
-              <div className="pointer-events-none absolute -right-20 -top-20 size-64 rounded-full bg-brand-coral/30 blur-3xl float-slow" aria-hidden />
+            <div className="group relative h-full overflow-hidden rounded-3xl bg-brand-navy p-9 text-white sm:p-12">
+              <Photo name="nepalNetwork" grade="none" className="absolute inset-x-0 bottom-0 top-1/3" sizes="(min-width: 1024px) 50vw, 100vw" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-brand-navy via-brand-navy/85 to-brand-navy/5" aria-hidden />
               <div className="relative">
-                <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-white/10"><Eye className="size-6" aria-hidden /></span>
-                <h2 id="vm-heading" className="mt-6 text-3xl font-semibold">Vision</h2>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-coral-light">Where we are going</p>
+                <h2 id="vm-heading" className="mt-3 text-4xl font-semibold">Vision</h2>
                 <p className="mt-4 text-pretty text-lg leading-relaxed text-white/90">{club.vision}</p>
               </div>
             </div>
           </Reveal>
           <Reveal delay={0.1}>
             <div className="h-full rounded-3xl border border-border/80 bg-card p-9 sm:p-12">
-              <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-accent text-accent-foreground"><Target className="size-6" aria-hidden /></span>
-              <h2 className="mt-6 text-3xl font-semibold">Mission</h2>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">How we get there</p>
+              <h2 className="mt-3 text-4xl font-semibold">Mission</h2>
               <ol className="mt-5 space-y-3">
                 {club.mission.map((m, i) => (
                   <li key={m} className="flex gap-3 text-sm leading-relaxed text-foreground/85">
@@ -86,10 +86,9 @@ export default function AboutPage() {
           <Stagger className="mt-12 grid grid-cols-1 gap-3 sm:mt-16 sm:grid-cols-3 sm:gap-4">
             {club.objectives.map((o, i) => (
               <StaggerItem key={o.title}>
-                <div className="group flex h-full items-center gap-4 rounded-3xl border border-border/80 bg-card px-5 py-4 card-hover sm:flex-col sm:py-8 sm:text-center">
-                  <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-blue to-brand-coral text-white shadow-md transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-[-4deg]">{(() => { const Icon = objectiveIcons[i % objectiveIcons.length]; return <Icon className="size-5" aria-hidden />; })()}</span>
-                  <h3 className="text-base font-semibold">{o.title}</h3>
-                  <span className="ml-auto font-mono text-xs text-muted-foreground sm:ml-0 sm:mt-auto lg:text-[11px]">0{i + 1}</span>
+                <div className="group flex h-full items-center gap-5 rounded-3xl border border-border/80 bg-card px-6 py-5 transition-all duration-500 hover:-translate-y-1 hover:border-primary/25 hover:shadow-[0_24px_60px_-34px_var(--glow-blue)] sm:flex-col sm:items-start sm:py-7">
+                  <span className="gradient-text font-display text-5xl font-semibold leading-none">0{i + 1}</span>
+                  <h3 className="text-lg font-semibold leading-snug">{o.title}</h3>
                 </div>
               </StaggerItem>
             ))}

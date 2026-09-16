@@ -14,8 +14,9 @@ function diff(target: number) {
   };
 }
 
-export function Countdown({ target, className, compact = false }: { target: string; className?: string; compact?: boolean }) {
+export function Countdown({ target, end, className, compact = false }: { target: string; /** ISO instant after which nothing is rendered. */ end?: string; className?: string; compact?: boolean }) {
   const ts = new Date(target).getTime();
+  const endTs = end ? new Date(end).getTime() : Infinity;
   const [t, setT] = useState<ReturnType<typeof diff> | null>(null);
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export function Countdown({ target, className, compact = false }: { target: stri
     { label: "Sec", value: t?.seconds },
   ];
 
+  if (t && Date.now() > endTs) return null;
   if (t?.done) {
     return <p className={cn("text-sm font-medium text-primary", className)}>Happening now</p>;
   }

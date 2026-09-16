@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Newspaper } from "lucide-react";
 import { blogCategories, posts as staticPosts, type BlogCategory, type BlogPost } from "@/data/blog";
 import { PostCard } from "./post-card";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -32,7 +31,6 @@ export function BlogList({ posts = staticPosts }: { posts?: BlogPost[] }) {
       {list.length === 0 ? (
         <EmptyState
           className="mt-8"
-          icon={Newspaper}
           title={`No ${cat} posts yet`}
           description={
             cat === "Student Stories"

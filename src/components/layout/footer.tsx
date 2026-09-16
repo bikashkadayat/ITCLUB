@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Mail } from "lucide-react";
 import { siteConfig } from "@/data/site";
 import { Logo } from "@/components/shared/logo";
 import { socialIcon } from "@/components/shared/brand-icons";
@@ -18,8 +17,7 @@ export function Footer() {
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
               A student-led, non-profit academic and technical club operating under {siteConfig.college.name}. {siteConfig.tagline}
             </p>
-            <div className="mt-6 flex items-start gap-3 text-sm text-muted-foreground">
-              <MapPin className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
+            <div className="mt-6 text-sm text-muted-foreground">
               <address className="not-italic leading-relaxed">
                 {siteConfig.college.addressLines.map((l) => (
                   <span key={l} className="block">
@@ -29,8 +27,8 @@ export function Footer() {
               </address>
             </div>
             {siteConfig.contactEmail && (
-              <a href={`mailto:${siteConfig.contactEmail}`} className="mt-3 inline-flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground">
-                <Mail className="size-4 text-primary" aria-hidden /> {siteConfig.contactEmail}
+              <a href={`mailto:${siteConfig.contactEmail}`} className="mt-3 inline-flex items-center text-sm text-muted-foreground hover:text-foreground">
+                {siteConfig.contactEmail}
               </a>
             )}
             {siteConfig.social.some((s) => s.href) && (

@@ -7,6 +7,7 @@ import { NextEvent } from "@/components/home/next-event";
 import { JoinCta } from "@/components/home/join-cta";
 
 export default function HomePage() {
+  const buildNow = new Date().toISOString();
   return (
     <>
       <Hero />
@@ -14,7 +15,7 @@ export default function HomePage() {
       <WhyJoin />
       <DepartmentsGrid />
       <Leadership />
-      <NextEvent />
+      <NextEvent buildNow={buildNow} />
       <JoinCta />
     </>
   );

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, Camera } from "lucide-react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { galleryImages as staticGallery, galleryCategories, type GalleryCategory, type GalleryImage } from "@/data/gallery";
 import { EmptyState } from "@/components/shared/empty-state";
 import { cn } from "@/lib/utils";
@@ -40,7 +40,6 @@ export function MasonryGallery({ extra = [] }: { extra?: GalleryImage[] }) {
       {list.length === 0 ? (
         <EmptyState
           className="mt-8"
-          icon={Camera}
           title={`No ${cat.toLowerCase()} photos yet`}
           description="The Media & Outreach department documents every event in photo and video. Photos from the first cycle will appear here."
           action={{ label: "See upcoming events", href: "/events" }}

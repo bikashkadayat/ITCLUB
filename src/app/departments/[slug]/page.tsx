@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, ArrowLeft, BookOpen, Calendar, Wrench, Rocket, Flag } from "lucide-react";
+import { ArrowRight, ArrowLeft, Calendar, Rocket } from "lucide-react";
 import { departments, getDepartment } from "@/data/departments";
 import { events } from "@/data/events";
 import { formatDate } from "@/lib/utils";
@@ -8,7 +8,7 @@ import { projects } from "@/data/projects";
 import { pageMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/shared/page-hero";
 import { Reveal, Stagger, StaggerItem } from "@/components/shared/reveal";
-import { DepartmentIcon } from "@/components/shared/department-icon";
+import { Photo } from "@/components/shared/photo";
 import { cn } from "@/lib/utils";
 
 export function generateStaticParams() {
@@ -37,16 +37,13 @@ export default async function DepartmentPage({ params }: { params: Promise<{ slu
       <PageHero
         eyebrow={`Department ${String(idx + 1).padStart(2, "0")}`}
         crumbs={[{ label: "Departments", href: "/departments" }, { label: d.name }]}
-        title={
-          <span className="flex flex-wrap items-center gap-4">
-            <span className={cn("flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-lg", d.color)}>
-              <DepartmentIcon icon={d.icon} className="size-7" />
-            </span>
-            {d.name}
-          </span>
-        }
+        title={d.name}
         description={d.tagline}
-      />
+      >
+        <div className="group relative aspect-[16/7] w-full max-w-3xl overflow-hidden rounded-3xl border border-border/80 shadow-[0_30px_80px_-40px_var(--glow-blue)]">
+          <Photo name={d.visual} priority sizes="(min-width: 768px) 768px, 100vw" className="absolute inset-0" />
+        </div>
+      </PageHero>
 
       <section className="section" aria-labelledby="overview-heading">
         <div className="container-x grid grid-cols-1 gap-12 lg:grid-cols-12">
@@ -56,10 +53,10 @@ export default async function DepartmentPage({ params }: { params: Promise<{ slu
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-foreground/85">{d.overview}</p>
             <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2">
-              <List icon={BookOpen} title="Learning areas" items={d.learningAreas} />
-              <List icon={Calendar} title="Activities" items={d.activities} />
-              <List icon={Wrench} title="Skills" items={d.skills} />
-              <List icon={Flag} title="Future goals" items={d.futureGoals} />
+              <List title="Learning areas" items={d.learningAreas} />
+              <List title="Activities" items={d.activities} />
+              <List title="Skills" items={d.skills} />
+              <List title="Future goals" items={d.futureGoals} />
             </div>
           </Reveal>
           <div className="space-y-5 lg:col-span-5">
@@ -140,12 +137,10 @@ export default async function DepartmentPage({ params }: { params: Promise<{ slu
   );
 }
 
-function List({ icon: Icon, title, items }: { icon: React.ComponentType<{ className?: string }>; title: string; items: readonly string[] }) {
+function List({ title, items }: { title: string; items: readonly string[] }) {
   return (
     <div>
-      <h3 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-        <Icon className="size-4 text-primary" /> {title}
-      </h3>
+      <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">{title}</h3>
       <ul className="mt-3 space-y-2">
         {items.map((it) => (
           <li key={it} className="flex gap-2.5 text-sm text-foreground/85">

@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { CheckCircle2, AlertCircle, Send } from "lucide-react";
 import { departments } from "@/data/departments";
 import { membership } from "@/data/membership";
-import { DepartmentIcon } from "@/components/shared/department-icon";
+import { Thumb } from "@/components/shared/photo";
 import { applicationSchema, zodErrors } from "@/lib/validation";
 import { whatsappUrl, membershipMessage, newApplicationRef, WHATSAPP_DISPLAY } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
@@ -102,7 +102,7 @@ export function MembershipForm() {
             return (
               <label key={d.slug} className={cn("flex min-w-0 cursor-pointer items-center gap-3 rounded-2xl border p-3.5 transition-all", on ? "border-primary/50 bg-secondary/70 ring-2 ring-primary/20" : "border-border/80 bg-card hover:bg-muted", disabled && "cursor-not-allowed opacity-50")}>
                 <input type="checkbox" name="departments" value={d.slug} checked={on} disabled={disabled} onChange={() => toggle(d.slug)} className="sr-only" />
-                <span className={cn("flex size-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br text-white", d.color)}><DepartmentIcon icon={d.icon} className="size-4" /></span>
+                <Thumb name={d.visual} className="size-10" />
                 <span className="min-w-0"><span className="block text-sm font-medium">{d.name}</span><span className="block text-xs text-muted-foreground sm:truncate">{d.tagline}</span></span>
                 <span className={cn("ml-auto size-5 shrink-0 rounded-full border-2", on ? "border-primary bg-primary" : "border-border")} aria-hidden>{on && <CheckCircle2 className="size-full text-primary-foreground" />}</span>
               </label>
@@ -128,7 +128,7 @@ export function MembershipForm() {
         </p>
       )}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <button type="submit" className="inline-flex h-13 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 text-base font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:h-12 sm:w-auto sm:text-sm">
+        <button type="submit" className="inline-flex h-13 w-full shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-primary px-6 text-base font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:h-12 sm:w-auto sm:text-sm">
           <Send className="size-4" aria-hidden /> Submit application
         </button>
         <p className="text-xs text-muted-foreground">WhatsApp opens with your application addressed to the Executive Committee ({WHATSAPP_DISPLAY}).</p>

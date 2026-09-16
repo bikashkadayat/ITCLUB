@@ -1,12 +1,12 @@
 import { pageMetadata } from "@/lib/seo";
-import { events, nextEvent, featuredEvents } from "@/data/events";
+import { events, featuredEvents } from "@/data/events";
+import { NextUp } from "@/components/events/next-up";
+import { UnlessPast } from "@/components/events/status-badge";
 import { FeaturedEvent } from "@/components/events/featured-event";
 import { PageHero } from "@/components/shared/page-hero";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/shared/reveal";
-import { Countdown } from "@/components/shared/countdown";
 import { EventsBrowser } from "@/components/events/events-browser";
-import { formatDate, formatTime } from "@/lib/utils";
 
 export const metadata = pageMetadata({
   title: "Events",
@@ -15,30 +15,24 @@ export const metadata = pageMetadata({
 });
 
 export default async function EventsPage() {
+  const buildNow = new Date().toISOString();
   return (
     <>
       <PageHero eyebrow="Events" crumbs={[{ label: "Events" }]} title={<>Our first activities <span className="gradient-text">as a new club</span>.</>} description="From orientation to Vibe Coding Week, Career Talks, a 24-hour hackathon, the AI for Social Good Challenge, the Annual Project Exhibition and the Portfolio Website Bootcamp.">
-        {nextEvent && (
-          <div className="rounded-3xl border border-border/80 bg-card/80 p-5 backdrop-blur sm:p-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">Next up</p>
-            <p className="mt-2 text-lg font-semibold">{nextEvent.title}</p>
-            <p className="text-sm text-muted-foreground">
-              {formatDate(nextEvent.date)} · {formatTime(nextEvent.date)} · {nextEvent.venue}
-            </p>
-            <Countdown target={nextEvent.date} className="mt-4" />
-          </div>
-        )}
+        <NextUp events={events} buildNow={buildNow} />
       </PageHero>
 
       {featuredEvents.map((fe, i) => (
-        <FeaturedEvent key={fe.slug} event={fe} variant={i % 2 === 0 ? "dark" : "light"} />
+        <UnlessPast key={fe.slug} date={fe.date} endDate={fe.endDate} buildNow={buildNow}>
+          <FeaturedEvent event={fe} variant={i % 2 === 0 ? "dark" : "light"} buildNow={buildNow} />
+        </UnlessPast>
       ))}
 
       <section className="section" aria-labelledby="browse-heading">
         <div className="container-x">
-          <SectionHeading eyebrow="Upcoming" title={<span id="browse-heading">Find something to join.</span>} />
+          <SectionHeading eyebrow="All events" title={<span id="browse-heading">Find something to join.</span>} />
           <Reveal className="mt-14">
-            <EventsBrowser events={events} />
+            <EventsBrowser events={events} buildNow={buildNow} />
           </Reveal>
         </div>
       </section>

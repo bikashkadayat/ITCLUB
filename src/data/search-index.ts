@@ -50,7 +50,7 @@ export const searchIndex: SearchItem[] = [
   ...events.map((e) => ({
     id: `event-${e.slug}`,
     title: e.title,
-    subtitle: `${e.type} · ${e.status}`,
+    subtitle: e.type,
     href: `/events#${e.slug}`,
     group: "Events" as const,
     keywords: e.summary,

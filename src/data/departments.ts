@@ -4,6 +4,8 @@
  * Skills, projects and goals expand on those work areas.
  */
 
+import type { VisualKey } from "./visuals";
+
 export type DepartmentSlug =
   | "ai-data-science"
   | "software-development"
@@ -26,6 +28,8 @@ export interface Department {
   skills: string[];
   projects: { title: string; description: string; status: "Proposed" | "In development" }[];
   futureGoals: string[];
+  /** Banner photograph (see data/visuals). */
+  visual: VisualKey;
   color: string; // tailwind gradient classes
   accent: string; // text/border colour class
 }
@@ -33,10 +37,11 @@ export interface Department {
 export const departments: Department[] = [
   {
     slug: "ai-data-science",
+    visual: "aiHologram",
     name: "AI & Data Science",
     shortName: "AI & DS",
     icon: "BrainCircuit",
-    tagline: "Models, data and research that solve real problems.",
+    tagline: "Build intelligent solutions with data and AI.",
     overview:
       "The AI & Data Science department builds functional, hands-on competency in artificial intelligence frameworks and data-driven research. Members move from statistical foundations to trained models, then to experiments that are documented, reproducible and publishable — the research capacity the club’s mission calls for.",
     learningAreas: [
@@ -81,10 +86,11 @@ export const departments: Department[] = [
   },
   {
     slug: "software-development",
+    visual: "lab",
     name: "Software Development",
     shortName: "SoftDev",
     icon: "Code2",
-    tagline: "Ship production-grade code, together.",
+    tagline: "Create modern websites and applications.",
     overview:
       "The Software Development department is where members practise end-to-end, agile, project-based workflows. Teams design, build and deploy full-stack web and mobile products using industry conventions — pull requests, sprints, code review — so that every member graduates with production-grade codebases on GitHub.",
     learningAreas: [
@@ -129,10 +135,11 @@ export const departments: Department[] = [
   },
   {
     slug: "cyber-security",
+    visual: "serverRoom",
     name: "Cyber Security",
     shortName: "CyberSec",
     icon: "ShieldCheck",
-    tagline: "Attack, defend, and stay compliant.",
+    tagline: "Learn how to protect digital systems.",
     overview:
       "The Cyber Security department develops information-security competency through ethical, hands-on practice: penetration analysis, network and perimeter defence, and the data-privacy compliance context that management and law students bring to the table. All exercises are run in controlled environments and within college policy.",
     learningAreas: [
@@ -177,10 +184,11 @@ export const departments: Department[] = [
   },
   {
     slug: "programming-problem-solving",
+    visual: "connectedDevices",
     name: "Programming & Problem Solving",
     shortName: "Prog & PS",
     icon: "Braces",
-    tagline: "Sharpen computational thinking, every week.",
+    tagline: "Strengthen logic and coding skills.",
     overview:
       "The Programming & Problem Solving department hardens the computational thinking and structural reasoning that every other department relies on. Through weekly challenges, sprint marathons and mock technical screenings, members build the algorithmic fluency that opens doors to internships and technical interviews.",
     learningAreas: [
@@ -225,10 +233,11 @@ export const departments: Department[] = [
   },
   {
     slug: "media-outreach",
+    visual: "nepalNetwork",
     name: "Media & Outreach",
     shortName: "Media",
     icon: "Megaphone",
-    tagline: "Tell the club’s story with brand-standard craft.",
+    tagline: "Tell stories and grow our community.",
     overview:
       "The Media & Outreach department manages the club’s public image. It runs the club’s social channels and growth metrics, maintains brand-standard content, and produces multimedia coverage of every event — working closely with the Public Relations / Communication Officer.",
     learningAreas: [
@@ -273,10 +282,11 @@ export const departments: Department[] = [
   },
   {
     slug: "events-partnership",
+    visual: "datacenterEngineer",
     name: "Events & Partnership",
     shortName: "Events",
     icon: "Handshake",
-    tagline: "Connecting the club to industry.",
+    tagline: "Organize impactful events and collaborations.",
     overview:
       "The Events & Partnership department delivers the club’s high-impact showcases and builds its relationships with the technology industry. It coordinates workshops, hackathons, seminars and site visits end-to-end, and manages corporate liaison and sponsorships under the Event / Program Coordinator.",
     learningAreas: [

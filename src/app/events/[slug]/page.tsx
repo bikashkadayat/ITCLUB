@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { CalendarDays, MapPin, ArrowLeft } from "lucide-react";
 import { events, getEvent } from "@/data/events";
@@ -10,7 +9,9 @@ import { Countdown } from "@/components/shared/countdown";
 import { EventActions } from "@/components/events/event-actions";
 import { formatDateRange, formatTimeSpan } from "@/lib/utils";
 import { EventDays } from "@/components/events/event-days";
-import { TopicIcon } from "@/components/events/topic-icon";
+import { StatusBadge } from "@/components/events/status-badge";
+import { eventEnd } from "@/lib/event-status";
+import { EventCover } from "@/components/events/event-cover";
 import { committeeWithPhotos } from "@/lib/team-photos";
 import { AvatarInitials } from "@/components/shared/avatar-initials";
 
@@ -33,7 +34,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
   const committee = committeeWithPhotos();
   const facilitators = (e.facilitators ?? []).map((f) => ({ ...f, member: committee.find((m) => m.id === f.memberId) })).filter((f) => f.member);
   const startsAt = new Date(e.date);
-  const upcoming = e.status === "upcoming";
+  const buildNow = new Date().toISOString();
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Event",
@@ -54,6 +55,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
         <div className="container-x relative pb-12 pt-32 sm:pt-40">
           <Breadcrumbs items={[{ label: "Events", href: "/events" }, { label: e.title }]} className="mb-6" />
           <div className="flex flex-wrap items-center gap-2">
+            <StatusBadge date={e.date} endDate={e.endDate} buildNow={buildNow} />
             <span className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-secondary-foreground">{e.type}</span>
             {(dept || e.host) && <span className="rounded-full border border-border px-3 py-1 text-xs">{dept?.name ?? e.host}</span>}
             {e.registrationOpen && <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-600">Registration open</span>}
@@ -66,7 +68,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             <div className="flex items-center gap-2"><CalendarDays className="size-4 text-primary" /><dd>{formatDateRange(e.date, e.endDate)} · {formatTimeSpan(e.date, e.endDate)}{e.duration ? ` · ${e.duration}` : ""}</dd></div>
             <div className="flex items-center gap-2"><MapPin className="size-4 text-primary" /><dd>{e.venue}</dd></div>
           </dl>
-          {upcoming && <Countdown target={startsAt.toISOString()} className="mt-6" />}
+          <Countdown target={startsAt.toISOString()} end={eventEnd(e)} className="mt-6" />
           <div className="mt-8">
             <EventActions title={e.title} open={e.registrationOpen} />
           </div>
@@ -74,7 +76,11 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
       </header>
       <div className="container-x grid grid-cols-1 gap-12 py-14 lg:grid-cols-12">
         <div className="prose-club lg:col-span-8">
-          {e.image && <Image src={e.image} alt="" width={1600} height={900} className="mb-8 max-h-[420px] w-full rounded-3xl border border-border/80 object-cover" />}
+          {e.photo && (
+            <div className="not-prose group relative mb-8 aspect-[16/7] w-full overflow-hidden rounded-3xl border border-border/80">
+              <EventCover event={e} sizes="(min-width: 1024px) 60vw, 100vw" />
+            </div>
+          )}
           {e.description.split(/\n\s*\n/).map((p, i) => (<p key={i} className="text-[17px]">{p}</p>))}
           {e.categories && (
             <>
@@ -121,7 +127,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
                 {e.topics.map((t) => (
                   <li key={t.title} className="rounded-2xl border border-border/80 bg-card p-5">
                     <div className="flex items-center gap-3">
-                      <span className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-blue to-brand-coral text-white"><TopicIcon icon={t.icon} className="size-5" /></span>
+                      <span className="font-mono text-sm text-primary">{String(e.topics!.indexOf(t) + 1).padStart(2, "0")}</span>
                       <h3 className="m-0 text-lg font-semibold">{t.title}</h3>
                     </div>
                     {t.goal && <p className="mt-3 text-sm text-muted-foreground"><strong className="text-foreground">Goal:</strong> {t.goal}</p>}
@@ -189,7 +195,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
             <>
               <h2>Recognition</h2>
               <ul className="mt-4 grid list-none gap-2 p-0 sm:grid-cols-2">
-                {e.awards.map((a) => (<li key={a} className="flex items-center gap-3 rounded-xl border border-border/80 bg-card px-4 py-3 text-sm font-medium"><span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-brand-blue to-brand-coral text-white"><TopicIcon icon="Trophy" className="size-4" /></span>{a}</li>))}
+                {e.awards.map((a) => (<li key={a} className="flex items-center gap-3 rounded-xl border border-border/80 bg-card px-4 py-3 text-sm font-medium"><span className="font-mono text-xs text-primary">{String(e.awards!.indexOf(a) + 1).padStart(2, "0")}</span>{a}</li>))}
               </ul>
             </>
           )}
@@ -201,14 +207,13 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
               </ul>
             </>
           )}
-          {e.visual === "exhibition" && e.topics && (
+          {e.type === "Project Exhibition" && e.topics && (
             <>
               <h2>Showcase gallery</h2>
               <p className="text-sm text-muted-foreground">Project photos will be added here after the exhibition.</p>
               <ul className="mt-4 grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-4" aria-label="Showcase gallery placeholders">
                 {e.topics.map((t) => (
                   <li key={t.title} className="flex aspect-[4/3] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-border bg-muted/40 p-4 text-center">
-                    <span className="flex size-10 items-center justify-center rounded-xl bg-card text-primary shadow-sm"><TopicIcon icon={t.icon} className="size-5" /></span>
                     <span className="text-xs font-medium text-muted-foreground">{t.title}</span>
                   </li>
                 ))}

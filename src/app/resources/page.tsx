@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { FileText, Download, ArrowRight, ExternalLink } from "lucide-react";
+import { Download, ArrowRight, ExternalLink } from "lucide-react";
+import { DocArt } from "@/components/shared/mini-art";
 import { pageMetadata } from "@/lib/seo";
 import { documents, learningTracks } from "@/data/resources";
 import { portfolioPlatforms } from "@/data/projects";
@@ -7,8 +8,7 @@ import { departments } from "@/data/departments";
 import { PageHero } from "@/components/shared/page-hero";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal, Stagger, StaggerItem } from "@/components/shared/reveal";
-import { DepartmentIcon } from "@/components/shared/department-icon";
-import { cn } from "@/lib/utils";
+import { Thumb } from "@/components/shared/photo";
 
 export const metadata = pageMetadata({
   title: "Resource Center",
@@ -28,7 +28,7 @@ export default function ResourcesPage() {
             {documents.map((d) => (
               <StaggerItem key={d.id}>
                 <a href={d.file} target="_blank" rel="noopener noreferrer" className="group flex h-full items-center gap-5 rounded-3xl border border-border/80 bg-card p-6 card-hover">
-                  <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-secondary text-primary transition-transform duration-500 group-hover:-translate-y-1"><FileText className="size-5" aria-hidden /></span>
+                  <span className="h-16 w-14 shrink-0 transition-transform duration-500 group-hover:-translate-y-1"><DocArt pages={d.pages} /></span>
                   <span className="min-w-0 flex-1">
                     <span className="block font-semibold leading-snug group-hover:text-primary">{d.title}</span>
                     <span className="mt-1 block text-xs text-muted-foreground">PDF · {d.pages} page{d.pages > 1 ? "s" : ""}</span>
@@ -51,7 +51,7 @@ export default function ResourcesPage() {
                 <Reveal key={t.slug}>
                   <Link href={`/departments/${t.slug}`} className="group block h-full rounded-3xl border border-border/80 bg-card p-6 card-hover" aria-label={`${t.department} learning track, ${t.steps.length} steps`}>
                     <div className="flex items-center gap-3">
-                      <span className={cn("flex size-11 items-center justify-center rounded-xl bg-gradient-to-br text-white", dept.color)}><DepartmentIcon icon={dept.icon} className="size-5" /></span>
+                      <Thumb name={dept.visual} className="size-12" />
                       <h3 className="font-semibold">{t.department}</h3>
                     </div>
                     <div className="mt-6 flex items-center justify-between">

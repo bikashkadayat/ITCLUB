@@ -2,12 +2,12 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { GitBranch, Circle, Lock, Globe, Lightbulb, ArrowUpRight, Search } from "lucide-react";
+import { Circle, Lock, Globe, ArrowUpRight, Search } from "lucide-react";
 import { projects as staticProjects, projectCategories, type Project, type ProjectCategory } from "@/data/projects";
 import { departments } from "@/data/departments";
 import { EmptyState } from "@/components/shared/empty-state";
 import { languageColor } from "@/components/shared/language-color";
-import { DepartmentIcon } from "@/components/shared/department-icon";
+import { Thumb } from "@/components/shared/photo";
 import { cn } from "@/lib/utils";
 
 export function ProjectsBrowser({ projects = staticProjects }: { projects?: Project[] }) {
@@ -59,7 +59,6 @@ export function ProjectsBrowser({ projects = staticProjects }: { projects?: Proj
         {list.length === 0 ? (
           <EmptyState
             className="mt-6"
-            icon={Lightbulb}
             title={projects.length === 0 ? "No projects published yet." : cat === "Student Innovations" ? "Student innovations open for submissions" : "No projects match"}
             description={
               projects.length === 0
@@ -80,9 +79,7 @@ export function ProjectsBrowser({ projects = staticProjects }: { projects?: Proj
                   <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/80 bg-card p-6 card-hover">
                     <div className={cn("absolute inset-x-0 top-0 h-1 bg-gradient-to-r opacity-80", gradient)} aria-hidden />
                     <div className="flex items-start justify-between gap-3">
-                      <span className={cn("flex size-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-md", gradient)}>
-                        {dept ? <DepartmentIcon icon={dept.icon} className="size-5" /> : <GitBranch className="size-5" aria-hidden />}
-                      </span>
+                      {dept ? <Thumb name={dept.visual} className="size-12" /> : <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-secondary font-display text-lg font-semibold text-primary">{p.name.charAt(0)}</span>}
                       <div className="flex flex-wrap justify-end gap-1.5">
                         <span className={cn("rounded-full px-2.5 py-1 text-xs lg:text-[11px] font-semibold", p.status === "In development" ? "bg-secondary text-secondary-foreground" : "bg-muted text-muted-foreground")}>{p.status}</span>
                         <span className="inline-flex items-center gap-1 rounded-full border border-border px-2.5 py-1 text-xs lg:text-[11px] text-muted-foreground">
@@ -123,7 +120,7 @@ export function ProjectsBrowser({ projects = staticProjects }: { projects?: Proj
                             Live <ArrowUpRight className="size-3" aria-hidden />
                           </a>
                         )}
-                        {!p.repo && !p.demo && <span className="text-muted-foreground/80">Repository link coming with the first release</span>}
+                        {!p.repo && !p.demo && <span className="text-muted-foreground">Repository link coming with the first release</span>}
                       </span>
                     </div>
                   </article>

@@ -1,21 +1,19 @@
 import type { DepartmentSlug } from "./departments";
+import type { VisualKey } from "./visuals";
 
 /**
- * Events. The club was founded on 13 September 2026, so the founding meeting is
- * the only completed event. Only activities that the Executive Committee has
- * actually scheduled are listed here — no placeholder or "planned" items.
- * Additional workshops, competitions and hackathons are announced after member
- * onboarding and the roadmap discussion.
+ * Events. Only activities the Executive Committee has actually scheduled are
+ * listed. Upcoming / Live Now / Past is never stored here: it is derived from
+ * `date` / `endDate` and the visitor's clock (see lib/event-status), so the
+ * Events page keeps itself current without edits or rebuilds.
  */
 
 export type EventType = "Meeting" | "Discussion" | "Workshop" | "Innovation Week" | "Career Talk" | "Hackathon" | "Innovation Challenge" | "Project Exhibition" | "Bootcamp";
-export type EventStatus = "upcoming" | "past";
 
 export interface ClubEvent {
   slug: string;
   title: string;
   type: EventType;
-  status: EventStatus;
   /** ISO date-time (Nepal time, UTC+05:45). */
   date: string;
   endDate?: string;
@@ -38,8 +36,8 @@ export interface ClubEvent {
   /** Day-by-day programme for multi-day events. */
   days?: { day: number; date: string; theme: string; time?: string; activities: string[]; activity?: string; showcase?: boolean }[];
   showcase?: { title: string; description: string };
-  /** Which illustration the featured card draws. */
-  visual?: "orbit" | "career" | "hackathon" | "impact" | "exhibition" | "portfolio";
+  /** Banner photograph, when a fitting one exists (see data/visuals). */
+  photo?: VisualKey;
   /** What each participant leaves with. */
   takeaways?: string[];
   outcomesLabel?: string;
@@ -57,7 +55,7 @@ export interface ClubEvent {
   duration?: string;
   /** Committee member ids (photos and roles come from the committee data) plus a label. */
   facilitators?: { memberId: string; label: string }[];
-  topics?: { icon: TopicIcon; title: string; items: string[]; goal?: string }[];
+  topics?: { title: string; items: string[]; goal?: string }[];
   /** Judging criteria (competitions). */
   criteria?: string[];
   /** What every team presents at the end. */
@@ -65,14 +63,12 @@ export interface ClubEvent {
   outcomes?: string[];
 }
 
-export type TopicIcon = "Code2" | "ShieldCheck" | "BrainCircuit" | "Network" | "Briefcase" | "GraduationCap" | "Leaf" | "Heart" | "Zap" | "Accessibility" | "Users" | "Smartphone" | "BookOpen" | "Trophy" | "Globe" | "FileText" | "User";
 
 export const events: ClubEvent[] = [
   {
     slug: "member-intake-orientation",
     title: "Member Intake & Orientation Assembly",
     type: "Meeting",
-    status: "upcoming",
     date: "2026-10-08T07:00:00+05:45",
     venue: "Tech AI College of Management & Law",
     host: "Club Administration",
@@ -86,7 +82,6 @@ export const events: ClubEvent[] = [
     slug: "club-roadmap-open-discussion",
     title: "Open Discussion on Club Roadmap & Future Plans",
     type: "Discussion",
-    status: "upcoming",
     date: "2026-10-09T07:00:00+05:45",
     venue: "Tech AI College of Management & Law",
     host: "All Members",
@@ -97,9 +92,9 @@ export const events: ClubEvent[] = [
   },
   {
     slug: "internet-governance-icann-apnic-workshop",
+    photo: "nepalNetwork",
     title: "Internet Governance, ICANN & APNIC Workshop",
     type: "Workshop",
-    status: "upcoming",
     date: "2026-10-12T07:00:00+05:45",
     venue: "Tech AI College of Management & Law",
     department: "ai-data-science",
@@ -110,12 +105,11 @@ export const events: ClubEvent[] = [
   },
   {
     slug: "vibe-coding-week-2026",
+    photo: "lab",
     title: "Vibe Coding Week 2026",
     tagline: "5 Days. Unlimited Ideas. One Showcase.",
     type: "Innovation Week",
-    status: "upcoming",
     featured: true,
-    visual: "orbit",
     date: "2026-11-16T07:00:00+05:45",
     endDate: "2026-11-20T07:00:00+05:45",
     venue: "Tech AI College of Management & Law",
@@ -140,12 +134,11 @@ export const events: ClubEvent[] = [
   },
   {
     slug: "career-talks-pathways-in-tech",
+    photo: "datacenterEngineer",
     title: "Career Talks: Pathways in Tech",
     tagline: "Explore Your Future. Discover Your Path in Technology.",
     type: "Career Talk",
-    status: "upcoming",
     featured: true,
-    visual: "career",
     date: "2026-11-27T07:00:00+05:45",
     duration: "2 hours",
     venue: "Tech AI College of Management & Law",
@@ -159,11 +152,11 @@ export const events: ClubEvent[] = [
       { memberId: "nirmal-bk", label: "Supporting Facilitator" },
     ],
     topics: [
-      { icon: "Code2", title: "Web Development", items: ["Frontend Development", "Backend Development", "Full Stack Career Path", "Portfolio Building"] },
-      { icon: "ShieldCheck", title: "Cyber Security", items: ["Introduction to Cyber Security", "Security Career Opportunities", "Industry Certifications", "Ethical Hacking Fundamentals"] },
-      { icon: "BrainCircuit", title: "Artificial Intelligence", items: ["AI & Machine Learning Careers", "Generative AI Tools", "AI Skills for Students", "Future Opportunities"] },
-      { icon: "Network", title: "Networking & Infrastructure", items: ["Network Engineering", "Cloud Fundamentals", "Internet Technologies", "Infrastructure Careers"] },
-      { icon: "Briefcase", title: "Freelancing & Remote Work", items: ["Building Online Presence", "Freelancing Platforms", "Client Management", "Personal Branding"] },
+      { title: "Web Development", items: ["Frontend Development", "Backend Development", "Full Stack Career Path", "Portfolio Building"] },
+      { title: "Cyber Security", items: ["Introduction to Cyber Security", "Security Career Opportunities", "Industry Certifications", "Ethical Hacking Fundamentals"] },
+      { title: "Artificial Intelligence", items: ["AI & Machine Learning Careers", "Generative AI Tools", "AI Skills for Students", "Future Opportunities"] },
+      { title: "Networking & Infrastructure", items: ["Network Engineering", "Cloud Fundamentals", "Internet Technologies", "Infrastructure Careers"] },
+      { title: "Freelancing & Remote Work", items: ["Building Online Presence", "Freelancing Platforms", "Client Management", "Personal Branding"] },
     ],
     outcomes: [
       "Understand major technology career pathways.",
@@ -180,9 +173,7 @@ export const events: ClubEvent[] = [
     tagline: "24 Hours. One Challenge. Unlimited Innovation.",
     motto: "Think Fast. Build Smart. Showcase Innovation.",
     type: "Hackathon",
-    status: "upcoming",
     featured: true,
-    visual: "hackathon",
     date: "2026-12-11T07:00:00+05:45",
     duration: "24 hours",
     venue: "Tech AI College of Management & Law",
@@ -193,10 +184,10 @@ export const events: ClubEvent[] = [
       "Mini Hackathon: Build in 24 Hours is an internal innovation challenge designed for students to transform ideas into working solutions within a single day.\n\nParticipants can compete individually or in teams and will build practical solutions that address real-world problems while improving teamwork, creativity, technical skills, and problem-solving abilities.\n\nThe event encourages students to learn by building, experimenting, and presenting innovative projects.",
     topicsLabel: "Hackathon themes",
     topics: [
-      { icon: "GraduationCap", title: "Education", items: ["Student Learning Tools", "Educational Platforms", "Academic Productivity Solutions"] },
-      { icon: "Leaf", title: "Environment", items: ["Sustainability Solutions", "Waste Management Ideas", "Climate Awareness Tools"] },
-      { icon: "Heart", title: "Social Impact", items: ["Community Support Projects", "Accessibility Solutions", "Digital Inclusion Initiatives"] },
-      { icon: "Zap", title: "Productivity Tools", items: ["Automation Solutions", "Personal Productivity Apps", "Workflow Improvement Tools"] },
+      { title: "Education", items: ["Student Learning Tools", "Educational Platforms", "Academic Productivity Solutions"] },
+      { title: "Environment", items: ["Sustainability Solutions", "Waste Management Ideas", "Climate Awareness Tools"] },
+      { title: "Social Impact", items: ["Community Support Projects", "Accessibility Solutions", "Digital Inclusion Initiatives"] },
+      { title: "Productivity Tools", items: ["Automation Solutions", "Personal Productivity Apps", "Workflow Improvement Tools"] },
     ],
     schedule: [
       { time: "07:00 AM", title: "Opening Session & Challenge Briefing" },
@@ -220,13 +211,12 @@ export const events: ClubEvent[] = [
   },
   {
     slug: "ai-for-social-good-challenge-2026",
+    photo: "aiHologram",
     title: "AI for Social Good Challenge 2026",
     tagline: "Build Technology That Creates Real Impact.",
     motto: "Technology for People. Innovation for Impact.",
     type: "Innovation Challenge",
-    status: "upcoming",
     featured: true,
-    visual: "impact",
     date: "2026-12-21T07:00:00+05:45",
     duration: "Full day",
     venue: "Tech AI College of Management & Law",
@@ -237,10 +227,10 @@ export const events: ClubEvent[] = [
       "AI for Social Good Challenge is a student innovation competition focused on solving real-world social problems through technology and artificial intelligence.\n\nParticipants will work individually or in teams to design and build innovative solutions that create positive impact in society.\n\nThe challenge encourages students to use technology not only for business and productivity, but also for education, environmental sustainability, accessibility, and community development.",
     topicsLabel: "Challenge themes",
     topics: [
-      { icon: "GraduationCap", title: "Education", goal: "Improve learning experiences and educational accessibility.", items: ["AI Learning Assistant", "Student Study Planner", "Smart Learning Platform", "Attendance Management System", "Educational Resource Sharing Platform", "Career Guidance Assistant"] },
-      { icon: "Leaf", title: "Environment", goal: "Promote environmental sustainability and responsible resource use.", items: ["Waste Management Solution", "Recycling Awareness Platform", "Carbon Footprint Tracker", "Environmental Awareness App", "Smart Energy Monitoring Tool", "Eco-Friendly Community Platform"] },
-      { icon: "Accessibility", title: "Accessibility", goal: "Make technology accessible for everyone.", items: ["Text-to-Speech System", "Speech-to-Text Assistant", "Accessibility Tools for Students", "Inclusive Learning Platform", "Navigation Assistance Tools", "AI Assistive Technologies"] },
-      { icon: "Users", title: "Community Development", goal: "Strengthen communities through technology and innovation.", items: ["Community Service Platform", "Volunteer Coordination System", "Local Problem Reporting App", "Digital Inclusion Solution", "Community Resource Mapping Tool", "Public Information Platform"] },
+      { title: "Education", goal: "Improve learning experiences and educational accessibility.", items: ["AI Learning Assistant", "Student Study Planner", "Smart Learning Platform", "Attendance Management System", "Educational Resource Sharing Platform", "Career Guidance Assistant"] },
+      { title: "Environment", goal: "Promote environmental sustainability and responsible resource use.", items: ["Waste Management Solution", "Recycling Awareness Platform", "Carbon Footprint Tracker", "Environmental Awareness App", "Smart Energy Monitoring Tool", "Eco-Friendly Community Platform"] },
+      { title: "Accessibility", goal: "Make technology accessible for everyone.", items: ["Text-to-Speech System", "Speech-to-Text Assistant", "Accessibility Tools for Students", "Inclusive Learning Platform", "Navigation Assistance Tools", "AI Assistive Technologies"] },
+      { title: "Community Development", goal: "Strengthen communities through technology and innovation.", items: ["Community Service Platform", "Volunteer Coordination System", "Local Problem Reporting App", "Digital Inclusion Solution", "Community Resource Mapping Tool", "Public Information Platform"] },
     ],
     schedule: [
       { time: "07:00 AM", title: "Opening Session" },
@@ -271,9 +261,7 @@ export const events: ClubEvent[] = [
     tagline: "Build. Create. Showcase. Inspire.",
     motto: "Ideas into Reality. Projects into Impact.",
     type: "Project Exhibition",
-    status: "upcoming",
     featured: true,
-    visual: "exhibition",
     date: "2026-12-27T07:00:00+05:45",
     endDate: "2026-12-27T10:00:00+05:45",
     venue: "Tech AI College of Management & Law",
@@ -283,10 +271,10 @@ export const events: ClubEvent[] = [
       "The Annual Project Exhibition 2026 is a showcase event where members of the Tech & AI Innovation Club present the projects they have developed throughout the semester.\n\nStudents will demonstrate their innovations, share their learning journey, receive feedback from peers and faculty, and inspire fellow students through practical technology solutions.\n\nThe event aims to celebrate creativity, technical skills, problem-solving, research, and project-based learning.",
     topicsLabel: "Project categories",
     topics: [
-      { icon: "Code2", title: "Web Development", items: ["Club Websites", "Portfolio Websites", "E-Commerce Platforms", "Management Systems", "Educational Platforms"] },
-      { icon: "Smartphone", title: "Mobile Applications", items: ["Student Utility Apps", "Educational Apps", "Community Apps", "Productivity Tools"] },
-      { icon: "BrainCircuit", title: "AI Projects", items: ["AI Chatbots", "Recommendation Systems", "Computer Vision Projects", "Machine Learning Models", "AI for Social Good Solutions"] },
-      { icon: "BookOpen", title: "Research Projects", items: ["Cyber Security Research", "Internet Governance Research", "Technology Policy Studies", "AI & Society Research", "Emerging Technology Research"] },
+      { title: "Web Development", items: ["Club Websites", "Portfolio Websites", "E-Commerce Platforms", "Management Systems", "Educational Platforms"] },
+      { title: "Mobile Applications", items: ["Student Utility Apps", "Educational Apps", "Community Apps", "Productivity Tools"] },
+      { title: "AI Projects", items: ["AI Chatbots", "Recommendation Systems", "Computer Vision Projects", "Machine Learning Models", "AI for Social Good Solutions"] },
+      { title: "Research Projects", items: ["Cyber Security Research", "Internet Governance Research", "Technology Policy Studies", "AI & Society Research", "Emerging Technology Research"] },
     ],
     objectives: [
       "Showcase student innovation and creativity.",
@@ -312,13 +300,12 @@ export const events: ClubEvent[] = [
   },
   {
     slug: "portfolio-website-bootcamp-2027",
+    photo: "connectedDevices",
     title: "Build Your Portfolio Website Bootcamp 2027",
     tagline: "Your Skills. Your Portfolio. Your Digital Identity.",
     motto: "Build Your Presence. Showcase Your Potential.",
     type: "Bootcamp",
-    status: "upcoming",
     featured: true,
-    visual: "portfolio",
     date: "2027-01-08T07:00:00+05:45",
     endDate: "2027-01-12T10:00:00+05:45",
     duration: "3 hours daily",
@@ -348,16 +335,8 @@ export const events: ClubEvent[] = [
   },
 ];
 
-export const featuredEvents = events
-  .filter((e) => e.featured && e.status === "upcoming")
-  .sort((a, b) => a.date.localeCompare(b.date));
-export const featuredEvent = featuredEvents[0];
-
-export const upcomingEvents = events
-  .filter((e) => e.status === "upcoming")
-  .sort((a, b) => a.date.localeCompare(b.date));
-export const pastEvents = events
-  .filter((e) => e.status === "past")
-  .sort((a, b) => b.date.localeCompare(a.date));
-export const nextEvent = upcomingEvents[0];
+/** All events, soonest first. Grouping by state happens at render time (lib/event-status). */
+export const sortedEvents = [...events].sort((a, b) => a.date.localeCompare(b.date));
+/** Featured events, soonest first; finished ones are hidden at render time. */
+export const featuredEvents = sortedEvents.filter((e) => e.featured);
 export const getEvent = (slug: string) => events.find((e) => e.slug === slug);

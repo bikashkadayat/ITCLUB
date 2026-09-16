@@ -1,4 +1,4 @@
-import { CheckCircle2, ShieldCheck, Layers } from "lucide-react";
+import { StepArt } from "@/components/shared/mini-art";
 import { pageMetadata } from "@/lib/seo";
 import { membership } from "@/data/membership";
 import { club } from "@/data/club";
@@ -34,9 +34,10 @@ export default function MembershipPage() {
           <Stagger as="ol" className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
             {membership.process.map((s) => (
               <StaggerItem key={s.step} as="li">
-                <div className="relative h-full rounded-3xl border border-border/80 bg-card p-6 card-hover">
-                  <span className="font-display text-4xl font-semibold text-primary/60">{s.step}</span>
-                  <h3 className="mt-3 text-lg font-semibold">{s.title}</h3>
+                <div className="group relative flex h-full flex-col rounded-3xl border border-border/80 bg-card p-6 transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/25 hover:shadow-[0_28px_60px_-34px_var(--glow-blue)]">
+                  <div className="h-20 w-full transition-transform duration-500 group-hover:scale-105"><StepArt step={Number(s.step)} /></div>
+                  <span className="mt-4 font-mono text-xs text-primary">{s.step}</span>
+                  <h3 className="mt-1 text-lg font-semibold leading-snug">{s.title}</h3>
                 </div>
               </StaggerItem>
             ))}
@@ -49,11 +50,12 @@ export default function MembershipPage() {
         <div className="container-x">
           <SectionHeading eyebrow="Membership benefits" title={<span id="benefits-heading">What you get as a member.</span>} />
           <Stagger className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {membership.benefits.map((b) => (
+            {membership.benefits.map((b, i) => (
               <StaggerItem key={b.title}>
-                <div className="h-full rounded-3xl border border-border/80 bg-card p-6">
-                  <CheckCircle2 className="size-6 text-primary" aria-hidden />
-                  <h3 className="mt-4 font-semibold">{b.title}</h3>
+                <div className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/80 bg-card p-7 transition-all duration-500 hover:-translate-y-1.5 hover:border-primary/25 hover:shadow-[0_28px_60px_-34px_var(--glow-blue)]">
+                  <span className="font-mono text-xs text-primary">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="mt-4 block h-px w-10 bg-gradient-to-r from-brand-blue to-brand-coral transition-all duration-500 group-hover:w-20" aria-hidden />
+                  <h3 className="mt-4 text-lg font-semibold leading-snug">{b.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{b.text}</p>
                 </div>
               </StaggerItem>
@@ -67,10 +69,8 @@ export default function MembershipPage() {
         <div className="container-x grid grid-cols-1 gap-6 lg:grid-cols-2">
           <Reveal>
             <div className="h-full rounded-3xl border border-border/80 bg-card p-8">
-              <span className="flex size-10 items-center justify-center rounded-xl bg-secondary text-primary">
-                <Layers className="size-5" aria-hidden />
-              </span>
-              <h2 id="structure-heading" className="mt-4 text-2xl font-semibold">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">How the club works</p>
+              <h2 id="structure-heading" className="mt-3 text-2xl font-semibold">
                 Club structure
               </h2>
               <ol className="mt-5 space-y-4">
@@ -93,10 +93,8 @@ export default function MembershipPage() {
           </Reveal>
           <Reveal delay={0.1}>
             <div className="h-full rounded-3xl border border-border/80 bg-card p-8">
-              <span className="flex size-10 items-center justify-center rounded-xl bg-accent text-accent-foreground">
-                <ShieldCheck className="size-5" aria-hidden />
-              </span>
-              <h2 className="mt-4 text-2xl font-semibold">Responsibilities &amp; conduct</h2>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-red-deep dark:text-brand-coral-light">What we expect</p>
+              <h2 className="mt-3 text-2xl font-semibold">Responsibilities &amp; conduct</h2>
               <ul className="mt-5 space-y-2.5">
                 {membership.responsibilities.map((r) => (
                   <li key={r} className="flex gap-2.5 text-sm text-foreground/85">

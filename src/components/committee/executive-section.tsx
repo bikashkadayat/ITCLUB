@@ -5,7 +5,8 @@ import { committeeWithPhotos } from "@/lib/team-photos";
 import { Reveal, Stagger, StaggerItem } from "@/components/shared/reveal";
 import { LinkedinIcon } from "@/components/shared/brand-icons";
 import { MemberDialog } from "./member-dialog";
-import { cn, initials } from "@/lib/utils";
+import { PortraitPlaceholder } from "@/components/shared/mini-art";
+import { cn } from "@/lib/utils";
 
 /** Photo, name, role, two-line bio. Everything else opens in a modal. */
 export function ExecutiveSection() {
@@ -45,10 +46,8 @@ function Avatar({ member: m, size = 96, className }: { member: CommitteeMember; 
     return <Image src={m.photo} alt={m.name} width={size} height={size} className={cn("aspect-square rounded-full object-cover ring-4 ring-background", className)} style={{ width: size, height: size }} />;
   }
   return (
-    <div className={cn("relative flex items-center justify-center rounded-full", className)} style={{ width: size, height: size }} aria-hidden>
-      <div className="absolute inset-0 rounded-full border border-dashed border-current opacity-40" />
-      <div className="absolute inset-[3px] rounded-full bg-gradient-to-br from-brand-blue via-brand-blue-light to-brand-coral opacity-90" />
-      <span className="relative font-display text-2xl font-medium text-white">{initials(m.name)}</span>
+    <div className={cn("relative overflow-hidden rounded-full ring-4 ring-background", className)} style={{ width: size, height: size }} aria-hidden>
+      <PortraitPlaceholder />
     </div>
   );
 }
