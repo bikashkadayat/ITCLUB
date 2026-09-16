@@ -343,5 +343,8 @@
   .prose-club ol { @apply mb-5 list-decimal space-y-2 pl-6; }
   .prose-club blockquote { @apply my-6 border-l-4 border-primary/60 bg-secondary/60 px-5 py-4 italic rounded-r-xl; }
   .prose-club a { @apply text-primary underline underline-offset-4; }
+  /* Chip / card lists inside prose opt out of bullets and indentation. */
+  .prose-club ul.list-none, .prose-club ol.list-none { list-style: none; padding-left: 0; }
+  .prose-club ul.list-none > li, .prose-club ol.list-none > li { margin: 0; }
   .prose-club strong { @apply text-foreground font-semibold; }
 }

@@ -1,5 +1,6 @@
 import { pageMetadata } from "@/lib/seo";
-import { events, nextEvent } from "@/data/events";
+import { events, nextEvent, featuredEvents } from "@/data/events";
+import { FeaturedEvent } from "@/components/events/featured-event";
 import { PageHero } from "@/components/shared/page-hero";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/shared/reveal";
@@ -9,14 +10,14 @@ import { formatDate, formatTime } from "@/lib/utils";
 
 export const metadata = pageMetadata({
   title: "Events",
-  description: "Upcoming events of the Tech & AI Innovation Club — member orientation, an open roadmap discussion and our first workshop at Tech AI College of Management & Law.",
+  description: "Upcoming events of the Tech & AI Innovation Club — Vibe Coding Week 2026, member orientation, an open roadmap discussion and our first workshop at Tech AI College of Management & Law.",
   path: "/events",
 });
 
 export default async function EventsPage() {
   return (
     <>
-      <PageHero eyebrow="Events" crumbs={[{ label: "Events" }]} title={<>Our first activities <span className="gradient-text">as a new club</span>.</>} description="Orientation, an open roadmap discussion and our first workshop.">
+      <PageHero eyebrow="Events" crumbs={[{ label: "Events" }]} title={<>Our first activities <span className="gradient-text">as a new club</span>.</>} description="From orientation to Vibe Coding Week, Career Talks, a 24-hour hackathon, the AI for Social Good Challenge, the Annual Project Exhibition and the Portfolio Website Bootcamp.">
         {nextEvent && (
           <div className="rounded-3xl border border-border/80 bg-card/80 p-5 backdrop-blur sm:p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">Next up</p>
@@ -28,6 +29,10 @@ export default async function EventsPage() {
           </div>
         )}
       </PageHero>
+
+      {featuredEvents.map((fe, i) => (
+        <FeaturedEvent key={fe.slug} event={fe} variant={i % 2 === 0 ? "dark" : "light"} />
+      ))}
 
       <section className="section" aria-labelledby="browse-heading">
         <div className="container-x">

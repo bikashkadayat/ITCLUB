@@ -65,7 +65,7 @@ export function NextEvent() {
           <Reveal delay={0.1} className="lg:col-span-5">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">Also coming up</p>
             <ul className="mt-4 divide-y divide-border/70 rounded-3xl border border-border/80 bg-card">
-              {upcomingEvents.filter((p) => p.slug !== e?.slug).map((p) => (
+              {upcomingEvents.filter((p) => p.slug !== e?.slug).slice(0, 3).map((p) => (
                 <li key={p.slug}>
                   <Link href={`/events/${p.slug}`} className="group flex items-center justify-between gap-4 px-5 py-4 transition-colors hover:bg-muted/60">
                     <div className="min-w-0">
@@ -78,7 +78,7 @@ export function NextEvent() {
                   </Link>
                 </li>
               ))}
-              <li className="px-5 py-4 text-sm text-muted-foreground">More events will be announced after member onboarding and the roadmap discussion.</li>
+              <li className="px-5 py-4 text-sm"><Link href="/events" className="inline-flex items-center gap-1.5 font-semibold text-primary">All upcoming events <ArrowRight className="size-4" aria-hidden /></Link></li>
             </ul>
           </Reveal>
         </div>

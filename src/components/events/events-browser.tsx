@@ -6,7 +6,7 @@ import { CalendarDays, MapPin, Clock, ArrowRight } from "lucide-react";
 import { EmptyState } from "@/components/shared/empty-state";
 import { events as staticEvents, type ClubEvent } from "@/data/events";
 import { departments } from "@/data/departments";
-import { formatDate, formatTime, cn } from "@/lib/utils";
+import { formatDateRange, formatTimeSpan, spanDays, cn } from "@/lib/utils";
 
 type Filter = "all" | "upcoming" | "past";
 
@@ -92,12 +92,12 @@ export function EventCard({ event: e }: { event: ClubEvent }) {
         <div className="flex items-center gap-2.5">
           <CalendarDays className="size-4 text-primary" aria-hidden />
           <dt className="sr-only">Date</dt>
-          <dd>{formatDate(e.date)}</dd>
+          <dd>{formatDateRange(e.date, e.endDate)}</dd>
         </div>
         <div className="flex items-center gap-2.5">
           <Clock className="size-4 text-primary" aria-hidden />
           <dt className="sr-only">Time</dt>
-          <dd>{formatTime(e.date)}</dd>
+          <dd>{spanDays(e.date, e.endDate) > 1 ? `${spanDays(e.date, e.endDate)} days · ${formatTimeSpan(e.date, e.endDate)}` : e.duration ? `${formatTimeSpan(e.date, e.endDate)} · ${e.duration}` : formatTimeSpan(e.date, e.endDate)}</dd>
         </div>
         <div className="flex items-center gap-2.5">
           <MapPin className="size-4 text-primary" aria-hidden />
