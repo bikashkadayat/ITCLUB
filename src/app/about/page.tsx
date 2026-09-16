@@ -53,8 +53,8 @@ export default function AboutPage() {
         <div className="container-x grid grid-cols-1 gap-6 lg:grid-cols-2">
           <Reveal>
             <div className="group relative h-full overflow-hidden rounded-3xl bg-brand-navy p-9 text-white sm:p-12">
-              <Photo name="nepalNetwork" grade="none" className="absolute inset-x-0 bottom-0 top-1/3" sizes="(min-width: 1024px) 50vw, 100vw" />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-brand-navy via-brand-navy/85 to-brand-navy/5" aria-hidden />
+              <Photo name="networkingEvent" grade="deep" className="absolute inset-0" sizes="(min-width: 1024px) 50vw, 100vw" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-brand-navy via-brand-navy/80 to-brand-navy/30" aria-hidden />
               <div className="relative">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-coral-light">Where we are going</p>
                 <h2 id="vm-heading" className="mt-3 text-4xl font-semibold">Vision</h2>

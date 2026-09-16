@@ -92,7 +92,7 @@ export const events: ClubEvent[] = [
   },
   {
     slug: "internet-governance-icann-apnic-workshop",
-    photo: "nepalNetwork",
+    photo: "networkingEvent",
     title: "Internet Governance, ICANN & APNIC Workshop",
     type: "Workshop",
     date: "2026-10-12T07:00:00+05:45",

@@ -233,7 +233,7 @@ export const departments: Department[] = [
   },
   {
     slug: "media-outreach",
-    visual: "nepalNetwork",
+    visual: "networkingEvent",
     name: "Media & Outreach",
     shortName: "Media",
     icon: "Megaphone",

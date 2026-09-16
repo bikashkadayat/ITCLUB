@@ -18,7 +18,7 @@ const tiles: Tile[] = [
   { kind: "photo", title: "Industry Exposure", text: "Learn directly from professionals and mentors.", photo: "datacenterEngineer", span: "" },
   { kind: "type", title: "Leadership", text: "Run a department, lead an event, present to a room.", display: "Lead the room.", tone: "navy", span: "" },
   { kind: "type", title: "Hackathons", text: "Compete, build and innovate as a team.", display: "24h", tone: "coral", span: "" },
-  { kind: "photo", title: "Networking", text: "Meet students and professionals across Nepal's tech community.", photo: "nepalNetwork", span: "lg:col-span-2" },
+  { kind: "photo", title: "Networking", text: "Meet students and professionals across Nepal's tech community.", photo: "networkingEvent", span: "lg:col-span-2" },
   { kind: "type", title: "Collaboration", text: "Computer science, management and law, working together.", display: "3 faculties. 1 team.", tone: "light", span: "" },
 ];
 
