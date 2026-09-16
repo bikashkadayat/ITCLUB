@@ -5,7 +5,7 @@ import { committeeWithPhotos } from "@/lib/team-photos";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Stagger, StaggerItem } from "@/components/shared/reveal";
 import { PortraitPlaceholder } from "@/components/shared/mini-art";
-import { LinkedInButton } from "@/components/shared/linkedin-button";
+import { MemberSocials } from "@/components/shared/member-socials";
 
 const featuredIds = ["bikash-kadayat", "sadikshya-rijal", "suman-karki"];
 
@@ -37,7 +37,7 @@ export function Leadership() {
                   <h3 className="mt-1 text-2xl font-semibold tracking-tight">{m.name}</h3>
                 </div>
               </Link>
-              <LinkedInButton href={m.linkedin} name={m.name} size="sm" onDark tipAlign="end" className="absolute right-4 top-4" />
+              <MemberSocials socials={m.socials} name={m.name} onDark size="sm" align="end" className="absolute right-4 top-4 rounded-2xl bg-black/40 p-1.5 backdrop-blur-md" />
             </StaggerItem>
           ))}
         </Stagger>

@@ -3,7 +3,7 @@ import { Crown, GraduationCap, ArrowUpRight } from "lucide-react";
 import type { CommitteeMember } from "@/data/committee";
 import { committeeWithPhotos } from "@/lib/team-photos";
 import { Reveal, Stagger, StaggerItem } from "@/components/shared/reveal";
-import { LinkedInButton } from "@/components/shared/linkedin-button";
+import { MemberSocials } from "@/components/shared/member-socials";
 import { MemberDialog } from "./member-dialog";
 import { PortraitPlaceholder } from "@/components/shared/mini-art";
 import { cn } from "@/lib/utils";
@@ -82,8 +82,8 @@ function ProfileCard({ member: m, variant = "officer" }: { member: CommitteeMemb
             <MemberDialog member={m} className="inline-flex h-10 items-center gap-1.5 rounded-full bg-primary px-5 text-sm font-medium sm:px-4 sm:text-xs text-primary-foreground transition-colors hover:bg-primary/90">
               Full profile <ArrowUpRight className="size-3.5" aria-hidden />
             </MemberDialog>
-            <LinkedInButton href={m.linkedin} name={m.name} />
           </div>
+          <MemberSocials socials={m.socials} name={m.name} className={cn("mt-4 justify-center", featured && "sm:justify-start")} />
         </div>
       </div>
     </article>

@@ -4,8 +4,16 @@
  * `responsibilities` is the formal wording from Article 8 of the Constitution.
  *
  * Personal contact numbers are intentionally NOT published. Add `photo` paths
- * (e.g. /images/team/bikash-kadayat.jpg) and `linkedin` URLs when available.
+ * (e.g. /images/team/bikash-kadayat.jpg) and social profile URLs (`socials`) when available.
  */
+
+/** Personal profiles shown on a member card. Leave a key out until the URL exists. */
+export interface MemberSocials {
+  linkedin?: string;
+  facebook?: string;
+  github?: string;
+  website?: string;
+}
 
 export interface CommitteeMember {
   id: string;
@@ -15,7 +23,7 @@ export interface CommitteeMember {
   program: string;
   isFaculty?: boolean;
   photo?: string;
-  linkedin?: string;
+  socials?: MemberSocials;
   /** Short, human bio (2–3 sentences). */
   bio: string;
   /** Key responsibilities shown on the profile card. */
@@ -28,7 +36,7 @@ export interface CommitteeMember {
 export const committee: CommitteeMember[] = [
   {
     id: "bikash-kadayat",
-    linkedin: "https://www.linkedin.com/in/bikash-kadayat-978852273/",
+    socials: { linkedin: "https://www.linkedin.com/in/bikash-kadayat-978852273/" },
     photo: "/images/team/bikash-kadayat.jpg",
     name: "Bikash Kadayat",
     position: "President",
@@ -86,7 +94,7 @@ export const committee: CommitteeMember[] = [
   },
   {
     id: "nirmal-bk",
-    linkedin: "https://www.linkedin.com/in/nirmal-bahadur-bk-346a613a9/",
+    socials: { linkedin: "https://www.linkedin.com/in/nirmal-bahadur-bk-346a613a9/" },
     photo: "/images/team/nirmal-bk.jpg",
     name: "Nirmal B.K",
     position: "IT / Technical Coordinator",
