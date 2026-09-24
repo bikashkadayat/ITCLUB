@@ -36,7 +36,12 @@ export interface CommitteeMember {
 export const committee: CommitteeMember[] = [
   {
     id: "bikash-kadayat",
-    socials: { linkedin: "https://www.linkedin.com/in/bikash-kadayat-978852273/" },
+    socials: {
+      linkedin: "https://www.linkedin.com/in/bikash-kadayat-978852273/",
+      facebook: "https://www.facebook.com/profile.php?id=61570765950652",
+      github: "https://github.com/bikashkadayat",
+      website: "https://bikashkadayat.com.np/",
+    },
     photo: "/images/team/bikash-kadayat.jpg",
     name: "Bikash Kadayat",
     position: "President",
