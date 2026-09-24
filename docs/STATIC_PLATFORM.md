@@ -10,8 +10,8 @@ GitHub repository  ──push to main──▶  GitHub Actions (npm run build)  
 
 1. The applicant fills in the form. Validation runs in the browser.
 2. The browser generates an application reference (`TAIC-APP-YYYYMMDD-XXXX`) and keeps a copy of the application in the applicant's own browser storage.
-3. Delivery to the committee is **WhatsApp**: on submit the browser opens WhatsApp automatically and shows a confirmation screen with a **Send Via WhatsApp** fallback button. The link is `https://wa.me/9779705811712?text=…` with the full application (name, email, phone, program, semester, department, skills, motivation and the reference) pre-filled; the applicant presses send in WhatsApp. No email, no form service, no backend.
-5. The contact form, newsletter sign-up and event seat requests use the same WhatsApp number (`src/lib/whatsapp.ts`).
+3. The application itself is the club's **Microsoft Form**, embedded at `/membership` with an "open in a new tab" fallback; responses go to the club's Microsoft Forms account. The form URL lives in `src/data/membership.ts`.
+5. The contact form, newsletter sign-up and event seat requests are handed to WhatsApp (`src/lib/whatsapp.ts`).
 
 ## What was removed and why
 
@@ -19,7 +19,7 @@ GitHub repository  ──push to main──▶  GitHub Actions (npm run build)  
 | --- | --- | --- |
 | PostgreSQL + Prisma | No database on GitHub Pages | Static content files |
 | NextAuth login, member portal, roles, admin tool, member registry, membership cards, QR verification | No server to check credentials or store data; browser-only tools were impractical for club operations | Membership applications go to the club WhatsApp number and are reviewed there |
-| Server actions, API routes, middleware | Not exportable | Browser-side forms handed to WhatsApp |
+| Server actions, API routes, middleware | Not exportable | Microsoft Forms for membership; browser-side forms handed to WhatsApp |
 | Certificates, event registration, QR check-in, uploads, notifications, analytics | Needed database and storage | Seat requests on WhatsApp; attendance recorded at the venue |
 | Achievements page, resource library uploads, event photo uploads | Database-only content | Static gallery and documents in `public/` |
 

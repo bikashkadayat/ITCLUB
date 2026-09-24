@@ -1,11 +1,17 @@
 export const membership = {
+  /** Official Microsoft Forms application. Replaces the old WhatsApp submission. */
+  applicationFormUrl:
+    "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Et4o_IrKCU6qda2pH4nYKX0H02BU7-dCtYA6BinRPIhUNjgzMllZQkVLWVROOVMzSzFJUllURkpJSC4u",
+  /** Same form, embedded in the page. */
+  applicationFormEmbedUrl:
+    "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Et4o_IrKCU6qda2pH4nYKX0H02BU7-dCtYA6BinRPIhUNjgzMllZQkVLWVROOVMzSzFJUllURkpJSC4u&embed=true",
   eligibility:
     "Any student enrolled in good standing at Tech AI College of Management & Law is eligible to become a member — across the computer science, management and law faculties.",
   process: [
-    { step: "01", title: "Fill Application Form" },
-    { step: "02", title: "Send Application via WhatsApp" },
-    { step: "03", title: "Executive Committee Reviews" },
-    { step: "04", title: "Receive Confirmation" },
+    { step: "01", title: "Open the Membership Form" },
+    { step: "02", title: "Fill in Your Details" },
+    { step: "03", title: "Submit the Form" },
+    { step: "04", title: "Executive Committee Reviews" },
   ],
   benefits: [
     { title: "Workshops, projects & events", text: "Participate in the club’s workshops, projects, events and activities across six departments." },

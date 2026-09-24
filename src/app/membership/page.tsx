@@ -7,7 +7,7 @@ import { club } from "@/data/club";
 import { PageHero } from "@/components/shared/page-hero";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal, Stagger, StaggerItem } from "@/components/shared/reveal";
-import { MembershipForm } from "@/components/forms/membership-form";
+import { ArrowUpRight } from "lucide-react";
 
 export const metadata = pageMetadata({
   title: "Membership",
@@ -26,6 +26,9 @@ export default function MembershipPage() {
       >
         <a href="#apply" className="inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-lg shadow-brand-blue/25 hover:bg-primary/90">
           Become a Member
+        </a>
+        <a href={membership.applicationFormUrl} target="_blank" rel="noopener noreferrer" className="ml-3 inline-flex h-12 items-center gap-2 rounded-full border border-border bg-background px-6 text-sm font-semibold hover:bg-muted">
+          Open the form <ArrowUpRight className="size-4" aria-hidden />
         </a>
         <figure className="relative mt-10 aspect-[16/7] w-full overflow-hidden rounded-3xl shadow-[0_30px_80px_-40px_var(--glow-blue)] ring-1 ring-black/5">
           <Image src="/images/gallery/computer-lab-session.jpg" alt="Club members working together in the computer lab at Tech AI College." fill priority sizes="(min-width: 1280px) 1200px, 100vw" className="object-cover object-[50%_55%]" />
@@ -102,14 +105,30 @@ export default function MembershipPage() {
       <section id="apply" className="section bg-muted/40 scroll-mt-24" aria-labelledby="apply-heading">
         <div className="container-x grid grid-cols-1 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <SectionHeading title={<span id="apply-heading">Membership Application</span>} description="Fill out the form below and send your application through WhatsApp." />
+            <SectionHeading title={<span id="apply-heading">Membership Application</span>} description="Fill in the official membership form below. The Executive Committee reviews every application after each intake." />
             <div className="mt-8 hidden rounded-2xl border border-border/80 bg-card p-5 lg:block">
               <p className="text-sm font-medium">Follow the club for event announcements.</p>
               <SocialLinks labelled className="mt-3" />
             </div>
           </div>
           <Reveal className="rounded-3xl border border-border/80 bg-card p-6 sm:p-8 lg:col-span-8">
-            <MembershipForm />
+            <div className="space-y-4">
+              <div className="overflow-hidden rounded-2xl border border-border/80 bg-background">
+                <iframe
+                  title="Tech & AI Innovation Club membership application form"
+                  src={membership.applicationFormEmbedUrl}
+                  className="h-[calc(100vh-12rem)] min-h-[40rem] w-full border-0"
+                  allow="fullscreen; microphone; camera; geolocation"
+                  loading="lazy"
+                />
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Form not loading?{" "}
+                <a href={membership.applicationFormUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-semibold text-primary underline underline-offset-4">
+                  Open it in a new tab <ArrowUpRight className="size-3.5" aria-hidden />
+                </a>
+              </p>
+            </div>
           </Reveal>
         </div>
       </section>
