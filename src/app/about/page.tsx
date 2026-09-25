@@ -9,6 +9,8 @@ import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal, Stagger, StaggerItem } from "@/components/shared/reveal";
 import { InteractiveTimeline } from "@/components/shared/timeline";
 import { Photo } from "@/components/shared/photo";
+import { Leadership } from "@/components/home/leadership";
+import { MembersSection } from "@/components/about/members-section";
 
 export const metadata = pageMetadata({
   title: "About the Club",
@@ -113,6 +115,9 @@ export default function AboutPage() {
           </Reveal>
         </div>
       </section>
+
+      <Leadership />
+      <MembersSection />
     </>
   );
 }
